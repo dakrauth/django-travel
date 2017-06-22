@@ -1,0 +1,33 @@
+{% extends "travel/entities/listing/base.html" %}
+{% block travel_list_header %}
+    <th>Flag</th>
+    <th>Name</th>
+    <th>Designation</th>
+    <th>Capital</th>
+    <th>County</th>
+    <th></th>
+{% endblock travel_list_header %}
+{% block travel_listing %}
+    {% for place in places %}
+    <tr>
+        <td>{% if place.flag %}
+            <img class="flag" src="{{ place.flag.thumb.url }}" />
+        {% endif %}</td>
+        <td>
+            <a href="{{ place.get_absolute_url }}">
+                {% firstof place.name place.full_name %}</a>
+        </td>
+        <td>{{ place.category_detail }}</td>
+        <td>
+            <a href="{{ place.capital.get_absolute_url }}">
+                {{ place.capital.name }}</a>
+        </td>
+        <td>
+            <a href="{{ place.country.get_absolute_url }}">
+                <img class="flag" src="{{ place.country.flag.thumb.url }}" />
+                {{ place.country.name }}</a>
+        </td>
+        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+    </tr>
+    {% endfor %}
+{% endblock travel_listing %}

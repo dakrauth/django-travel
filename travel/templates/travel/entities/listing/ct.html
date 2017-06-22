@@ -1,0 +1,20 @@
+{% extends "travel/entities/listing/base.html" %}
+{% block travel_list_header %}
+    <th></th>
+    <th>Name</th>
+    <th>State</th>
+    <th>County</th>
+    <th></th>
+{% endblock travel_list_header %}
+{% block travel_listing %}
+    {% for place in places %}
+    <tr>
+        <td>{% if not place.flag.is_locked %}<img src="{{ place.flag.thumb.url }}">{% endif %}</td>
+        <td><a href="{{ place.get_absolute_url }}">{{ place.name }}</a></td>
+        <td>{{ place.state.name }}</td>
+        <td>{{ place.country }}</td>
+        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+    </tr>
+    {% endfor %}
+{% endblock travel_listing %}
+

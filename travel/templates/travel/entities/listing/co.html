@@ -1,0 +1,53 @@
+{% extends "travel/entities/listing/base.html" %}
+{% load travel_tags %}{% load humanize %}
+{% block travel_list_header %}
+    <th>Flag</th>
+    <th>
+        Name / Official Name
+    </th>
+    <th>Code</th>
+    <th>Capital</th>
+    <th>Continent</th>
+    <th class="text-right">Population</th>
+    <th class="text-right">Size</th>
+    <th></th>
+{% endblock travel_list_header %}
+{% block travel_listing %}
+    {% for place in places %}
+    <tr>
+        <td>{% if place.flag and place.flag.thumb %}
+            <img class="flag" src="{{ place.flag.thumb.url }}" />
+        {% endif %}</td>
+        <td>
+            <a href="{{ place.get_absolute_url }}">{{ place.name }}</a><br>
+            <em>{{ place.full_name }}</em>
+        </td>
+        <td>{{ place.code }}</td>
+        <td>
+            {% if place.capital %}
+            <a href="{{ place.capital.get_absolute_url }}">
+                {{ place.capital.name }}
+            </a>
+            {% endif %}
+        </td>
+        <td>
+            {{ place.continent }}
+        </td>
+        {% having place.entityinfo as info %}
+        <td class="text-right">{% if info.population %}{{ info.population|intcomma }}{% endif %}</td>
+        <td class="text-right">
+            {% if info.area %}
+            {{ info.area|intcomma }} km<sup>2</sup><br>
+            {{ info.square_miles|intcomma }} mi<sup>2</sup>
+            {% endif %}
+        </td>
+        {% else %}
+        <td></td>
+        <td></td>
+        {% endhaving %}
+        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+    </tr>
+    {% endfor %}
+{% endblock travel_listing %}
+
+

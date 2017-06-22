@@ -1,0 +1,19 @@
+{% extends "travel/entities/listing/base.html" %}
+{% block travel_list_header %}
+    <th>Name</th>
+    <th>Official Name</th>
+    <th>Abbreviation</th>
+    <th></th>
+{% endblock travel_list_header %}
+{% block travel_listing %}
+    {% for place in places %}
+    <tr>
+        <td><a href="{{ place.get_absolute_url }}">{{ place.name }}</a></td>
+        <td>{{ place.full_name }}</td>
+        <td>{{ place.code }}</td>
+        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+    </tr>
+    {% endfor %}
+{% endblock travel_listing %}
+
+

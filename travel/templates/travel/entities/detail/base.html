@@ -1,0 +1,171 @@
+{% extends "travel/base.html" %}
+{% load travel_tags %}
+{% block travel_heading %}
+    {{ place.name }}{% if user.is_superuser %} <a href="{{ place.get_edit_url }}"><small class="glyphicon glyphicon-edit"></small></a>{% endif %}
+    <small>{{ place.type.title }}</small>
+{% endblock travel_heading %}
+{% block travel_content %}
+<div class="row">
+    <div class="col-xs-7">
+        <dl class="dl-horizontal entity-details">
+            <dt>Official name</dt>
+            <dd>
+                {{ place.full_name }} | {% with place.extern as extern %}
+                <a class="external" href="{{ extern.url }}">{{ extern.name }} <small class="glyphicon glyphicon-new-window"></small></a>
+                {% endwith %}
+            </dd>
+            
+            {% if place.capital %}
+            <dt>Capital</dt>
+            <dd>
+                <a href="{{ place.capital.get_absolute_url }}">{{ place.capital.name }}</a> |
+                <a class="mapit" href="{{ place.capital.google_maps_url }}">Map</a>
+            </dd>
+            {% endif %}
+            
+            {% if place.country %}
+            <dt>Country</dt>
+            <dd>
+                <a href="{{ place.country.get_absolute_url }}">{{ place.country }}</a>
+            </dd>
+            {% endif %}
+            
+            {% having place.get_continent as continent %}
+            <dt>Continent</dt>
+            <dd>
+                <a href="{{ continent.get_absolute_url }}">{{ continent }}</a>
+            </dd>
+            {% endhaving %}
+            
+            {% if place.state %}
+            <dt>State</dt>
+            <dd>
+                <a href="{{ place.state.get_absolute_url }}">{{ place.state }}</a>
+            </dd>
+            {% endif %}
+            
+            {% if place.locality or place.lat %}
+            <dt>Location</dt>
+            <dd>
+                {% if place.locality %}{{ place.locality }}<br>{% endif %}
+                {% include "travel/entities/detail/snippets/map.html" %}
+            </dd>
+            {% endif %}
+            
+            {% if place.code %}
+            <dt>Code</dt>
+            <dd>{{ place.code }}</dd>
+            {% endif %}
+            
+            {% if place.tzinfo %}
+            {% load tz %}
+            {% timezone place.tzinfo %}
+            <dt>Time Zone</dt>
+            <dd>
+                {{ place.tzinfo.zone }}, {% now "e O" %}
+            </dd>
+            <dt>Current Time</dt>
+            <dd>
+                <span class="tz-clock" data-timezone="{{ place.tzinfo.zone }}"></span>
+            </dd>
+            {% endtimezone %}
+            {% endif %}
+            {% having place.related_entities as related %}
+            <dt>Related</dt>
+            <dd id="related">{% block travel_related %}
+                <ul class="related-content">{% for rel in place.related_entities %}
+                    <li>
+                        <a href="{{ rel.url }}"><span>{{ rel.count }}</span> {{ rel.text }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>{% endblock travel_related %}
+            </dd>
+            {% endhaving %}
+            {% block travel_extra_details %}{% endblock travel_extra_details %}
+        </dl>
+        {% if user.is_authenticated %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Add a log entry</h2>
+            </div>
+            <div class="panel-body">
+                {% include "travel/log-entry-form.html" with entity=place %}
+            </div>
+        </div>
+        {% having history|length as count %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Previous Log Entries <span class="label label-default">{{ count }} entr{{ count|pluralize:"y,ies" }}</span></h2>
+            </div>
+            <table class="table table-striped">
+            <thead>
+                <tr><th>Arrival</th><th>Rating</th><th>Edit?</th></tr>
+            </thead>
+            <tbody> {% for entry in history %}
+                <tr>
+                    <td>{{ entry.arrival|date:"D, M j, Y" }} &mdash; {{ entry.arrival|date:"P" }} {{ entry.arrival.tzinfo.zone }}</td>
+                    <td>{{ entry.get_rating_display }}</td>
+                    <td>
+                        <a title="Edit this log entry" href="{{ entry.get_absolute_url }}">
+                            <i class="glyphicon glyphicon-edit"></i></a>
+                    </td>
+                </tr>
+                {% if entry.notes %}
+                <tr>
+                    <td colspan="4">
+                        <blockquote>
+                        {{ entry.notes.safe_html }}
+                        </blockquote>
+                    </td>
+                </tr>{% endif %} {% endfor %}
+            </tbody>
+            </table>
+        </div>
+        {% endhaving %}
+        {% endif %}
+        
+    </div>
+    <div class="col-xs-5 images">
+    {% block travel_images %}
+        {% if place.flag %}<a class="travel-image" href="{{ place.flag.image_url }}">
+            <img class="flag flag-md" src="{{ place.flag.image_url }}"></a>{% endif %}
+    {% endblock travel_images %}
+    </div>
+</div>
+{% endblock travel_content %}
+{% block travel_end_body %}{{ block.super }}
+<script type="text/javascript">
+    (function() {
+        var tz_delta = function(loc, there) {
+            var delta = there.utcOffset() - loc.utcOffset();
+            var neg = delta < 0;
+            var delta_str = '';
+            var minutes = 0;
+            delta = Math.abs(delta);
+            if(delta) {
+                minutes = delta % 60;
+                if(delta >= 60) {
+                    delta_str = Math.floor(delta / 60) + ' hours';
+                }
+                if(minutes) {
+                    delta_str += (delta_str.length ? ' ' : '') + minutes + ' minutes';
+                }
+                delta_str = ' (' + (neg ? '-' : '+') + delta_str + '/local)';
+            }
+            return delta_str;
+        };
+        
+        function update_time() {
+            _.each(document.querySelectorAll('.tz-clock'), function(el) {
+                var tz = el.getAttribute('data-timezone');
+                var loc = moment();
+                var there = loc.clone().tz(tz);
+                el.textContent = there.format('MMMM Do YYYY, h:mm:ss a') + tz_delta(loc, there);
+            });
+            setTimeout(update_time, 1000)
+        };
+        
+        update_time();
+    })();
+</script>
+{% endblock travel_end_body %}

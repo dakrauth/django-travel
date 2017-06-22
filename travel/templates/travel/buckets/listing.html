@@ -1,0 +1,26 @@
+{% extends "travel/base.html" %}
+{% block travel_title %}Bucket  Lists{% endblock travel_title %}
+{% block travel_heading %}Bucket Lists{% endblock travel_heading %}
+{% block travel_content %}
+    <table class="table table-hover table-striped table-condensed">
+    <thead>
+        <tr class="">
+            <th></th>
+            <th>Bucket</th>
+            <th>Description</th>
+            <th>Entries</th>
+        </tr>
+    </thead>
+    <tbody>{% for bucket_list in bucket_lists  %}
+        <tr>
+            <td><span class="glyphicon glyphicon-{{ bucket_list.is_public|yesno:"globe,user" }}"></span></td>
+            <td><a href="{{ bucket_list.get_absolute_url }}">{{ bucket_list }}</a></td>
+            <td>
+                {{ bucket_list.description }}{% if bucket_list.is_private %}<sup>*</sup>{% endif %}
+            </td>
+            <td>{{ bucket_list.entities.count }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock travel_content %}
