@@ -344,7 +344,8 @@ class TravelEntity(models.Model):
             )
         else:
             key = self.Related.ENTITY_TYPES.get(abbr)
-            qs = TravelEntityType.objects.distinct().filter(**{key: self})
+            if key:
+                qs = TravelEntityType.objects.distinct().filter(**{key: self})
 
         if qs:
             return qs.annotate(cnt=models.Count('abbr')).values_list('abbr', 'cnt')
