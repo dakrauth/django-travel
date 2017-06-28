@@ -6,9 +6,9 @@
     {% endif %}
 {% endblock travel_heading %}
 {% block travel_content %}
-    <p>Total: <span class="badge">{{ places|length }}</span></p>
+    <p>Total: <span class="badge">{{ entities|length }}</span></p>
     {% load pagination_tags %}
-    {% autopaginate places 100 %}
+    {% autopaginate entities 100 %}
     {% paginate %}
     
     <table class="table table-hover table-striped table-condensed entity-table">

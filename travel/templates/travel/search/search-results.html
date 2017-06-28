@@ -8,28 +8,28 @@
 {% paginate %}
 
 <table class="table table-hover table-condensed table-striped">
-<tbody>{% for place in results %}
+<tbody>{% for entity in results %}
     <tr>
-        <td style="width:36px;height:36px">{% if place.flag %}
-            <img class="flag" src="{{ place.flag.thumb.url }}" />{% endif %}
+        <td style="width:36px;height:36px">{% if entity.flag %}
+            <img class="flag" src="{{ entity.flag.thumb.url }}" />{% endif %}
         </td>
         <td>
-            <a href="{{ place.get_absolute_url }}">{{ place.full_name }}</a>
+            <a href="{{ entity.get_absolute_url }}">{{ entity.full_name }}</a>
         </td>
-        <td>{{ place.category_detail }}</td>
-        <td>{{ place.code }}</td>
-        {% if place.country %}
+        <td>{{ entity.category_detail }}</td>
+        <td>{{ entity.code }}</td>
+        {% if entity.country %}
         <td>
-            <a href="{{ place.country.get_absolute_url }}">
-                {{ place.country }}</a>
+            <a href="{{ entity.country.get_absolute_url }}">
+                {{ entity.country }}</a>
         </td>
         <td>
-            <img class="flag" src="{{ place.country.flag.thumb.url }}">
+            <img class="flag" src="{{ entity.country.flag.thumb.url }}">
         </td>
         {% else %}<td colspan="2"></td>
         {% endif %}
         {% if request.user.is_authenticated %}
-        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+        <td>{% include "travel/_visited.html" with id=entity.id %}</td>
         {% endif %}
     </tr>{% endfor %}
 </tbody>

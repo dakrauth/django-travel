@@ -18,17 +18,17 @@
         </tr>
     </thead>
     <tbody>
-        {% for obj,logged in entities %}
-        <tr data-id="{{ obj.id }}">
-            <td class="flag-32">{% if obj.flag %}
-                <img src="{{ obj.flag.thumb.url }}" />{% endif %}
+        {% for entity,logged in entities %}
+        <tr data-id="{{ entity.id }}">
+            <td class="flag-32">{% if entity.flag %}
+                <img src="{{ entity.flag.thumb.url }}" />{% endif %}
             </td>
             <td>
-                <a href="{{ obj.get_absolute_url }}">{{ obj.descriptive_name }}</a>
+                <a href="{{ entity.get_absolute_url }}">{{ entity.descriptive_name }}</a>
             </td>
             <td>{{ logged }}</td>
             <td class="text-center" style="font-size: 1.125em">
-                {% include "travel/_visited.html" with id=obj.id %}
+                {% include "travel/_visited.html" with id=entity.id %}
             </td>
         </tr>
         {% endfor %}

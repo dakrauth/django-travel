@@ -13,27 +13,27 @@
     <th></th>
 {% endblock travel_list_header %}
 {% block travel_listing %}
-    {% for place in places %}
+    {% for entity in entities %}
     <tr>
-        <td>{% if place.flag and place.flag.thumb %}
-            <img class="flag" src="{{ place.flag.thumb.url }}" />
+        <td>{% if entity.flag and entity.flag.thumb %}
+            <img class="flag" src="{{ entity.flag.thumb.url }}" />
         {% endif %}</td>
         <td>
-            <a href="{{ place.get_absolute_url }}">{{ place.name }}</a><br>
-            <em>{{ place.full_name }}</em>
+            <a href="{{ entity.get_absolute_url }}">{{ entity.name }}</a><br>
+            <em>{{ entity.full_name }}</em>
         </td>
-        <td>{{ place.code }}</td>
+        <td>{{ entity.code }}</td>
         <td>
-            {% if place.capital %}
-            <a href="{{ place.capital.get_absolute_url }}">
-                {{ place.capital.name }}
+            {% if entity.capital %}
+            <a href="{{ entity.capital.get_absolute_url }}">
+                {{ entity.capital.name }}
             </a>
             {% endif %}
         </td>
         <td>
-            {{ place.continent }}
+            {{ entity.continent }}
         </td>
-        {% having place.entityinfo as info %}
+        {% having entity.entityinfo as info %}
         <td class="text-right">{% if info.population %}{{ info.population|intcomma }}{% endif %}</td>
         <td class="text-right">
             {% if info.area %}
@@ -45,7 +45,7 @@
         <td></td>
         <td></td>
         {% endhaving %}
-        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+        <td>{% include "travel/_visited.html" with id=entity.id %}</td>
     </tr>
     {% endfor %}
 {% endblock travel_listing %}

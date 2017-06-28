@@ -6,12 +6,12 @@
     <th></th>
 {% endblock travel_list_header %}
 {% block travel_listing %}
-    {% for place in places %}
+    {% for entity in entities %}
     <tr>
-        <td><a href="{{ place.get_absolute_url }}">{{ place.name }}</a></td>
-        <td>{{ place.full_name }}</td>
-        <td>{{ place.code }}</td>
-        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+        <td><a href="{{ entity.get_absolute_url }}">{{ entity.name }}</a></td>
+        <td>{{ entity.full_name }}</td>
+        <td>{{ entity.code }}</td>
+        <td>{% include "travel/_visited.html" with id=entity.id %}</td>
     </tr>
     {% endfor %}
 {% endblock travel_listing %}

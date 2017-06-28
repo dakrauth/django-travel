@@ -1,14 +1,14 @@
 {% extends "travel/entities/detail/base.html" %}
 {% load staticfiles humanize travel_tags %}
 {% block travel_images %}{{ block.super }}
-    {% if place.entityinfo %}
-    {% for img in place.entityinfo.images %}
+    {% if entity.entityinfo %}
+    {% for img in entity.entityinfo.images %}
     <a href="{{ img.url }}"><img src="{{ img.url }}"></a>
     {% endfor %}
     {% endif %}
 {% endblock travel_images %}
 {% block travel_extra_details %}
-    {% having place.entityinfo as info %}
+    {% having entity.entityinfo as info %}
     <dt>Area</dt>
     <dd>{% if info.area %}{{ info.area|intcomma }} km<sup>2</sup>{% else %}<em>Unknown</em>{% endif %}</dd>
     <dt>Population</dt>

@@ -1,8 +1,8 @@
 {% extends "travel/base.html" %}
 {% load travel_tags %}
 {% block travel_heading %}
-    {{ place.name }}{% if user.is_superuser %} <a href="{{ place.get_edit_url }}"><small class="glyphicon glyphicon-edit"></small></a>{% endif %}
-    <small>{{ place.type.title }}</small>
+    {{ entity.name }}{% if user.is_superuser %} <a href="{{ entity.get_edit_url }}"><small class="glyphicon glyphicon-edit"></small></a>{% endif %}
+    <small>{{ entity.type.title }}</small>
 {% endblock travel_heading %}
 {% block travel_content %}
 <div class="row">
@@ -10,70 +10,70 @@
         <dl class="dl-horizontal entity-details">
             <dt>Official name</dt>
             <dd>
-                {{ place.full_name }} | {% with place.extern as extern %}
+                {{ entity.full_name }} | {% with entity.extern as extern %}
                 <a class="external" href="{{ extern.url }}">{{ extern.name }} <small class="glyphicon glyphicon-new-window"></small></a>
                 {% endwith %}
             </dd>
             
-            {% if place.capital %}
+            {% if entity.capital %}
             <dt>Capital</dt>
             <dd>
-                <a href="{{ place.capital.get_absolute_url }}">{{ place.capital.name }}</a> |
-                <a class="mapit" href="{{ place.capital.google_maps_url }}">Map</a>
+                <a href="{{ entity.capital.get_absolute_url }}">{{ entity.capital.name }}</a> |
+                <a class="mapit" href="{{ entity.capital.google_maps_url }}">Map</a>
             </dd>
             {% endif %}
             
-            {% if place.country %}
+            {% if entity.country %}
             <dt>Country</dt>
             <dd>
-                <a href="{{ place.country.get_absolute_url }}">{{ place.country }}</a>
+                <a href="{{ entity.country.get_absolute_url }}">{{ entity.country }}</a>
             </dd>
             {% endif %}
             
-            {% having place.get_continent as continent %}
+            {% having entity.get_continent as continent %}
             <dt>Continent</dt>
             <dd>
                 <a href="{{ continent.get_absolute_url }}">{{ continent }}</a>
             </dd>
             {% endhaving %}
             
-            {% if place.state %}
+            {% if entity.state %}
             <dt>State</dt>
             <dd>
-                <a href="{{ place.state.get_absolute_url }}">{{ place.state }}</a>
+                <a href="{{ entity.state.get_absolute_url }}">{{ entity.state }}</a>
             </dd>
             {% endif %}
             
-            {% if place.locality or place.lat %}
+            {% if entity.locality or entity.lat %}
             <dt>Location</dt>
             <dd>
-                {% if place.locality %}{{ place.locality }}<br>{% endif %}
+                {% if entity.locality %}{{ entity.locality }}<br>{% endif %}
                 {% include "travel/entities/detail/snippets/map.html" %}
             </dd>
             {% endif %}
             
-            {% if place.code %}
+            {% if entity.code %}
             <dt>Code</dt>
-            <dd>{{ place.code }}</dd>
+            <dd>{{ entity.code }}</dd>
             {% endif %}
             
-            {% if place.tzinfo %}
+            {% if entity.tzinfo %}
             {% load tz %}
-            {% timezone place.tzinfo %}
+            {% timezone entity.tzinfo %}
             <dt>Time Zone</dt>
             <dd>
-                {{ place.tzinfo.zone }}, {% now "e O" %}
+                {{ entity.tzinfo.zone }}, {% now "e O" %}
             </dd>
             <dt>Current Time</dt>
             <dd>
-                <span class="tz-clock" data-timezone="{{ place.tzinfo.zone }}"></span>
+                <span class="tz-clock" data-timezone="{{ entity.tzinfo.zone }}"></span>
             </dd>
             {% endtimezone %}
             {% endif %}
-            {% having place.related_entities as related %}
+            {% having entity.related_entities as related %}
             <dt>Related</dt>
             <dd id="related">{% block travel_related %}
-                <ul class="related-content">{% for rel in place.related_entities %}
+                <ul class="related-content">{% for rel in entity.related_entities %}
                     <li>
                         <a href="{{ rel.url }}"><span>{{ rel.count }}</span> {{ rel.text }}</a>
                     </li>
@@ -89,7 +89,7 @@
                 <h2 class="panel-title">Add a log entry</h2>
             </div>
             <div class="panel-body">
-                {% include "travel/log-entry-form.html" with entity=place %}
+                {% include "travel/log-entry-form.html" with entity=entity %}
             </div>
         </div>
         {% having history|length as count %}
@@ -127,8 +127,8 @@
     </div>
     <div class="col-xs-5 images">
     {% block travel_images %}
-        {% if place.flag %}<a class="travel-image" href="{{ place.flag.image_url }}">
-            <img class="flag flag-md" src="{{ place.flag.image_url }}"></a>{% endif %}
+        {% if entity.flag %}<a class="travel-image" href="{{ entity.flag.image_url }}">
+            <img class="flag flag-md" src="{{ entity.flag.image_url }}"></a>{% endif %}
     {% endblock travel_images %}
     </div>
 </div>

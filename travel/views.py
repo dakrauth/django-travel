@@ -119,11 +119,11 @@ def search_advanced(request):
 
 def by_locale(request, ref):
     etype = get_object_or_404(travel.TravelEntityType, abbr=ref)
-    places = list(etype.entity_set.select_related(
+    entities = list(etype.entity_set.select_related(
         'flag', 'capital', 'state', 'country', 'continent'
     ))
     template = 'entities/listing/{}.html'.format(ref)
-    return render_travel(request, template, {'type': etype, 'places': places})
+    return render_travel(request, template, {'type': etype, 'entities': entities})
 
 
 def _default_entity_handler(request, entity):
@@ -144,7 +144,7 @@ def _default_entity_handler(request, entity):
     ]
     
     return render_travel(request, templates, {
-        'place': entity,
+        'entity': entity,
         'form': form,
         'history': history
     })
@@ -166,20 +166,20 @@ def entity(request, ref, code, aux=None):
 
 
 def entity_relationships(request, ref, code, rel, aux=None):
-    places = travel.TravelEntity.objects.find(ref, code, aux)
-    count  = places.count()
+    entities = travel.TravelEntity.objects.find(ref, code, aux)
+    count  = entities.count()
     
     if count == 0:
         raise http.Http404('No entity matches the given query.')
     elif count > 1:
-        return render_travel(request, 'search/search.html', {'results': places})
+        return render_travel(request, 'search/search.html', {'results': entities})
 
-    place = places[0]
+    entity = entities[0]
     etype  = get_object_or_404(travel.TravelEntityType, abbr=rel)
     return render_travel(request, 'entities/listing/{}.html'.format(rel), {
         'type': etype,
-        'places': place.related_by_type(etype),
-        'parent': place
+        'entities': entity.related_by_type(etype),
+        'parent': entity
     })
 
 
@@ -211,7 +211,7 @@ def _entity_edit(request, entity, template='entities/edit.html'):
     else:
         form = forms.EditTravelEntityForm(instance=entity)
 
-    return render_travel(request, template, {'place': entity, 'form': form})
+    return render_travel(request, template, {'entity': entity, 'form': form})
 
 
 @superuser_required

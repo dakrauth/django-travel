@@ -13,17 +13,17 @@
         </tr>
     </thead>
     <tbody>
-        {% for obj in entities %}
-        <tr data-id="{{ obj.id }}">
-            <td class="flag-32">{% if obj.flag %}
-                <img src="{{ obj.flag.thumb.url }}" />{% endif %}
+        {% for entity in entities %}
+        <tr data-id="{{ entity.id }}">
+            <td class="flag-32">{% if entity.flag %}
+                <img src="{{ entity.flag.thumb.url }}" />{% endif %}
             </td>
             <td>
-                <a href="{{ obj.get_absolute_url }}">{{ obj.descriptive_name }}</a>
+                <a href="{{ entity.get_absolute_url }}">{{ entity.descriptive_name }}</a>
             </td>
             {% for result in results  %}
             <td class="text-center" style="font-size: 1.125em">
-            {% include "travel/entities/listing/_visited.html" with id=obj.id checklist=result.entities %}
+            {% include "travel/entities/listing/_visited.html" with id=entity.id checklist=result.entities %}
             </td>
             {% endfor %}
         </tr>

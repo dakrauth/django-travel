@@ -8,26 +8,26 @@
     <th></th>
 {% endblock travel_list_header %}
 {% block travel_listing %}
-    {% for place in places %}
+    {% for entity in entities %}
     <tr>
-        <td>{% if place.flag %}
-            <img class="flag" src="{{ place.flag.thumb.url }}" />
+        <td>{% if entity.flag %}
+            <img class="flag" src="{{ entity.flag.thumb.url }}" />
         {% endif %}</td>
         <td>
-            <a href="{{ place.get_absolute_url }}">
-                {% firstof place.name place.full_name %}</a>
+            <a href="{{ entity.get_absolute_url }}">
+                {% firstof entity.name entity.full_name %}</a>
         </td>
-        <td>{{ place.category_detail }}</td>
+        <td>{{ entity.category_detail }}</td>
         <td>
-            <a href="{{ place.capital.get_absolute_url }}">
-                {{ place.capital.name }}</a>
+            <a href="{{ entity.capital.get_absolute_url }}">
+                {{ entity.capital.name }}</a>
         </td>
         <td>
-            <a href="{{ place.country.get_absolute_url }}">
-                <img class="flag" src="{{ place.country.flag.thumb.url }}" />
-                {{ place.country.name }}</a>
+            <a href="{{ entity.country.get_absolute_url }}">
+                <img class="flag" src="{{ entity.country.flag.thumb.url }}" />
+                {{ entity.country.name }}</a>
         </td>
-        <td>{% include "travel/_visited.html" with id=place.id %}</td>
+        <td>{% include "travel/_visited.html" with id=entity.id %}</td>
     </tr>
     {% endfor %}
 {% endblock travel_listing %}

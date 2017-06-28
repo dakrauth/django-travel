@@ -1,6 +1,6 @@
 {% extends "travel/base.html" %}
 {% load url from future %}
-{% block travel_heading %}{{ place.name }}{% endblock travel_heading %}
+{% block travel_heading %}{{ entity.name }}{% endblock travel_heading %}
 {% block travel_content %}
     {% if user.is_superuser %}
     {% if state == 'start' %}
