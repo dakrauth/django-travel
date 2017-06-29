@@ -15,12 +15,14 @@
         <td>{{ entity.locality }}</td>
         <td>{% if entity.state %}
             <a href="{{ entity.state.get_absolute_url}}">
-                <img class="flag" src="{{ entity.state.flag.thumb.url }}" />
+                {% if entity.state.flag %}
+                <img class="flag flag-sm" src="{{ entity.state.flag.thumb_url }}" />
+                {% endif %}
                 {{ entity.state.name }}</a>{% endif %}
         </td>
         <td>
             <a href="{{ entity.country.get_absolute_url }}">
-                <img src="{{ entity.country.flag.thumb.url }}" />
+                <img class="flag flag-sm" src="{{ entity.country.flag.thumb_url }}" />
                 {{ entity.country.name }}</a>
         </td>
         <td>{% include "travel/_visited.html" with id=entity.id %}</td>

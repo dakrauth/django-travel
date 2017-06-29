@@ -2,11 +2,11 @@
 // Sample entity object
 //------------------------------------------------------------------------------
 // entity = {
-//     "flag__thumb": "img/wh-32.png",
+//     "flag__svg": "img/wh-32.png",
 //     "code": "3",
 //     "name": "Aachen Cathedral",
 //     "locality": "State of North Rhine-Westphalia (Nordrhein-Westfalen)",
-//     "country__flag__thumb": "img/flags/co/de/de-32.png",
+//     "country__flag__svg": "img/flags/co/de/de-32.png",
 //     "country__code": "DE",
 //     "country__name": "Germany",
 //     "type__abbr": "wh",
@@ -186,8 +186,8 @@
         };
 
         nameTd.appendChild(DOM.create('a', e.name, {'href': e.entityUrl}));
-        if(e.flag__thumb) {
-            flagTd.appendChild(DOM.create('img', {'src': e.flag__thumb, 'class': 'flag'}));
+        if(e.flag__svg) {
+            flagTd.appendChild(DOM.create('img', {'src': e.flag__svg, 'class': 'flag flag-sm'}));
         }
         
         e.locality && extras.push(e.locality);
@@ -196,10 +196,10 @@
             nameTd.appendChild(DOM.create('span', extras.join(', ')));
         }
         
-        if(e.country__flag__thumb) {
+        if(e.country__flag__svg) {
             nameTd.appendChild(DOM.create('img', {
-                'src': e.country__flag__thumb,
-                'class': 'flag flag-sm'
+                'src': e.country__flag__svg,
+                'class': 'flag flag-xs'
             }));
         }
 
@@ -236,9 +236,9 @@
     var initializeLogEntry = function(e, mediaPrefix) {
         e.logs = [];
         e.entityUrl = entityUrl(e);
-        e.flag__thumb = mediaPrefix + e.flag__thumb;
-        if(e.country__flag__thumb) {
-            e.country__flag__thumb = mediaPrefix + e.country__flag__thumb;
+        e.flag__svg = mediaPrefix + e.flag__svg;
+        if(e.country__flag__svg) {
+            e.country__flag__svg = mediaPrefix + e.country__flag__svg;
         }
         return e;
     };

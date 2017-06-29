@@ -22,7 +22,7 @@ class TravelEntityTypeAdmin(admin.ModelAdmin):
 
 
 class TravelFlagAdmin(admin.ModelAdmin):
-    list_display = ('id', 'source', 'base_dir', 'ref', 'thumb')
+    list_display = ('id', 'source')
 
 
 class TravelProfileAdmin(admin.ModelAdmin):

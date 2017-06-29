@@ -15,7 +15,7 @@
         </td>
         <td>
             <a href="{{ entity.country.get_absolute_url }}">
-                <img class="flag" src="{{ entity.country.flag.thumb.url }}" />
+                <img class="flag flag-sm" src="{{ entity.country.flag.thumb_url }}" />
                 {{ entity.country.name }}</a>
         </td>
         <td>{% include "travel/_visited.html" with id=entity.id %}</td>

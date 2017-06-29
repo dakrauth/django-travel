@@ -14,11 +14,11 @@
         </td>
         <td>{{ entity.name }}{% if entity.name != entity.locality %}, {{ entity.locality }}{% endif %}</td>
         <td>{% if entity.state %}
-            <img class="flag" src="{{ entity.state.flag.thumb.url }}" />
+            <img class="flag flag-sm" src="{{ entity.state.flag.thumb_url }}" />
             <a href="{{ entity.state.get_absolute_url }}">{{ entity.state }}</a>{% endif %}
         </td>
         <td>
-            <img class="flag" src="{{ entity.country.flag.thumb.url }}" />
+            <img class="flag flag-sm" src="{{ entity.country.flag.thumb_url }}" />
             <a href="{{ entity.country.get_absolute_url }}">{{ entity.country }}</a>
         </td>
         <td>{% include "travel/_visited.html" with id=entity.id %}</td>

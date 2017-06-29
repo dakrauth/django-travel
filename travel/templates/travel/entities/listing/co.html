@@ -15,8 +15,8 @@
 {% block travel_listing %}
     {% for entity in entities %}
     <tr>
-        <td>{% if entity.flag and entity.flag.thumb %}
-            <img class="flag" src="{{ entity.flag.thumb.url }}" />
+        <td>{% if entity.flag and entity.flag.thumb_url %}
+            <img class="flag flag-sm" src="{{ entity.flag.thumb_url }}" />
         {% endif %}</td>
         <td>
             <a href="{{ entity.get_absolute_url }}">{{ entity.name }}</a><br>

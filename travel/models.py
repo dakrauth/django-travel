@@ -37,73 +37,32 @@ SUBNATIONAL_CATEGORY    = {
     'T': 'Territory',
 }
 
-# A few migration/PY2 hoops to jump through here, must have module level funcs
-# for the ``upload_to`` param for FileFields and ImageFields
-def _base_flag_upload(instance, filename, size):
-    return  '{}/{}/{}'.format(
-        BASE_FLAG_DIR,
-        instance.base_dir,
-        '{}-{}{}'.format(instance.ref, size, os.path.splitext(filename)[1])
-    )
-
-def flag_upload_32(instance, filename): return _base_flag_upload(instance, filename, 32)
-def flag_upload_128(instance, filename): return _base_flag_upload(instance, filename, 128)
-
+def flag_upload_32(*args, **kws): pass
+def flag_upload_128(*args, **kws): pass
 
 def svg_upload(instance, filename):
-    return  '{}/{}/flag.svg'.format(BASE_FLAG_DIR, instance.base_dir)
+    return  '{}/{}-{}'.format(BASE_FLAG_DIR, instance.id/ filename)
 
 
 class TravelFlag(models.Model):
     source = models.CharField(max_length=255)
-    base_dir = models.CharField(max_length=8)
-    ref = models.CharField(max_length=6)
-    thumb  = models.ImageField(upload_to=flag_upload_32, blank=True)
-    large = models.ImageField(upload_to=flag_upload_128, blank=True)
     svg = models.FileField(upload_to=svg_upload, blank=True)
     is_locked = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'travel_flag'
 
-    @property
+    @cached_property
     def image_url(self):
-        if self.svg:
-            if os.path.exists(self.svg.path):
-                return self.svg.url
-        return self.large.url
+        if self.svg and os.path.exists(self.svg.path):
+            return self.svg.url
 
-    def update(self, url, base, ref, svg, thumb, large):
-        join        = os.path.join
-        ref         = ref.lower()
-        media_root  = settings.MEDIA_ROOT
-        parent_dir  = join(BASE_FLAG_DIR, base, ref)
-        abs_dir     = join(media_root, parent_dir)
-        path_fmt    = join(parent_dir, '{}-{{}}.png'.format(ref))
+        return self.source
 
-        if not os.path.exists(abs_dir):
-            os.makedirs(abs_dir)
 
-        self.source   = url
-        self.base_dir = base
-        self.ref      = ref
-        self.svg      = None
-
-        for attr, data, size in (('thumb', thumb, 32), ('large', large, 128)):
-            if data:
-                flag_path = path_fmt.format(size)
-                setattr(self, attr, flag_path)
-                with open(join(media_root, flag_path), 'wb') as fp:
-                    fp.write(data)
-            else:
-                setattr(self, attr, None)
-
-        if svg:
-            self.svg = join(parent_dir, 'flag.svg')
-            with open(join(media_root, parent_dir, 'flag.svg'), 'wb') as fp:
-                fp.write(svg)
-
-        self.save()
+    @cached_property
+    def thumb_url(self):
+        return self.image_url
 
 
 class TravelBucketList(models.Model):
@@ -378,8 +337,8 @@ class TravelEntity(models.Model):
 
     def update_flag(self, flag_url):
         flag = self.flag if self.flag and not self.flag.is_locked else TravelFlag()
-        svg, thumb, large = travel_utils.get_flag_data(flag_url)
-        flag.update(flag_url, self.flag_dir, self.code, svg, thumb, large)
+        flag.source = flag_url
+        flag.save()
         self.flag = flag
         self.save()
         return flag
@@ -442,8 +401,8 @@ class TravelLog(models.Model):
     def user_history(cls, user):
         return (
             TravelEntity.objects.filter(travellog__user=user).distinct().values(
-                'id', 'code', 'name', 'locality', 'country__name', 'country__code',
-                'country__flag__thumb', 'type__abbr', 'flag__thumb'
+                'id', 'code', 'name', 'locality', 'flag__svg', 'country__name', 'country__code',
+                'country__flag__svg', 'type__abbr'
             ),
             TravelLog.objects.filter(user=user).order_by('-arrival').values(
                 'id', 'arrival', 'entity__id', 'rating'

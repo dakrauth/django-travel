@@ -11,7 +11,7 @@
 <tbody>{% for entity in results %}
     <tr>
         <td style="width:36px;height:36px">{% if entity.flag %}
-            <img class="flag" src="{{ entity.flag.thumb.url }}" />{% endif %}
+            <img class="flag flag-xs" src="{{ entity.flag.thumb_url }}" />{% endif %}
         </td>
         <td>
             <a href="{{ entity.get_absolute_url }}">{{ entity.full_name }}</a>
@@ -24,7 +24,7 @@
                 {{ entity.country }}</a>
         </td>
         <td>
-            <img class="flag" src="{{ entity.country.flag.thumb.url }}">
+            <img class="flag flag-xs" src="{{ entity.country.flag.thumb_url }}">
         </td>
         {% else %}<td colspan="2"></td>
         {% endif %}

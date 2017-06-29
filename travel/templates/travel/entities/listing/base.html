@@ -2,7 +2,7 @@
 {% block travel_title %}{{ single_label}} Listing{% endblock travel_title %}
 {% block travel_heading %}{{ type }} listing
     {% if parent %}for <a href="{{ parent.get_absolute_url }}">
-        <span class="flag-bg" style="background: url({{ parent.flag.thumb.url }}) no-repeat right center; padding-right: 36px">{{ parent }}</span></a>
+        <span class="flag-bg" style="background: url({{ parent.flag.thumb_url }}) no-repeat right center; padding-right: 36px">{{ parent }}</span></a>
     {% endif %}
 {% endblock travel_heading %}
 {% block travel_content %}

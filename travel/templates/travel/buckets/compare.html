@@ -16,7 +16,7 @@
         {% for entity in entities %}
         <tr data-id="{{ entity.id }}">
             <td class="flag-32">{% if entity.flag %}
-                <img src="{{ entity.flag.thumb.url }}" />{% endif %}
+                <img src="{{ entity.flag.thumb_url }}" />{% endif %}
             </td>
             <td>
                 <a href="{{ entity.get_absolute_url }}">{{ entity.descriptive_name }}</a>

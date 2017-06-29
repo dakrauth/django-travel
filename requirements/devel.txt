@@ -1,6 +1,6 @@
 #django-debug-toolbar==1.4
-ipdb
-ipython
-pytest-django==3.0.0
-pytest==2.9.2
-pytest-cov==2.3.1
+ipdb==0.10.3
+ipython==6.1.0
+pytest-django==3.1.2
+pytest==3.1.2
+pytest-cov==2.5.1
