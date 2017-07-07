@@ -12,7 +12,8 @@ class TestJSONEncoding:
             a_date=datetime.date(2011, 4, 22),
             a_time=datetime.time(16, 59, 59),
             a_datetime=datetime.datetime(2009, 2, 9, 8, 15),
-            a_decimal=Decimal('19.65')
+            a_decimal=Decimal('19.65'),
+            an_int=77
         )
         out = utils.json_dumps(data)
         print(out)
@@ -51,6 +52,14 @@ class TestLatLonParsing:
             delta = abs(lon - expect[1])
             print(delta)
             assert delta < threshold
+
+    def test_bad_latlon(self):
+        with pytest.raises(ValueError):
+            utils.parse_latlon('124')
+            utils.parse_latlon('124W 15E')
+            utils.parse_latlon("1°60' 15E")
+            utils.parse_latlon('90.5, 123')
+            utils.parse_latlon('89.5, 180.1')
 
 
 class TestNiceFormats:

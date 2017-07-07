@@ -32,38 +32,21 @@ def nice_url(text):
     return quote_plus(text)
 
 
-def get_url_content(url):
-    r = requests.get(url)
-    return r.content if r.ok else None
-
-
 class LatLonParser:
-
     latlon_sym_re = re.compile(
-        r'''
-            ([+-]?\d+)[º°]?\s*
-            (?:(\d+)['′])?\s*
-            (?:(\d+)["″])?\s*
-            ([NS])?
-            \s*[,/]?\s*
-            ([+-]?\d+)[º°]?\s*
-            (?:(\d+)['′])?\s*
-            (?:(\d+)["″])?\s*
-            ([EW])?
-        ''',
-        re.VERBOSE
+        r'''^{dms}([NS])?\s*[,/]?\s*{dms}([EW])?$'''.format(
+            dms=r'''([+-]?\d+)[º°]?\s*(?:(\d+)['′])?\s*(?:(\d+)["″])?\s*'''
+        ),
     )
 
     latlon_dec_re = re.compile(
-        r'''^
-            ([+-]?\d+\.\d+)\s*
-            ([NS])?
-            \s*[,/]?\s*
-            ([+-]?\d+\.\d+)\s*
-            ([EW])?
-        $''',
-        re.VERBOSE
+        r'''^{deg}([NS])?\s*[,/]?\s*{deg}([EW])?$'''.format(
+            deg=r'([+-]?\d+(?:\.\d+)?)[º°]?\s*'
+        )
     )
+
+    def error(self, msg):
+        return ValueError('Invalid Lat/Lon: {}'.format(msg))
 
     def make_decimal(self, degs='0', mins=None, secs=None, negative=False):
         with localcontext() as ctx:
@@ -71,6 +54,9 @@ class LatLonParser:
             degs = Decimal(degs)
             mins = Decimal(mins or '0')
             secs = Decimal(secs or '0')
+            if mins >= 60 or secs >= 60:
+                raise self.error('mins({}), secs({})'.format(mins, secs))
+
             degs += (mins / Decimal('60')) + (secs / Decimal('3600'))
             return -degs if negative else degs
 
@@ -85,16 +71,22 @@ class LatLonParser:
                 lat_d, lat_m, lat_s, lat_dir, lon_d, lon_m, lon_s, lon_dir = m.groups()
 
         if m:
-            lat_dir = lat_dir or 'N'
-            lon_dir = lon_dir or 'E'
-            lat = self.make_decimal(lat_d, lat_m, lat_s, lat_dir.lower() == 's')
-            lon = self.make_decimal(lon_d, lon_m, lon_s, lon_dir.lower() == 'w')
+            lat_dir = (lat_dir or 'N').lower()
+            lon_dir = (lon_dir or 'E').lower()
+            lat = self.make_decimal(lat_d, lat_m, lat_s, lat_dir == 's')
+            if abs(lat) > 90:
+                raise self.error('Lat must be in range of [-90, 90]')
+
+            lon = self.make_decimal(lon_d, lon_m, lon_s, lon_dir == 'w')
+            if abs(lon) > 180:
+                raise self.error('Lon must be in range of [-180, 180]')
             
             return [lat, lon]
         
-        raise ValueError('Invalid Lat/Lon value: %s' % (s,))
+        raise self.error(s)
 
 parse_latlon = LatLonParser().parse
+
 
 class TravelJsonEncoder(json.JSONEncoder):
     """
