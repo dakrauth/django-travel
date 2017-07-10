@@ -1,6 +1,6 @@
 {% extends "travel/base.html" %}
 {% load static %}
-{% block travel_extra_head %}
+{% block extra_head %}
 <style type="text/css" media="screen">
     #item { padding: 4px; margin-bottom: 1em; }
     #item:before, #item:after { content:""; display:block; }
@@ -17,6 +17,7 @@
         vertical-align: middle;
         box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
         max-height: 72px;
+        cursor: pointer;
     }
     @media (min-width: 992px) {
         #item > div { max-height: 120px;  }
@@ -25,7 +26,7 @@
     .panel .panel-title { font-size: 18px; line-height: 32px; color: #333;}
     .panel h2 span { margin-right: 56px; }
 </style>
-{% endblock travel_extra_head %}
+{% endblock extra_head %}
 {% block travel_heading %}The Flag Game{% endblock travel_heading %}
 {% block travel_content %}
     <div class="panel panel-default">
@@ -36,7 +37,20 @@
             </h2>
         </div>
         <div class="panel-body" id="item-wrap">
-            <div id="item"></div>
+            <div id="item">
+                <div class="col-xs-6 col-md-3">
+                    <img class="img-responsive" src=""data-id="" data-correct="">
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <img class="img-responsive" src=""data-id="" data-correct="">
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <img class="img-responsive" src=""data-id="" data-correct="">
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <img class="img-responsive" src=""data-id="" data-correct="">
+                </div>
+            </div>
         </div>
         <div class="panel-footer">
             <div class="clearfix">
@@ -46,16 +60,9 @@
     </div>
     {% endblock travel_content %}
 {% block travel_end_body %}{{ block.super }}
-{% verbatim %}
-<script id="flag_view_template" type="text/template">
-    <div class="col-xs-6 col-md-3">
-        <img class="img-responsive" src="{{ co.large }}" data-id="{{ co.id }}" data-correct="{{ correct }}">
-    </div>
-</script>
-{% endverbatim %}
-<script src="{% static 'travel/flag-game.js' %}"></script>
+<script src="{% static 'js/flag-game.js' %}"></script>
 <script type="text/javascript" charset="utf-8">
-    FlagGame.play(
+    playGame(
         {{ countries|safe }},
         {{ groups|safe }}
     );
