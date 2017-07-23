@@ -1,6 +1,7 @@
 from django.conf.urls import *
 from django.views.generic import TemplateView, RedirectView
-from travel import views
+from . import views
+from .flag_game import flag_game
 
 search_patterns = [
     url(r'^$',          views.search, name='travel-search'),
@@ -44,6 +45,15 @@ urlpatterns = [
     url(r'^profiles/',        include(profile_patterns)),
     url(r'^buckets/',         include(bucket_list_patterns)),
     url(r'^languages/',       include(language_patterns)),
-    url(r'^edit/i/(\w+)/(\w+)(?:-(\w+))?/$', views.entity_edit, name='travel-entity-edit'),
-    url(r'^plugs/$', TemplateView.as_view(template_name='travel/plugs.html'), name='travel-plugs'),
+    url(r'^flags/$',          flag_game, name='travel-flag-quiz'),
+    url(
+        r'^plugs/$',
+        TemplateView.as_view(template_name='travel/plugs.html'),
+        name='travel-plugs'
+    ),
+    url(
+        r'^edit/i/(\w+)/(\w+)(?:-(\w+))?/$',
+        views.entity_edit,
+        name='travel-entity-edit'
+    ),
 ]

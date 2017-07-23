@@ -60,9 +60,9 @@
     </div>
     {% endblock travel_content %}
 {% block travel_end_body %}{{ block.super }}
-<script src="{% static 'js/flag-game.js' %}"></script>
+<script src="{% static 'travel/flag-game.js' %}"></script>
 <script type="text/javascript" charset="utf-8">
-    playGame(
+    playFlagGame(
         {{ countries|safe }},
         {{ groups|safe }}
     );
