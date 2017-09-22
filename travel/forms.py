@@ -70,7 +70,7 @@ class DateUtilField(forms.Field):
             return datetime(value.year, value.month, value.day)
 
         try:
-            return travel_utils.dt_parse(value)
+            return travel_utils.dt_parser(value)
         except:
             raise forms.ValidationError(self.error_messages['invalid'])
 
