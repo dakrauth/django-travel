@@ -36,26 +36,25 @@
     
     var sorters = {
         'type': function(a, b) {
-            a = a.entity, b = b.entity;
-            if(b.type__abbr > a.type__abbr) {
-                return 1;
-            }
-            if(a.type__abbr < b.type__abbr) {
-                return -1;
-            }
-            if(b.name > a.name) {
-                return 1;
-            }
-            return (a.name < b.name) ? -1 : 0;
+            return (b.entity.type__abbr > a.entity.type__abbr) ? 1: -1;
         },
         'name': function(a, b) {
-            a = a.entity, b = b.entity;
-            return (b.name > a.name) ? 1 : (a.name < b.name) ? -1 : 0;
+            return (b.entity.name > a.name) ? 1 : -1;
         },
-        'recent': function(a, b) { return b.arrival.date - a.arrival.date; },
-        'first':  function(a, b) { return b.first_visit.date - a.first_visit.date; },
-        'logs':   function(a, b) { return b.num_visits - a.num_visits; },
-        'rating': function(a, b) { return a.rating - b.rating; }
+        'recent_visit': function(a, b) {
+            return b.arrival.valueOf() - a.arrival.valueOf();
+        },
+        'first_visit':  function(a, b) {
+            a = a.entity.logs;
+            b = b.entity.logs;
+            return b[b.length - 1].arrival.valueOf() - a[a.length - 1].arrival.valueOf();
+        },
+        'num_visits':   function(a, b) {
+            return b.entity.logs.length - a.entity.logs.length;
+        },
+        'rating': function(a, b) {
+            return a.rating - b.rating;
+        }
     };
     
     var DATE_STRING  = 'MMM Do YYYY';
@@ -64,10 +63,8 @@
     var DATE_FORMAT  = 'YYYY-MM-DD';
     var STARS        = '★★★★★';
     
-    //--------------------------------------------------------------------------
     var stars = function(rating) { return STARS.substr(rating - 1); };
     
-    //--------------------------------------------------------------------------
     var iterKeys = function(obj, callback, ctx) {
         var items = [];
         ctx = ctx || obj;
@@ -82,7 +79,6 @@
         return items;
     };
     
-    //==========================================================================
     var Set = defClass({
         constructor: function(iter) {
             this.items = {};
@@ -119,7 +115,6 @@
         }
     });
     
-    //--------------------------------------------------------------------------
     var DOM = {
         $: document.getElementById.bind(document),
         create: function(tag) {
@@ -162,7 +157,6 @@
         }
     };
     
-    //--------------------------------------------------------------------------
     var dateTags = function(dtw) {
         return [
             DOM.create('div', dtw.format(DATE_STRING)),
@@ -170,7 +164,6 @@
         ];
     };
     
-    //--------------------------------------------------------------------------
     var createLogRow = function(log) {
         var e = log.entity;
         var nameTd = DOM.create('td');
@@ -214,7 +207,6 @@
         ]);
     };
     
-    //--------------------------------------------------------------------------
     var sortedDict = function(dct) {
         var keys = iterKeys(dct);
         keys.sort();
@@ -223,7 +215,6 @@
         });
     };
     
-    //--------------------------------------------------------------------------
     var entityUrl = function(e) {
         var bit = e.code;
         if(e.type__abbr == 'wh' || e.type__abbr == 'st') {
@@ -232,18 +223,19 @@
         return '/i/' + e.type__abbr + '/' + bit + '/';
     };
 
-    //--------------------------------------------------------------------------
     var initializeLogEntry = function(e, mediaPrefix) {
         e.logs = [];
         e.entityUrl = entityUrl(e);
-        e.flag__svg = mediaPrefix + e.flag__svg;
+        if(e.flag__svg) {
+            e.flag__svg = mediaPrefix + e.flag__svg;    
+        }
+        
         if(e.country__flag__svg) {
             e.country__flag__svg = mediaPrefix + e.country__flag__svg;
         }
         return e;
     };
     
-    //--------------------------------------------------------------------------
     var getOrdering = function(el) {
         var ordering = {'column': el.dataset.column, 'order': el.dataset.order};
         var current = el.parentElement.querySelector('.current');
@@ -258,7 +250,6 @@
         return ordering;
     };
     
-    //--------------------------------------------------------------------------
     var showSummary = function(summary) {
         var el = DOM.$('summary');
         DOM.removeChildren(el);
@@ -275,7 +266,6 @@
         });
     };
     
-    //==========================================================================
     var Summary = defClass({
         constructor: function Summary() {
             Summary.keys.forEach(function(key) {
@@ -293,26 +283,17 @@
     
     Summary.keys = iterKeys(TYPE_MAPPING);
     
-    //==========================================================================
     var TravelLogs = defClass({
         constructor: function(logs, summary) {
             this.logs = logs;
             this.summary = summary;
         },
-        sort: function(column, order) {
+        sortLogs: function(column, order) {
             console.log('ordering', column, order);
-            this.logs.sort(function(a, b) {
-                var result = 0;
-                if(a[column] > b[column]) {
-                    result = 1;
-                }
-                else {
-                    if(a[column] < b[column]) {
-                        result = -1;
-                    }
-                }
-                return (result && order === 'desc') ? -result : result;
-            });
+            this.logs.sort(sorters[column]);
+            if(order === 'desc') {
+                this.logs.reverse()
+            }
         },
         filter: function(bits) {
             var logs    = this.logs;
@@ -375,7 +356,6 @@
             return this;
         }
     });
-    //--------------------------------------------------------------------------
     var showLogs = function(travelLogs) {
         var count = travelLogs.logs.length;
         var parent = DOM.$('history');
@@ -393,11 +373,11 @@
         console.log('delta', new Date() - start);
     };
     
-    //--------------------------------------------------------------------------
     var controller = (function() {
-        var entityDict = {};
-        var currentLogs, allLogs;
         var ctrl = {
+            entityDict: {},
+            currentLogs: null,
+            allLogs: null,
             initialize: function(entities, logs, conf) {
                 var mediaPrefix = conf.mediaPrefix || MEDIA_PREFIX;
                 var countries = {};
@@ -408,22 +388,22 @@
                     if(e.country__code) {
                         countries[e.country__code] = e.country__name;
                     }
-                    entityDict[e.id] = e;
-                });
+                    this.entityDict[e.id] = e;
+                }, this);
             
                 logs = logs.map(function(log) {
-                    log.entity = entityDict[log.entity__id];
+                    log.entity = this.entityDict[log.entity__id];
                     if(!log.entity) {
                         console.log(log);
                     }
                     log.entity.logs.push(log);
-                    log.arrival = moment(log.arrival.value);
+                    log.arrival = moment(log.arrival);
                     years.add(log.arrival.year());
                     summary.add(log.entity);
                     return log;
                 }, this);
             
-                currentLogs = allLogs = new TravelLogs(logs, summary);
+                this.currentLogs = this.allLogs = new TravelLogs(logs, summary);
                 console.log(summary);
                 createCountryOptions(countries);
                 initOrderingByColumns(this);
@@ -432,14 +412,13 @@
             },
         
             filterLogs: function(bits) {
-                currentLogs = allLogs.filter(bits);
-                showLogs(currentLogs);
+                this.currentLogs = this.allLogs.filter(bits);
+                showLogs(this.currentLogs);
             },
         
             sortCurrent: function(column, order) {
-                console.log('ordering', column, order);
-                currentLogs.sort();
-                showLogs(currentLogs);
+                this.currentLogs.sortLogs(column, order);
+                showLogs(this.currentLogs);
             }
         };
         
@@ -532,10 +511,8 @@
         return ctrl;
     }());
     
-    //==========================================================================
     var HashBits = function() {};
     
-    //--------------------------------------------------------------------------
     HashBits.fromHash = function(hash) {
         var arr;
         var kvp;
@@ -570,7 +547,6 @@
         return bits;
     };
     
-    //--------------------------------------------------------------------------
     HashBits.fromFilters = function() {
         var dt    = DOM.$('id_date').value;
         var el    = document.querySelector('#history thead .current');
@@ -592,7 +568,6 @@
         return bits;
     };
 
-    //--------------------------------------------------------------------------
     HashBits.prototype.toString = function() {
         var a = [];
         this.type  && a.push('type:' + this.type);
@@ -614,12 +589,10 @@
         
     };
     
-    //--------------------------------------------------------------------------
     HashBits.prototype.update = function() {
         window.history.pushState({}, '', this.toString());
     };
     
-    //--------------------------------------------------------------------------
     var setFilterFields = function(bits) {
         var yearsEl = DOM.$('id_years');
         var dateEl = DOM.$('id_date');
