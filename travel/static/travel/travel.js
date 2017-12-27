@@ -16,22 +16,10 @@
 //------------------------------------------------------------------------------
 
 ;var Travelogue = (function(root) {
-    function noop() {};    
-    function defClass(prototype) {
-        var constructor = prototype.hasOwnProperty('constructor') ? prototype.constructor : noop;
-        constructor.prototype = prototype;
-        return constructor;
-    }
-
     var TYPE_MAPPING = {
-        'cn': 'Continents',
-        'co': 'Countries',
-        'st': 'States',
-        'ap': 'Airports',
-        'ct': 'Cities',
-        'np': 'National Parks',
-        'lm': 'Landmarks',
-        'wh': 'World Heritage sites'
+        'cn': 'Continents', 'co': 'Countries', 'st': 'States',
+        'ap': 'Airports',   'ct': 'Cities',    'np': 'National Parks',
+        'lm': 'Landmarks',  'wh': 'World Heritage sites'
     };
     
     var sorters = {
@@ -62,98 +50,31 @@
     var MEDIA_PREFIX = '/media/';
     var DATE_FORMAT  = 'YYYY-MM-DD';
     var STARS        = '★★★★★';
-    
+
     var stars = function(rating) { return STARS.substr(rating - 1); };
     
-    var iterKeys = function(obj, callback, ctx) {
-        var items = [];
-        ctx = ctx || obj;
-        for(var k in obj) {
-            if(obj.hasOwnProperty(k)) {
-                items.push(k);
-                if(callback) {
-                    callback.call(ctx, k, obj[k]);
-                }
-            }
-        }
-        return items;
-    };
-    
-    var Set = defClass({
-        constructor: function(iter) {
-            this.items = {};
-            this.size = 0;
-            if(iter) {
-                iter.forEach(function(i) { this.add(i); }, this);
-            }
-        },
-        add: function(value) {
-            if(!this.has(value)) {
-                this.items[value] = true;
-                this.size++;
-            }
-        },
-        has: function(value) {
-            return this.items.hasOwnProperty(value);
-        },
-        values: function() {
-            var a = [];
-            for(var prop in this.items) {
-                if(this.items.hasOwnProperty(prop)) {
-                    a.push(prop);
-                }
-            }
-            return a;
-        },
-        forEach: function(callback, ctx) {
-            ctx = ctx || this;
-            for(var prop in this.items) {
-                if(this.items.hasOwnProperty(prop)) {
-                    callback.call(ctx, prop);
-                }
-            }
-        }
-    });
-    
     var DOM = {
-        $: document.getElementById.bind(document),
+        get: function(q, ctx) { return document.querySelector(q, ctx); },
         create: function(tag) {
             var j, key, arg;
             var el = document.createElement(tag);
             for(var i = 1; i < arguments.length; i++) {
                 arg = arguments[i];
-                if(_.isPlainObject(arg)) {
-                    DOM.setAttrs(el, arg);
+                if(Array.isArray(arg)) {
+                    Array.from(arg).forEach(function(child) {
+                        el.appendChild(child);
+                    });
                 }
-                else if(Array.isArray(arg)) {
-                    DOM.appendChildren(el, arg);
+                else if(typeof arg === 'string') {
+                    el.textContent = arg;
                 }
                 else {
-                    el.textContent = arg.toString();
+                    Object.keys(arg).forEach(function(key) {
+                        el.setAttribute(key, arg[key]);
+                    });
                 }
             }
             return el;
-        },
-        appendChildren: function(el, children) {
-            Array.from(children).forEach(function(child) { el.appendChild(child); });
-        },
-        setAttrs: function(el, attrs) {
-            iterKeys(attrs, function(k,v) { el.setAttribute(k, v); });
-        },
-        css: function(el, vals) {
-            var style = el.style;
-            iterKeys(vals, function(k, v) { style[k] = v; });
-        },
-        evt: function(el, kind, handler, t) {
-            el.addEventListener(kind, handler, t);
-        },
-        remove: function(el) {
-            el.parentNode.removeChild(el);
-        },
-        removeChildren: function(el) {
-            while(el.lastChild) {
-              el.removeChild(el.lastChild);
-            }
         }
     };
     
@@ -169,8 +90,14 @@
         var nameTd = DOM.create('td');
         var flagTd = DOM.create('td');
         var extras = [];
+        var firstArrival = e.logs[e.logs.length-1].arrival;
         var attrs = {
-            'data-id' : e.id,
+            'data-id': e.id,
+            'data-name': e.name,
+            'data-arrival': log.arrival.valueOf(),
+            'data-first': firstArrival.valueOf(),
+            'data-count': e.logs.length,
+            'data-rating': log.rating,
             'class': e.type__abbr + ' co-' + (
                 e.country__code ?
                 e.country__code :
@@ -178,7 +105,7 @@
             )
         };
 
-        nameTd.appendChild(DOM.create('a', e.name, {'href': e.entityUrl}));
+        nameTd.appendChild(DOM.create('a', e.name, {'href': e.url()}));
         if(e.flag__svg) {
             flagTd.appendChild(DOM.create('img', {'src': e.flag__svg, 'class': 'flag flag-sm'}));
         }
@@ -201,39 +128,10 @@
             DOM.create('td', TYPE_MAPPING[e.type__abbr]),
             nameTd,
             DOM.create('td', {'class': 'when'}, dateTags(log.arrival)),
-            DOM.create('td', {'class': 'when'}, dateTags(e.logs[e.logs.length-1].arrival)),
-            DOM.create('td', e.logs.length),
+            DOM.create('td', {'class': 'when'}, dateTags(firstArrival)),
+            DOM.create('td', e.logs.length.toString()),
             DOM.create('td', stars(log.rating))
         ]);
-    };
-    
-    var sortedDict = function(dct) {
-        var keys = iterKeys(dct);
-        keys.sort();
-        return keys.map(function(key) {
-            return [key, dct[key]];
-        });
-    };
-    
-    var entityUrl = function(e) {
-        var bit = e.code;
-        if(e.type__abbr == 'wh' || e.type__abbr == 'st') {
-            bit = e.country__code + '-' + bit;
-        } 
-        return '/i/' + e.type__abbr + '/' + bit + '/';
-    };
-
-    var initializeLogEntry = function(e, mediaPrefix) {
-        e.logs = [];
-        e.entityUrl = entityUrl(e);
-        if(e.flag__svg) {
-            e.flag__svg = mediaPrefix + e.flag__svg;    
-        }
-        
-        if(e.country__flag__svg) {
-            e.country__flag__svg = mediaPrefix + e.country__flag__svg;
-        }
-        return e;
     };
     
     var getOrdering = function(el) {
@@ -251,11 +149,14 @@
     };
     
     var showSummary = function(summary) {
-        var el = DOM.$('summary');
-        DOM.removeChildren(el);
+        var el = DOM.get('#summary');
+        while(el.lastChild) {
+          el.removeChild(el.lastChild);
+        }
+
         el.appendChild(DOM.create('strong', 'Summary: '));
-        summary.iter(function(key) {
-            var items = iterKeys(this[key]).length;
+        Object.keys(summary).forEach(function(key) {
+            var items = Object.keys(summary[key]).length;
             if(items) {
                 el.appendChild(DOM.create(
                     'span',
@@ -266,27 +167,46 @@
         });
     };
     
-    var Summary = defClass({
-        constructor: function Summary() {
-            Summary.keys.forEach(function(key) {
+    var Summary = Object.create({
+        init: function() {
+            Object.keys(TYPE_MAPPING).forEach(function(key) {
                 this[key] = {};
             }, this);
+            return this;
         },
         add: function(e) {
             var kind = this[e.type__abbr];
-            kind[e.id] = kind[e.id] ? kind[e.id] + 1 : 1;
+            kind[e.id] = 1 + (kind[e.id] || 0);
+        }
+    });
+
+    var LogEntry = Object.create({
+        init: function(e, mediaPrefix) {
+            Object.assign(this, e);
+            this.logs = [];
+            if(this.flag__svg) {
+                this.flag__svg = mediaPrefix + this.flag__svg;    
+            }
+            
+            if(this.country__flag__svg) {
+                this.country__flag__svg = mediaPrefix + this.country__flag__svg;
+            }
+            return this;
         },
-        iter:  function(callback) {
-            Summary.keys.forEach(callback, this);
+        url: function() {
+            var bit = this.code;
+            if(this.type__abbr == 'wh' || this.type__abbr == 'st') {
+                bit = this.country__code + '-' + bit;
+            } 
+            return '/i/' + this.type__abbr + '/' + bit + '/';
         }
     });
     
-    Summary.keys = iterKeys(TYPE_MAPPING);
-    
-    var TravelLogs = defClass({
-        constructor: function(logs, summary) {
+    var TravelLogs = Object.create({
+        init: function(logs, summary) {
             this.logs = logs;
             this.summary = summary;
+            return this;
         },
         sortLogs: function(column, order) {
             console.log('ordering', column, order);
@@ -296,13 +216,11 @@
             }
         },
         filter: function(bits) {
-            var logs    = this.logs;
             var summary = this.summary;
-            
             console.log('filter bits', bits);
             if(bits.type || bits.co || bits.timeframe || bits.limit) {
-                summary = new Summary();
-                logs = logs.filter(function(log) {
+                summary = Object.create(Summary).init();
+                this.logs.forEach(function(log) {
                     var e = log.entity;
                     var good = true;
                     if(bits.type) {
@@ -346,24 +264,22 @@
                     
                     if(good) {
                         summary.add(e);
-                        return true;
                     }
                     
-                    return false;
+                    log.isActive = good;
                 });
-                return new TravelLogs(logs, summary);
             }
             return this;
         }
     });
     var showLogs = function(travelLogs) {
         var count = travelLogs.logs.length;
-        var parent = DOM.$('history');
+        var parent = DOM.get('#history');
         var el = parent.querySelector('tbody');
         var start = new Date();
         
-        DOM.$('id_count').textContent = (count + ' entr' + (count > 1 ? 'ies' : 'y'));
-        DOM.remove(el);
+        DOM.get('#id_count').textContent = (count + ' entr' + (count > 1 ? 'ies' : 'y'));
+        el.parentNode.removeChild(el);
         el = DOM.create('tbody');
         travelLogs.logs.forEach(function(log) {
             el.appendChild(createLogRow(log));
@@ -373,233 +289,202 @@
         console.log('delta', new Date() - start);
     };
     
-    var controller = (function() {
-        var ctrl = {
-            entityDict: {},
-            currentLogs: null,
-            allLogs: null,
-            initialize: function(entities, logs, conf) {
-                var mediaPrefix = conf.mediaPrefix || MEDIA_PREFIX;
-                var countries = {};
-                var years = new Set();
-                var summary = new Summary();
-                entities.forEach(function(e) {
-                    e = initializeLogEntry(e, mediaPrefix);
-                    if(e.country__code) {
-                        countries[e.country__code] = e.country__name;
-                    }
-                    this.entityDict[e.id] = e;
-                }, this);
+    var initOrderingByColumns = function(history) {
+        var columns = '#history thead th[data-column]';
+        Array.from(document.querySelectorAll(columns)).forEach(function(e) {
+            e.addEventListener('click', function(evt) {
+                var ordering = getOrdering(this);
+                if(ordering.order === 'asc') {
+                    HashBits.fromFilters().update();
+                }
+                history.sortCurrent(ordering.column, ordering.order);
+            }, false);
+        });
+    };
+
+    var createCountryOptions = function(countries) {
+        var cos = DOM.get('#id_co');
+        Object.keys(countries).sort().forEach(function(key) {
+            cos.appendChild(DOM.create('option', countries[key], {'value': key}));
+        });
+    };
+    
+    var createYearsOption = function(keys) {
+        var sel = DOM.create('select', {
+            'class': 'filter_ctrl form-control input-sm',
+            'id': 'id_years'
+        });
+
+        sel.style.display = 'none';
+        keys.sort(function(a, b) { return b - a; }).forEach(function(yr) {
+            sel.appendChild(DOM.create('option', yr, {'value': yr}));
+        });
+        DOM.get('#id_date').parentElement.appendChild(sel);
+    };
+
+    var initProfileFilter = function(conf) {
+        var dateEl = DOM.get('#id_date');
+        var picker = new Pikaday({
+            field: dateEl,
+            format: DATE_FORMAT,
+            minDate: new Date(1920,1,1),
+            yearRange: [1920, (new Date()).getFullYear()],
+            onSelect: function(dt) { console.log(dt, this); }
+        });
+
+        window.addEventListener('hashchange', onHashChange, false);
+        DOM.get('#id_timeframe').addEventListener('change', function() {
+            if(this.value === '=') {
+                DOM.get('#id_years').style.display = 'inline-block';
+                dateEl.style.display = 'none';
+            }
+            else {
+                dateEl.style.display = 'inline-block';
+                DOM.get('#id_years').style.display = 'none';
+            }
+        }, false);
+
+        dateEl.addEventListener('input', onFilterChange, false);
+        dateEl.addEventListener('propertychange', onFilterChange, false);
+        Array.from(document.querySelectorAll('.filter_ctrl')).forEach(function(e) {
+            e.addEventListener('change', onFilterChange, false);
+        });
+
+        onHashChange();
+    };
+    
+    var controller = {
+        initialize: function(entities, logs, conf) {
+            var mediaPrefix = conf.mediaPrefix || MEDIA_PREFIX;
+            var countries = {};
+            var yearSet = {};
+            var summary = Object.create(Summary).init();
+            var entityDict = {};
+            this.logEntries = [];
+            entities.forEach(function(e) {
+                var e = Object.create(LogEntry).init(e, mediaPrefix);
+                this.logEntries.push(e);
+                if(e.country__code) {
+                    countries[e.country__code] = e.country__name;
+                }
+                entityDict[e.id] = e;
+            }, this);
             
-                logs = logs.map(function(log) {
-                    log.entity = this.entityDict[log.entity__id];
-                    if(!log.entity) {
-                        console.log(log);
-                    }
-                    log.entity.logs.push(log);
-                    log.arrival = moment(log.arrival);
-                    years.add(log.arrival.year());
-                    summary.add(log.entity);
-                    return log;
-                }, this);
+            logs = logs.map(function(log) {
+                log.entity = entityDict[log.entity__id];
+                if(!log.entity) { console.log(log); }
+                log.entity.logs.push(log);
+                log.arrival = moment(log.arrival);
+                yearSet[log.arrival.year()] = true;
+                summary.add(log.entity);
+                return log;
+            }, this);
             
-                this.currentLogs = this.allLogs = new TravelLogs(logs, summary);
-                console.log(summary);
-                createCountryOptions(countries);
-                initOrderingByColumns(this);
-                createYearsOption(years);
-                initProfileFilter(conf);
-            },
-        
-            filterLogs: function(bits) {
-                this.currentLogs = this.allLogs.filter(bits);
-                showLogs(this.currentLogs);
-            },
-        
-            sortCurrent: function(column, order) {
-                this.currentLogs.sortLogs(column, order);
-                showLogs(this.currentLogs);
-            }
-        };
-        
-        //----------------------------------------------------------------------
-        var onFilterChange = function() {
-            var bits = HashBits.fromFilters();
-            console.log(bits);
-
-            bits.update();
-            ctrl.filterLogs(bits);
-        };
-
-        //----------------------------------------------------------------------
-        var onHashChange = function() {
-            var bits = HashBits.fromHash();
-            setFilterFields(bits);
-            ctrl.filterLogs(bits);
-        };
-        
-        //----------------------------------------------------------------------
-        var initOrderingByColumns = function(history) {
-            var columns = '#history thead th[data-column]';
-            Array.from(document.querySelectorAll(columns)).forEach(function(e) {
-                DOM.evt(e, 'click', function(evt) {
-                    var ordering = getOrdering(this);
-                    if(ordering.order === 'asc') {
-                        HashBits.fromFilters().update();
-                    }
-                    history.sortCurrent(ordering.column, ordering.order);
-                });
-            });
-        };
-        
-        //----------------------------------------------------------------------
-        var createCountryOptions = function(countries) {
-            var cos = DOM.$('id_co');
-            sortedDict(countries).forEach(function(item) {
-                cos.appendChild(DOM.create('option', item[1], {'value': item[0]}));
-            });
-        };
-        
-        //----------------------------------------------------------------------
-        var createYearsOption = function(years) {
-            var keys = years.values();
-            var sel = DOM.create('select', {
-                'class': 'filter_ctrl form-control input-sm',
-                'id': 'id_years'
-            });
-
-            DOM.css(sel, {'display': 'none'});
-            keys.sort(function(a, b) { return b - a; });
-            keys.forEach(function(yr) {
-                sel.appendChild(DOM.create('option', yr, {'value': yr}));
-            });
-            DOM.$('id_date').parentElement.appendChild(sel);
-        };
-        
-        //----------------------------------------------------------------------
-        var initProfileFilter = function(conf) {
-            var dateEl = DOM.$('id_date');
-            var picker = new Pikaday({
-                field: dateEl,
-                format: DATE_FORMAT,
-                minDate: new Date(1920,1,1),
-                yearRange: [1920, (new Date()).getFullYear()],
-                onSelect: function(dt) { console.log(dt, this); }
-            });
-
-            DOM.evt(window, 'hashchange', onHashChange);
-            DOM.evt(DOM.$('id_timeframe'), 'change', function() {
-                if(this.value === '=') {
-                    DOM.$('id_years').style.display = 'inline-block';
-                    dateEl.style.display = 'none';
-                }
-                else {
-                    dateEl.style.display = 'inline-block';
-                    DOM.$('id_years').style.display = 'none';
-                }
-            });
-
-            DOM.evt(dateEl, 'input', onFilterChange);
-            DOM.evt(dateEl, 'propertychange', onFilterChange);
-            Array.from(document.querySelectorAll('.filter_ctrl')).forEach(function(e) {
-                DOM.evt(e, 'change', onFilterChange);
-            });
-
-            onHashChange();
-        };
-        
-        return ctrl;
-    }());
+            this.logs = Object.create(TravelLogs).init(logs, summary);
+            console.log(summary);
+            createCountryOptions(countries);
+            initOrderingByColumns(this);
+            createYearsOption(Object.keys(yearSet));
+            initProfileFilter(conf);
+        },
     
-    var HashBits = function() {};
+        filterLogs: function(bits) {
+            this.logs.filter(bits);
+            showLogs(this.logs);
+        },
     
-    HashBits.fromHash = function(hash) {
-        var arr;
-        var kvp;
-        var i = 0;
-        var bits = new HashBits();
-        hash = hash || window.location.hash;
-        if(hash && hash[0] == '#') {
-            hash = hash.substr(1);
+        sortLogs: function(column, order) {
+            this.logs.sortLogs(column, order);
+            showLogs(this.logs);
         }
-        
-        if(hash) {
-            arr = hash.split('/');
-            for(i = 0; i < arr.length; i++) {
-                kvp = arr[i].split(':');
-                if(kvp.length === 2) {
-                    bits[kvp[0]] = kvp[1];
-                }
-                else {
-                    bits[kvp[0]] = true;
-                }
-            }
-            if(bits.date) {
-                bits.timeframe = bits.date[0];
-                if(bits.timeframe === '=') {
-                    bits.date = parseInt(bits.date.substr(1));
-                }
-                else {
-                    bits.date = moment(bits.date.substr(1));
-                }
-            }
-        }
-        return bits;
     };
-    
-    HashBits.fromFilters = function() {
-        var dt    = DOM.$('id_date').value;
-        var el    = document.querySelector('#history thead .current');
-        var bits  = new HashBits();
-        bits.type = DOM.$('id_filter').value;
-        bits.co   = DOM.$('id_co').value;
-        bits.timeframe = DOM.$('id_timeframe').value;
-        bits.limit = DOM.$('id_limit').value;
-
-        if(bits.timeframe === '=') {
-            bits.date = parseInt(DOM.$('id_years').value);
-        }
-        else if(bits.timeframe) {
-            bits.date = dt ? moment(dt) : null;
-        }
-        if(el && el.dataset.order == 'asc') {
-            bits.asc = el.dataset.column;
-        }
-        return bits;
+        
+    var onFilterChange = function() {
+        var bits = Object.create(HashBits).fromFilters();
+        console.log(bits);
+        bits.update();
+        controller.filterLogs(bits);
     };
 
-    HashBits.prototype.toString = function() {
-        var a = [];
-        this.type  && a.push('type:' + this.type);
-        this.co    && a.push('co:' + this.co);
-        this.asc   && a.push('asc:' + this.asc);
-        this.limit && a.push('limit:' + this.limit);
-
-        if(this.timeframe === '-' || this.timeframe === '+') {
-            if(this.date) {
-                a.push('date:' + this.timeframe + this.date.format(DATE_FORMAT));
-            }
-        }
-        else if(this.timeframe === '=') {
-            if(this.date) {
-                a.push('date:' + this.timeframe + this.date);
-            }
-        }
-        return a.length ? '#' + a.join('/') : './';
+    var onHashChange = function() {
+        var bits = HashBits.fromHash();
+        setFilterFields(bits);
+        controller.filterLogs(bits);
+    };
         
-    };
-    
-    HashBits.prototype.update = function() {
-        window.history.pushState({}, '', this.toString());
-    };
+    var HashBits = Object.create({
+        fromHash: function(hash) {
+            hash = hash || window.location.hash;
+            if(hash && hash[0] == '#') {
+                hash = hash.substr(1);
+            }
+            
+            if(hash) {
+                hash.split('/').forEach(function(bit) {
+                    var kvp = bit.split(':');
+                    this[kvp[0]] = (kvp.length === 2) ? kvp[1] : true;
+                }, this);
+
+                if(this.date) {
+                    this.timeframe = this.date[0];
+                    this.date = (this.timeframe === '=') ? 
+                        parseInt(this.date.substr(1))    :
+                        moment(this.date.substr(1));
+                }
+            }
+            return this;
+        },
+        fromFilters: function() {
+            var dt    = DOM.get('#id_date').value;
+            var el    = document.querySelector('#history thead .current');
+            this.type = DOM.get('#id_filter').value;
+            this.co   = DOM.get('#id_co').value;
+            this.timeframe = DOM.get('#id_timeframe').value;
+            this.limit = DOM.get('#id_limit').value;
+
+            if(this.timeframe === '=') {
+                this.date = parseInt(DOM.get('#id_years').value);
+            }
+            else if(this.timeframe) {
+                this.date = dt ? moment(dt) : null;
+            }
+            if(el && el.dataset.order == 'asc') {
+                this.asc = el.dataset.column;
+            }
+            return this;
+        },
+        toString: function() {
+            var a = [];
+            ['type', 'co', 'asc', 'limit'].forEach(function(bit) {
+                if(this[bit]) {
+                    a.push(bit + ':' + this[bit]);
+                }
+            }, this);
+
+            if(this.timeframe === '-' || this.timeframe === '+') {
+                if(this.date) {
+                    a.push('date:' + this.timeframe + this.date.format(DATE_FORMAT));
+                }
+            }
+            else if(this.timeframe === '=') {
+                if(this.date) {
+                    a.push('date:' + this.timeframe + this.date);
+                }
+            }
+            return a.length ? '#' + a.join('/') : './';
+        },
+        update: function() {
+            window.history.pushState({}, '', this.toString());
+        }
+    });
     
     var setFilterFields = function(bits) {
-        var yearsEl = DOM.$('id_years');
-        var dateEl = DOM.$('id_date');
-        DOM.$('id_filter').value = bits.type || '';
-        DOM.$('id_timeframe').value = bits.timeframe || '';
-        DOM.$('id_co').value = bits.co || '';
-        DOM.$('id_limit').value = bits.limit || '';
+        var yearsEl = DOM.get('#id_years');
+        var dateEl = DOM.get('#id_date');
+        DOM.get('#id_filter').value = bits.type || '';
+        DOM.get('#id_timeframe').value = bits.timeframe || '';
+        DOM.get('#id_co').value = bits.co || '';
+        DOM.get('#id_limit').value = bits.limit || '';
 
         yearsEl.style.display = 'none';
         dateEl.style.display = 'none';
@@ -616,14 +501,16 @@
     };
     
     return {
-        parseHash: function(hsh) {
-            return HashBits.fromHash(hsh);
+        parseHash: function(hash) {
+            return Object.create(HashBits).fromHash(hash);
         },
         timeit: function(fn) {
             var args = Array.from(arguments);
-            var start = new Date();
-            var result = fn.call(undefined, args);
-            var end = new Date();
+            var start, end, result;
+            args.shift();
+            start = new Date();
+            result = fn.call(undefined, args);
+            end = new Date();
             console.log(start + ' | ' + end + ' = ' + (end - start));
             return result;
         },

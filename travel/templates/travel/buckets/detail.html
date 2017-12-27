@@ -11,7 +11,6 @@
     <table class="bucket-result table table-striped travel-action">
     <thead>
         <tr class="">
-            <th></th>
             <th>Entity</th>
             <th>Visits</th>
             <th>Status</th>
@@ -20,10 +19,12 @@
     <tbody>
         {% for entity,logged in entities %}
         <tr data-id="{{ entity.id }}">
-            <td class="flag flag-xs">{% if entity.flag %}
-                <img src="{{ entity.flag.thumb_url }}" />{% endif %}
-            </td>
             <td>
+                {% if entity.flag %}
+                <img class="flag flag-sm" src="{{ entity.flag.thumb_url }}">&nbsp;
+                {% else %}
+                <span class="flag flag-sm"></span>
+                {% endif %}
                 <a href="{{ entity.get_absolute_url }}">{{ entity.descriptive_name }}</a>
             </td>
             <td>{{ logged }}</td>
