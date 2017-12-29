@@ -54,9 +54,9 @@ class Migration(migrations.Migration):
                 ('category', models.CharField(max_length=4, blank=True)),
                 ('locality', models.CharField(max_length=256, blank=True)),
                 ('tz', models.CharField(max_length=40, verbose_name=b'timezone', blank=True)),
-                ('capital', models.ForeignKey(related_name='capital_set', blank=True, to='travel.TravelEntity', null=True)),
-                ('continent', models.ForeignKey(related_name='continent_set', blank=True, to='travel.TravelEntity', null=True)),
-                ('country', models.ForeignKey(related_name='country_set', blank=True, to='travel.TravelEntity', null=True)),
+                ('capital', models.ForeignKey(on_delete=django.db.models.SET_NULL, related_name='capital_set', blank=True, to='travel.TravelEntity', null=True)),
+                ('continent', models.ForeignKey(on_delete=django.db.models.SET_NULL, related_name='continent_set', blank=True, to='travel.TravelEntity', null=True)),
+                ('country', models.ForeignKey(on_delete=django.db.models.SET_NULL, related_name='country_set', blank=True, to='travel.TravelEntity', null=True)),
             ],
             options={
                 'ordering': ('name',),
@@ -77,8 +77,8 @@ class Migration(migrations.Migration):
                 ('tld', models.CharField(max_length=8, blank=True)),
                 ('population', models.IntegerField(default=None, null=True, blank=True)),
                 ('area', models.IntegerField(default=None, null=True, blank=True)),
-                ('currency', models.ForeignKey(blank=True, to='travel.TravelCurrency', null=True)),
-                ('entity', models.OneToOneField(related_name='entityinfo', to='travel.TravelEntity')),
+                ('currency', models.ForeignKey(on_delete=django.db.models.SET_NULL, blank=True, to='travel.TravelCurrency', null=True)),
+                ('entity', models.OneToOneField(on_delete=django.db.models.CASCADE, related_name='entityinfo', to='travel.TravelEntity')),
             ],
             options={
                 'db_table': 'travel_entityinfo',
@@ -128,8 +128,8 @@ class Migration(migrations.Migration):
                 ('arrival', models.DateTimeField()),
                 ('rating', models.PositiveSmallIntegerField(default=3, choices=[(1, b'&#9733;&#9733;&#9733;&#9733;&#9733;'), (2, b'&#9733;&#9733;&#9733;&#9733;'), (3, b'&#9733;&#9733;&#9733;'), (4, b'&#9733;&#9733;'), (5, b'&#9733;')])),
                 ('notes', models.TextField(blank=True)),
-                ('entity', models.ForeignKey(to='travel.TravelEntity')),
-                ('user', models.ForeignKey(related_name='travellog_set', to=settings.AUTH_USER_MODEL)),
+                ('entity', models.ForeignKey(on_delete=django.db.models.CASCADE, to='travel.TravelEntity')),
+                ('user', models.ForeignKey(on_delete=django.db.models.CASCADE, related_name='travellog_set', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ('-arrival',),
@@ -141,7 +141,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('access', models.CharField(default='PRO', max_length=3, choices=[('PUB', b'Public'), ('PRI', b'Private'), ('PRO', b'Protected')])),
-                ('user', models.OneToOneField(related_name='travel_profile', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(on_delete=django.db.models.CASCADE, related_name='travel_profile', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'db_table': 'travel_profile',
@@ -165,12 +165,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='travelentity',
             name='state',
-            field=models.ForeignKey(related_name='state_set', blank=True, to='travel.TravelEntity', null=True),
+            field=models.ForeignKey(on_delete=django.db.models.SET_NULL, related_name='state_set', blank=True, to='travel.TravelEntity', null=True),
         ),
         migrations.AddField(
             model_name='travelentity',
             name='type',
-            field=models.ForeignKey(related_name='entity_set', to='travel.TravelEntityType'),
+            field=models.ForeignKey(on_delete=django.db.models.PROTECT, related_name='entity_set', to='travel.TravelEntityType'),
         ),
         migrations.AddField(
             model_name='travelbucketlist',
@@ -180,6 +180,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='travelbucketlist',
             name='owner',
-            field=models.ForeignKey(default=None, blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(on_delete=django.db.models.SET_NULL, default=None, blank=True, to=settings.AUTH_USER_MODEL, null=True),
         ),
     ]

@@ -22,7 +22,7 @@ class TravelBucketListManager(Manager):
     
     def for_user(self, user):
         q = Q(is_public=True)
-        if user.is_authenticated():
+        if user.is_authenticated:
             q |= Q(owner=user)
         return self.filter(q).order_by('title')
         

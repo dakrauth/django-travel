@@ -5,7 +5,7 @@ from collections import Counter
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
@@ -66,7 +66,7 @@ class TravelFlag(models.Model):
 
 
 class TravelBucketList(models.Model):
-    owner = models.ForeignKey(User, blank=True, null=True, default=None)
+    owner = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     is_public = models.BooleanField(default=True)
     description = models.TextField(blank=True)
@@ -86,7 +86,7 @@ class TravelBucketList(models.Model):
 
     def user_results(self, user):
         all_entities = self.entities.select_related()
-        if not user.is_authenticated():
+        if not user.is_authenticated:
             return 0, [(e, 0) for e in all_entities]
 
         logged_entities = Counter(TravelLog.objects.filter(
@@ -109,7 +109,7 @@ class TravelProfile(models.Model):
         PRIVATE   = ChoiceEnumeration.Option('PRI',  'Private')
         PROTECTED = ChoiceEnumeration.Option('PRO',  'Protected', default=True)
 
-    user   = models.OneToOneField(User, related_name='travel_profile')
+    user   = models.OneToOneField(User, related_name='travel_profile',  on_delete=models.CASCADE)
     access = models.CharField(max_length=3, choices=Access.CHOICES, default=Access.DEFAULT)
 
     objects = TravelProfileManager()
@@ -181,7 +181,7 @@ class Extern(object):
 
 class TravelEntity(models.Model):
     geonameid = models.IntegerField(default=0)
-    type      = models.ForeignKey(TravelEntityType, related_name='entity_set')
+    type      = models.ForeignKey(TravelEntityType, related_name='entity_set', on_delete=models.PROTECT)
     code      = models.CharField(max_length=6, db_index=True)
     name      = models.CharField(max_length=175)
     full_name = models.CharField(max_length=175)
@@ -190,11 +190,11 @@ class TravelEntity(models.Model):
     category  = models.CharField(blank=True, max_length=4)
     locality  = models.CharField(max_length=256, blank=True)
 
-    flag      = models.ForeignKey(TravelFlag, null=True, blank=True,on_delete=models.SET_NULL)
-    capital   = models.ForeignKey('self', related_name='capital_set',   blank=True, null=True)
-    state     = models.ForeignKey('self', related_name='state_set',     blank=True, null=True)
-    country   = models.ForeignKey('self', related_name='country_set',   blank=True, null=True)
-    continent = models.ForeignKey('self', related_name='continent_set', blank=True, null=True)
+    flag      = models.ForeignKey(TravelFlag, null=True, blank=True,    on_delete=models.SET_NULL)
+    capital   = models.ForeignKey('self', related_name='capital_set',   on_delete=models.SET_NULL, blank=True, null=True)
+    state     = models.ForeignKey('self', related_name='state_set',     on_delete=models.SET_NULL, blank=True, null=True)
+    country   = models.ForeignKey('self', related_name='country_set',   on_delete=models.SET_NULL, blank=True, null=True)
+    continent = models.ForeignKey('self', related_name='continent_set', on_delete=models.SET_NULL, blank=True, null=True)
     tz        = models.CharField('timezone', max_length=40, blank=True)
     #extras    = models.TextField(blank=True)
 
@@ -367,9 +367,9 @@ class TravelLog(models.Model):
 
     arrival = models.DateTimeField()
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=3)
-    user = models.ForeignKey(User, related_name='travellog_set')
+    user = models.ForeignKey(User, related_name='travellog_set', on_delete=models.CASCADE)
     notes = models.TextField(blank=True)
-    entity = models.ForeignKey(TravelEntity)
+    entity = models.ForeignKey(TravelEntity,  on_delete=models.CASCADE)
 
     objects = TravelLogManager()
 
@@ -460,9 +460,9 @@ class EntityImage(object):
 
 
 class TravelEntityInfo(models.Model):
-    entity = models.OneToOneField(TravelEntity, related_name='entityinfo')
+    entity = models.OneToOneField(TravelEntity, related_name='entityinfo',  on_delete=models.CASCADE)
     iso3 = models.CharField(blank=True, max_length=3)
-    currency = models.ForeignKey(TravelCurrency, blank=True, null=True)
+    currency = models.ForeignKey(TravelCurrency, blank=True, null=True, on_delete=models.SET_NULL)
     denom = models.CharField(blank=True, max_length=40)
     denoms = models.CharField(blank=True, max_length=60)
     language_codes = models.CharField(blank=True, max_length=100)

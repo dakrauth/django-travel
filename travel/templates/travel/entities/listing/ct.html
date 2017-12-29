@@ -9,7 +9,7 @@
 {% block travel_listing %}
     {% for entity in entities %}
     <tr>
-        <td>{% if not entity.flag.is_locked %}<img src="{{ entity.flag.thumb_url }}">{% endif %}</td>
+        <td>{% if not entity.flag.is_locked %}<img class="flag flag-sm" src="{{ entity.flag.thumb_url }}">{% endif %}</td>
         <td><a href="{{ entity.get_absolute_url }}">{{ entity.name }}</a></td>
         <td>{{ entity.state.name }}</td>
         <td>{{ entity.country }}</td>

@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 
 
 def _checklist(user):
-    return TravelLog.objects.checklist(user) if user.is_authenticated() else {}
+    return TravelLog.objects.checklist(user) if user.is_authenticated else {}
 
 
 def search(request):

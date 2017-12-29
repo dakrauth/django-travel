@@ -19,7 +19,7 @@
 	<ul class="list-unstyled related-entities">
 		{% for e in language.related_entities %}
 		<li>
-			<img src="{{ e.flag.thumb_url }}">
+			<img class="flag flag-sm" src="{{ e.flag.thumb_url }}">
 			<a href="{{ e.get_absolute_url }}">{{ e }}</a>
 		</li>
 		{% endfor %}	

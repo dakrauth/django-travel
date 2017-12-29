@@ -1,7 +1,7 @@
 from django import http
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 
@@ -11,7 +11,7 @@ from travel import utils
 
 
 superuser_required = user_passes_test(
-    lambda u: u.is_authenticated() and u.is_active and u.is_superuser
+    lambda u: u.is_authenticated and u.is_active and u.is_superuser
 )
 
 def render_travel(request, base_templates, data):
@@ -128,7 +128,7 @@ def by_locale(request, ref):
 
 def _default_entity_handler(request, entity):
     form, history = None, []
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         history = request.user.travellog_set.filter(entity=entity)
         if request.method == 'POST':
             form = forms.TravelLogForm(entity, request.POST)
