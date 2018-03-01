@@ -48,6 +48,7 @@ class TravelFlag(models.Model):
     source = models.CharField(max_length=255)
     svg = models.FileField(upload_to=svg_upload, blank=True)
     is_locked = models.BooleanField(default=False)
+    emoji = models.CharField(max_length=8, blank=True)
 
     class Meta:
         db_table = 'travel_flag'

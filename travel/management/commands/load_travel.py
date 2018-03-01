@@ -1,6 +1,4 @@
-from __future__ import print_function
 import sys
-import codecs
 from pprint import pprint
 from optparse import make_option
 from collections import defaultdict
@@ -11,7 +9,7 @@ from travel import models as travel
 
 def read_entities(fn, delimiter='|'):
     lines = []
-    with codecs.open(fn, encoding='utf-8') as fp:
+    with open(fn, encoding='utf-8') as fp:
         lineno = 0
         for line in fp:
             lineno += 1

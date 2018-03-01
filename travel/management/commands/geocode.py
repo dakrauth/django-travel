@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from travel.geocode import reversegc
+from travel.extras.geocode import reversegc
 from pprint import pprint
 
 class Command(BaseCommand):
