@@ -403,7 +403,7 @@ class TravelLog(models.Model):
         return (
             TravelEntity.objects.filter(travellog__user=user).distinct().values(
                 'id', 'code', 'name', 'locality', 'flag__svg', 'country__name', 'country__code',
-                'country__flag__svg', 'type__abbr'
+                'country__flag__svg', 'country__flag__emoji', 'type__abbr'
             ),
             TravelLog.objects.filter(user=user).order_by('-arrival').values(
                 'id', 'arrival', 'entity__id', 'rating'

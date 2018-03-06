@@ -116,7 +116,10 @@
             nameTd.appendChild(DOM.create('span', extras.join(', ')));
         }
         
-        if(e.country__flag__svg) {
+        if(e.country__flag__emoji) {
+            nameTd.appendChild(DOM.create('span', e.country__flag__emoji));    
+        }
+        else if(e.country__flag__svg) {
             nameTd.appendChild(DOM.create('img', {
                 'src': e.country__flag__svg,
                 'class': 'flag flag-xs'
@@ -374,7 +377,7 @@
                 log.entity = entityDict[log.entity__id];
                 if(!log.entity) { console.log(log); }
                 log.entity.logs.push(log);
-                log.arrival = moment(log.arrival);
+                log.arrival = moment(log.arrival.value);
                 yearSet[log.arrival.year()] = true;
                 summary.add(log.entity);
                 return log;

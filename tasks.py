@@ -6,14 +6,13 @@ COVERAGE_PARAMS = '--cov-config .coveragerc --cov-report html --cov-report term 
 def clean(ctx):
     '''Removes all the cache files'''
     ctx.run('find . -type d -name __pycache__ | xargs rm -rf')
-    ctx.run('rm -rf htmlcov django_travel.egg-info .cache')
-    ctx.run('rm -f test-travel.db .coverage')
+    ctx.run('rm -rf htmlcov django_travel.egg-info .cache test-travel.db .coverage')
 
 
 @task
-def test(ctx):
+def test(ctx, verbose=False):
     '''Run all tests'''
-    ctx.run('py.test', pty=True)
+    ctx.run('py.test{}'.format(' -vv' if verbose else '', pty=True))
 
 
 @task

@@ -96,21 +96,20 @@ class TravelJsonEncoder(json.JSONEncoder):
     DATE_FORMAT     = "%Y-%m-%d"
     TIME_FORMAT     = "%H:%M:%S"
     DATETIME_FORMAT = '{}T{}Z'.format(DATE_FORMAT, TIME_FORMAT)
-    
 
     def _special(self, ctype, value):
-        return value
-
+        return {'content_type': ctype, 'value': value}
+ 
     def default(self, o):
         if isinstance(o, datetime.datetime):
-            return o.strftime(self.DATETIME_FORMAT)
+            return self._special('datetime', o.strftime(self.DATETIME_FORMAT))
         elif isinstance(o, datetime.date):
-            return o.strftime(self.DATE_FORMAT)
+            return self._special('date', o.strftime(self.DATE_FORMAT))
         elif isinstance(o, datetime.time):
-            return o.strftime(self.TIME_FORMAT)
+            return self._special('time', o.strftime(self.TIME_FORMAT))
         elif isinstance(o, Decimal):
-            return str(o)
-        
+            return self._special('decimal', str(o))
+    
         return super(TravelJsonEncoder, self).default(o)
 
 
