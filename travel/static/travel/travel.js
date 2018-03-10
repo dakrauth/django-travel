@@ -219,59 +219,57 @@
             }
         },
         filter: function(bits) {
-            var summary = this.summary;
             console.log('filter bits', bits);
-            if(bits.type || bits.co || bits.timeframe || bits.limit) {
-                summary = Object.create(Summary).init();
-                this.logs.forEach(function(log) {
-                    var e = log.entity;
-                    var good = true;
-                    if(bits.type) {
-                        good = (e.type__abbr === bits.type);
-                    }
+            this.summary = Object.create(Summary).init();
+            this.logs.forEach(function(log) {
+                var e = log.entity;
+                var good = true;
+                if(bits.type) {
+                    good = (e.type__abbr === bits.type);
+                }
 
-                    if(good && bits.co) {
-                        good = (
-                            e.country__code === bits.co ||
-                            (e.type__abbr === 'co' && e.code === bits.co)
-                        );
+                if(good && bits.co) {
+                    good = (
+                        e.country__code === bits.co ||
+                        (e.type__abbr === 'co' && e.code === bits.co)
+                    );
+                }
+                
+                if(good && bits.limit) {
+                    if(e.logs.length === 1) {
+                        good = true;
                     }
-                    
-                    if(good && bits.limit) {
-                        if(e.logs.length === 1) {
-                            good = true;
-                        }
-                        else if(bits.limit === 'recent') {
-                            good = e.logs[0].id === log.id;
-                        }
-                        else {
-                            good = e.logs[e.logs.length - 1].id == log.id;
-                        }
+                    else if(bits.limit === 'recent') {
+                        good = e.logs[0].id === log.id;
                     }
+                    else {
+                        good = e.logs[e.logs.length - 1].id == log.id;
+                    }
+                }
 
-                    if(good && bits.timeframe && bits.date) {
-                        switch(bits.timeframe) {
-                            case '+':
-                                good = log.arrival.isAfter(bits.date);
-                                break;
-                            case '-':
-                                good = log.arrival.isBefore(bits.date);
-                                break;
-                            case '=':
-                                good = (log.arrival.year() === bits.date);
-                                break;
-                            default:
-                                good = false;
-                        }
+                if(good && bits.timeframe && bits.date) {
+                    switch(bits.timeframe) {
+                        case '+':
+                            good = log.arrival.isAfter(bits.date);
+                            break;
+                        case '-':
+                            good = log.arrival.isBefore(bits.date);
+                            break;
+                        case '=':
+                            good = (log.arrival.year() === bits.date);
+                            break;
+                        default:
+                            good = false;
                     }
-                    
-                    if(good) {
-                        summary.add(e);
-                    }
-                    
-                    log.isActive = good;
-                });
-            }
+                }
+                
+                if(good) {
+                    this.summary.add(e);
+                }
+                
+                log.isActive = good;
+            }, this);
+
             return this;
         }
     });
