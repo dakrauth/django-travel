@@ -17,9 +17,9 @@
 
 ;var Travelogue = (function(root) {
     var TYPE_MAPPING = {
-        'cn': 'Continents', 'co': 'Countries', 'st': 'States',
-        'ap': 'Airports',   'ct': 'Cities',    'np': 'National Parks',
-        'lm': 'Landmarks',  'wh': 'World Heritage sites'
+        'cn': 'Continents', 'co': 'Countries', 'wh': 'World Heritage sites',
+        'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
+        'lm': 'Landmarks',  'ct': 'Cities'
     };
     
     var sorters = {
@@ -285,7 +285,10 @@
         el.parentNode.removeChild(el);
         el = DOM.create('tbody');
         travelLogs.logs.forEach(function(log) {
-            el.appendChild(createLogRow(log));
+            if(log.isActive) {
+                el.appendChild(createLogRow(log));    
+            }
+            
         });
         parent.appendChild(el);
         showSummary(travelLogs.summary);
@@ -378,6 +381,7 @@
                 if(!log.entity) { console.log(log); }
                 log.entity.logs.push(log);
                 log.arrival = moment(log.arrival.value);
+                log.isActive = true;
                 yearSet[log.arrival.year()] = true;
                 summary.add(log.entity);
                 return log;
