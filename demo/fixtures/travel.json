@@ -1,116 +1,4 @@
 [{
-"model": "contenttypes.contenttype",
-"pk": 1,
-"fields": {
-"app_label": "travel",
-"model": "travelflag"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 2,
-"fields": {
-"app_label": "travel",
-"model": "travelbucketlist"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 3,
-"fields": {
-"app_label": "travel",
-"model": "travelprofile"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 4,
-"fields": {
-"app_label": "travel",
-"model": "travelentitytype"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 5,
-"fields": {
-"app_label": "travel",
-"model": "travelentity"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 6,
-"fields": {
-"app_label": "travel",
-"model": "travellog"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 7,
-"fields": {
-"app_label": "travel",
-"model": "travellanguage"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 8,
-"fields": {
-"app_label": "travel",
-"model": "travelcurrency"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 9,
-"fields": {
-"app_label": "travel",
-"model": "travelentityinfo"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 13,
-"fields": {
-"app_label": "auth",
-"model": "permission"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 14,
-"fields": {
-"app_label": "auth",
-"model": "group"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 15,
-"fields": {
-"app_label": "auth",
-"model": "user"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 16,
-"fields": {
-"app_label": "contenttypes",
-"model": "contenttype"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 17,
-"fields": {
-"app_label": "sessions",
-"model": "session"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 18,
-"fields": {
-"app_label": "sites",
-"model": "site"
-}
-}, {
-"model": "contenttypes.contenttype",
-"pk": 19,
-"fields": {
-"app_label": "admin",
-"model": "logentry"
-}
-}, {
 "model": "sites.site",
 "pk": 1,
 "fields": {
@@ -122,10 +10,6 @@
 "pk": 1,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Afghanistan.svg",
-"base_dir": "co",
-"ref": "af",
-"thumb": "travel/img/flags/co/af/af-32.png",
-"large": "travel/img/flags/co/af/af-128.png",
 "svg": "travel/img/flags/co/af/flag.svg",
 "is_locked": false
 }
@@ -134,10 +18,6 @@
 "pk": 2,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg",
-"base_dir": "co",
-"ref": "al",
-"thumb": "travel/img/flags/co/al/al-32.png",
-"large": "travel/img/flags/co/al/al-128.png",
 "svg": "travel/img/flags/co/al/flag.svg",
 "is_locked": false
 }
@@ -146,10 +26,6 @@
 "pk": 3,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Algeria.svg",
-"base_dir": "co",
-"ref": "dz",
-"thumb": "travel/img/flags/co/dz/dz-32.png",
-"large": "travel/img/flags/co/dz/dz-128.png",
 "svg": "travel/img/flags/co/dz/flag.svg",
 "is_locked": false
 }
@@ -158,10 +34,6 @@
 "pk": 4,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Andorra.svg",
-"base_dir": "co",
-"ref": "ad",
-"thumb": "travel/img/flags/co/ad/ad-32.png",
-"large": "travel/img/flags/co/ad/ad-128.png",
 "svg": "travel/img/flags/co/ad/flag.svg",
 "is_locked": false
 }
@@ -170,10 +42,6 @@
 "pk": 5,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Angola.svg",
-"base_dir": "co",
-"ref": "ao",
-"thumb": "travel/img/flags/co/ao/ao-32.png",
-"large": "travel/img/flags/co/ao/ao-128.png",
 "svg": "travel/img/flags/co/ao/flag.svg",
 "is_locked": false
 }
@@ -182,10 +50,6 @@
 "pk": 6,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Antarctica.svg",
-"base_dir": "co",
-"ref": "aq",
-"thumb": "travel/img/flags/co/aq/aq-32.png",
-"large": "travel/img/flags/co/aq/aq-128.png",
 "svg": "travel/img/flags/co/aq/flag.svg",
 "is_locked": false
 }
@@ -194,10 +58,6 @@
 "pk": 7,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Antigua_and_Barbuda.svg",
-"base_dir": "co",
-"ref": "ag",
-"thumb": "travel/img/flags/co/ag/ag-32.png",
-"large": "travel/img/flags/co/ag/ag-128.png",
 "svg": "travel/img/flags/co/ag/flag.svg",
 "is_locked": false
 }
@@ -206,10 +66,6 @@
 "pk": 8,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg",
-"base_dir": "co",
-"ref": "ar",
-"thumb": "travel/img/flags/co/ar/ar-32.png",
-"large": "travel/img/flags/co/ar/ar-128.png",
 "svg": "travel/img/flags/co/ar/flag.svg",
 "is_locked": false
 }
@@ -218,10 +74,6 @@
 "pk": 9,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg",
-"base_dir": "co",
-"ref": "am",
-"thumb": "travel/img/flags/co/am/am-32.png",
-"large": "travel/img/flags/co/am/am-128.png",
 "svg": "travel/img/flags/co/am/flag.svg",
 "is_locked": false
 }
@@ -230,10 +82,6 @@
 "pk": 10,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Aruba.svg",
-"base_dir": "co",
-"ref": "aw",
-"thumb": "travel/img/flags/co/aw/aw-32.png",
-"large": "travel/img/flags/co/aw/aw-128.png",
 "svg": "travel/img/flags/co/aw/flag.svg",
 "is_locked": false
 }
@@ -242,10 +90,6 @@
 "pk": 11,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg",
-"base_dir": "co",
-"ref": "au",
-"thumb": "travel/img/flags/co/au/au-32.png",
-"large": "travel/img/flags/co/au/au-128.png",
 "svg": "travel/img/flags/co/au/flag.svg",
 "is_locked": false
 }
@@ -254,10 +98,6 @@
 "pk": 12,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",
-"base_dir": "co",
-"ref": "at",
-"thumb": "travel/img/flags/co/at/at-32.png",
-"large": "travel/img/flags/co/at/at-128.png",
 "svg": "travel/img/flags/co/at/flag.svg",
 "is_locked": false
 }
@@ -266,10 +106,6 @@
 "pk": 13,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg",
-"base_dir": "co",
-"ref": "az",
-"thumb": "travel/img/flags/co/az/az-32.png",
-"large": "travel/img/flags/co/az/az-128.png",
 "svg": "travel/img/flags/co/az/flag.svg",
 "is_locked": false
 }
@@ -278,10 +114,6 @@
 "pk": 14,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/93/Flag_of_the_Bahamas.svg",
-"base_dir": "co",
-"ref": "bs",
-"thumb": "travel/img/flags/co/bs/bs-32.png",
-"large": "travel/img/flags/co/bs/bs-128.png",
 "svg": "travel/img/flags/co/bs/flag.svg",
 "is_locked": false
 }
@@ -290,10 +122,6 @@
 "pk": 15,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Bahrain.svg",
-"base_dir": "co",
-"ref": "bh",
-"thumb": "travel/img/flags/co/bh/bh-32.png",
-"large": "travel/img/flags/co/bh/bh-128.png",
 "svg": "travel/img/flags/co/bh/flag.svg",
 "is_locked": false
 }
@@ -302,10 +130,6 @@
 "pk": 16,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg",
-"base_dir": "co",
-"ref": "bd",
-"thumb": "travel/img/flags/co/bd/bd-32.png",
-"large": "travel/img/flags/co/bd/bd-128.png",
 "svg": "travel/img/flags/co/bd/flag.svg",
 "is_locked": false
 }
@@ -314,10 +138,6 @@
 "pk": 17,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ef/Flag_of_Barbados.svg",
-"base_dir": "co",
-"ref": "bb",
-"thumb": "travel/img/flags/co/bb/bb-32.png",
-"large": "travel/img/flags/co/bb/bb-128.png",
 "svg": "travel/img/flags/co/bb/flag.svg",
 "is_locked": false
 }
@@ -326,10 +146,6 @@
 "pk": 18,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/85/Flag_of_Belarus.svg",
-"base_dir": "co",
-"ref": "by",
-"thumb": "travel/img/flags/co/by/by-32.png",
-"large": "travel/img/flags/co/by/by-128.png",
 "svg": "travel/img/flags/co/by/flag.svg",
 "is_locked": false
 }
@@ -338,10 +154,6 @@
 "pk": 19,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg",
-"base_dir": "co",
-"ref": "be",
-"thumb": "travel/img/flags/co/be/be-32.png",
-"large": "travel/img/flags/co/be/be-128.png",
 "svg": "travel/img/flags/co/be/flag.svg",
 "is_locked": false
 }
@@ -350,10 +162,6 @@
 "pk": 20,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e7/Flag_of_Belize.svg",
-"base_dir": "co",
-"ref": "bz",
-"thumb": "travel/img/flags/co/bz/bz-32.png",
-"large": "travel/img/flags/co/bz/bz-128.png",
 "svg": "travel/img/flags/co/bz/flag.svg",
 "is_locked": false
 }
@@ -362,10 +170,6 @@
 "pk": 21,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Benin.svg",
-"base_dir": "co",
-"ref": "bj",
-"thumb": "travel/img/flags/co/bj/bj-32.png",
-"large": "travel/img/flags/co/bj/bj-128.png",
 "svg": "travel/img/flags/co/bj/flag.svg",
 "is_locked": false
 }
@@ -374,10 +178,6 @@
 "pk": 22,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bermuda.svg",
-"base_dir": "co",
-"ref": "bm",
-"thumb": "travel/img/flags/co/bm/bm-32.png",
-"large": "travel/img/flags/co/bm/bm-128.png",
 "svg": "travel/img/flags/co/bm/flag.svg",
 "is_locked": false
 }
@@ -386,10 +186,6 @@
 "pk": 23,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_Bhutan.svg",
-"base_dir": "co",
-"ref": "bt",
-"thumb": "travel/img/flags/co/bt/bt-32.png",
-"large": "travel/img/flags/co/bt/bt-128.png",
 "svg": "travel/img/flags/co/bt/flag.svg",
 "is_locked": false
 }
@@ -398,10 +194,6 @@
 "pk": 24,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/de/Flag_of_Bolivia_%28state%29.svg",
-"base_dir": "co",
-"ref": "bo",
-"thumb": "travel/img/flags/co/bo/bo-32.png",
-"large": "travel/img/flags/co/bo/bo-128.png",
 "svg": "travel/img/flags/co/bo/flag.svg",
 "is_locked": false
 }
@@ -410,10 +202,6 @@
 "pk": 25,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bosnia_and_Herzegovina.svg",
-"base_dir": "co",
-"ref": "ba",
-"thumb": "travel/img/flags/co/ba/ba-32.png",
-"large": "travel/img/flags/co/ba/ba-128.png",
 "svg": "travel/img/flags/co/ba/flag.svg",
 "is_locked": false
 }
@@ -422,10 +210,6 @@
 "pk": 26,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Botswana.svg",
-"base_dir": "co",
-"ref": "bw",
-"thumb": "travel/img/flags/co/bw/bw-32.png",
-"large": "travel/img/flags/co/bw/bw-128.png",
 "svg": "travel/img/flags/co/bw/flag.svg",
 "is_locked": false
 }
@@ -434,10 +218,6 @@
 "pk": 27,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Brazil.svg",
-"base_dir": "co",
-"ref": "br",
-"thumb": "travel/img/flags/co/br/br-32.png",
-"large": "travel/img/flags/co/br/br-128.png",
 "svg": "travel/img/flags/co/br/flag.svg",
 "is_locked": false
 }
@@ -446,10 +226,6 @@
 "pk": 28,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Brunei.svg",
-"base_dir": "co",
-"ref": "bn",
-"thumb": "travel/img/flags/co/bn/bn-32.png",
-"large": "travel/img/flags/co/bn/bn-128.png",
 "svg": "travel/img/flags/co/bn/flag.svg",
 "is_locked": false
 }
@@ -458,10 +234,6 @@
 "pk": 29,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Bulgaria.svg",
-"base_dir": "co",
-"ref": "bg",
-"thumb": "travel/img/flags/co/bg/bg-32.png",
-"large": "travel/img/flags/co/bg/bg-128.png",
 "svg": "travel/img/flags/co/bg/flag.svg",
 "is_locked": false
 }
@@ -470,10 +242,6 @@
 "pk": 30,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Burkina_Faso.svg",
-"base_dir": "co",
-"ref": "bf",
-"thumb": "travel/img/flags/co/bf/bf-32.png",
-"large": "travel/img/flags/co/bf/bf-128.png",
 "svg": "travel/img/flags/co/bf/flag.svg",
 "is_locked": false
 }
@@ -482,10 +250,6 @@
 "pk": 31,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/8c/Flag_of_Myanmar.svg",
-"base_dir": "co",
-"ref": "mm",
-"thumb": "travel/img/flags/co/mm/mm-32.png",
-"large": "travel/img/flags/co/mm/mm-128.png",
 "svg": "travel/img/flags/co/mm/flag.svg",
 "is_locked": false
 }
@@ -494,10 +258,6 @@
 "pk": 32,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/50/Flag_of_Burundi.svg",
-"base_dir": "co",
-"ref": "bi",
-"thumb": "travel/img/flags/co/bi/bi-32.png",
-"large": "travel/img/flags/co/bi/bi-128.png",
 "svg": "travel/img/flags/co/bi/flag.svg",
 "is_locked": false
 }
@@ -506,10 +266,6 @@
 "pk": 33,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_Cambodia.svg",
-"base_dir": "co",
-"ref": "kh",
-"thumb": "travel/img/flags/co/kh/kh-32.png",
-"large": "travel/img/flags/co/kh/kh-128.png",
 "svg": "travel/img/flags/co/kh/flag.svg",
 "is_locked": false
 }
@@ -518,10 +274,6 @@
 "pk": 34,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4f/Flag_of_Cameroon.svg",
-"base_dir": "co",
-"ref": "cm",
-"thumb": "travel/img/flags/co/cm/cm-32.png",
-"large": "travel/img/flags/co/cm/cm-128.png",
 "svg": "travel/img/flags/co/cm/flag.svg",
 "is_locked": false
 }
@@ -530,10 +282,6 @@
 "pk": 35,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg",
-"base_dir": "co",
-"ref": "ca",
-"thumb": "travel/img/flags/co/ca/ca-32.png",
-"large": "travel/img/flags/co/ca/ca-128.png",
 "svg": "travel/img/flags/co/ca/flag.svg",
 "is_locked": false
 }
@@ -542,10 +290,6 @@
 "pk": 36,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Cape_Verde.svg",
-"base_dir": "co",
-"ref": "cv",
-"thumb": "travel/img/flags/co/cv/cv-32.png",
-"large": "travel/img/flags/co/cv/cv-128.png",
 "svg": "travel/img/flags/co/cv/flag.svg",
 "is_locked": false
 }
@@ -554,10 +298,6 @@
 "pk": 37,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Central_African_Republic.svg",
-"base_dir": "co",
-"ref": "cf",
-"thumb": "travel/img/flags/co/cf/cf-32.png",
-"large": "travel/img/flags/co/cf/cf-128.png",
 "svg": "travel/img/flags/co/cf/flag.svg",
 "is_locked": false
 }
@@ -566,10 +306,6 @@
 "pk": 38,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4b/Flag_of_Chad.svg",
-"base_dir": "co",
-"ref": "td",
-"thumb": "travel/img/flags/co/td/td-32.png",
-"large": "travel/img/flags/co/td/td-128.png",
 "svg": "travel/img/flags/co/td/flag.svg",
 "is_locked": false
 }
@@ -578,10 +314,6 @@
 "pk": 39,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/78/Flag_of_Chile.svg",
-"base_dir": "co",
-"ref": "cl",
-"thumb": "travel/img/flags/co/cl/cl-32.png",
-"large": "travel/img/flags/co/cl/cl-128.png",
 "svg": "travel/img/flags/co/cl/flag.svg",
 "is_locked": false
 }
@@ -590,10 +322,6 @@
 "pk": 40,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_the_People%27s_Republic_of_China.svg",
-"base_dir": "co",
-"ref": "cn",
-"thumb": "travel/img/flags/co/cn/cn-32.png",
-"large": "travel/img/flags/co/cn/cn-128.png",
 "svg": "travel/img/flags/co/cn/flag.svg",
 "is_locked": false
 }
@@ -602,10 +330,6 @@
 "pk": 41,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg",
-"base_dir": "co",
-"ref": "co",
-"thumb": "travel/img/flags/co/co/co-32.png",
-"large": "travel/img/flags/co/co/co-128.png",
 "svg": "travel/img/flags/co/co/flag.svg",
 "is_locked": false
 }
@@ -614,10 +338,6 @@
 "pk": 42,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/94/Flag_of_the_Comoros.svg",
-"base_dir": "co",
-"ref": "km",
-"thumb": "travel/img/flags/co/km/km-32.png",
-"large": "travel/img/flags/co/km/km-128.png",
 "svg": "travel/img/flags/co/km/flag.svg",
 "is_locked": false
 }
@@ -626,10 +346,6 @@
 "pk": 43,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_the_Republic_of_the_Congo.svg",
-"base_dir": "co",
-"ref": "cg",
-"thumb": "travel/img/flags/co/cg/cg-32.png",
-"large": "travel/img/flags/co/cg/cg-128.png",
 "svg": "travel/img/flags/co/cg/flag.svg",
 "is_locked": false
 }
@@ -638,10 +354,6 @@
 "pk": 44,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f2/Flag_of_Costa_Rica.svg",
-"base_dir": "co",
-"ref": "cr",
-"thumb": "travel/img/flags/co/cr/cr-32.png",
-"large": "travel/img/flags/co/cr/cr-128.png",
 "svg": "travel/img/flags/co/cr/flag.svg",
 "is_locked": false
 }
@@ -650,10 +362,6 @@
 "pk": 45,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg",
-"base_dir": "co",
-"ref": "ci",
-"thumb": "travel/img/flags/co/ci/ci-32.png",
-"large": "travel/img/flags/co/ci/ci-128.png",
 "svg": "travel/img/flags/co/ci/flag.svg",
 "is_locked": false
 }
@@ -662,10 +370,6 @@
 "pk": 46,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Croatia.svg",
-"base_dir": "co",
-"ref": "hr",
-"thumb": "travel/img/flags/co/hr/hr-32.png",
-"large": "travel/img/flags/co/hr/hr-128.png",
 "svg": "travel/img/flags/co/hr/flag.svg",
 "is_locked": false
 }
@@ -674,10 +378,6 @@
 "pk": 47,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bd/Flag_of_Cuba.svg",
-"base_dir": "co",
-"ref": "cu",
-"thumb": "travel/img/flags/co/cu/cu-32.png",
-"large": "travel/img/flags/co/cu/cu-128.png",
 "svg": "travel/img/flags/co/cu/flag.svg",
 "is_locked": false
 }
@@ -686,10 +386,6 @@
 "pk": 48,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Cyprus.svg",
-"base_dir": "co",
-"ref": "cy",
-"thumb": "travel/img/flags/co/cy/cy-32.png",
-"large": "travel/img/flags/co/cy/cy-128.png",
 "svg": "travel/img/flags/co/cy/flag.svg",
 "is_locked": false
 }
@@ -698,10 +394,6 @@
 "pk": 49,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Czech_Republic.svg",
-"base_dir": "co",
-"ref": "cz",
-"thumb": "travel/img/flags/co/cz/cz-32.png",
-"large": "travel/img/flags/co/cz/cz-128.png",
 "svg": "travel/img/flags/co/cz/flag.svg",
 "is_locked": false
 }
@@ -710,10 +402,6 @@
 "pk": 50,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg",
-"base_dir": "co",
-"ref": "cd",
-"thumb": "travel/img/flags/co/cd/cd-32.png",
-"large": "travel/img/flags/co/cd/cd-128.png",
 "svg": "travel/img/flags/co/cd/flag.svg",
 "is_locked": false
 }
@@ -722,10 +410,6 @@
 "pk": 51,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
-"base_dir": "co",
-"ref": "dk",
-"thumb": "travel/img/flags/co/dk/dk-32.png",
-"large": "travel/img/flags/co/dk/dk-128.png",
 "svg": "travel/img/flags/co/dk/flag.svg",
 "is_locked": false
 }
@@ -734,10 +418,6 @@
 "pk": 52,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_Djibouti.svg",
-"base_dir": "co",
-"ref": "dj",
-"thumb": "travel/img/flags/co/dj/dj-32.png",
-"large": "travel/img/flags/co/dj/dj-128.png",
 "svg": "travel/img/flags/co/dj/flag.svg",
 "is_locked": false
 }
@@ -746,10 +426,6 @@
 "pk": 53,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c4/Flag_of_Dominica.svg",
-"base_dir": "co",
-"ref": "dm",
-"thumb": "travel/img/flags/co/dm/dm-32.png",
-"large": "travel/img/flags/co/dm/dm-128.png",
 "svg": "travel/img/flags/co/dm/flag.svg",
 "is_locked": false
 }
@@ -758,10 +434,6 @@
 "pk": 54,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_the_Dominican_Republic.svg",
-"base_dir": "co",
-"ref": "do",
-"thumb": "travel/img/flags/co/do/do-32.png",
-"large": "travel/img/flags/co/do/do-128.png",
 "svg": "travel/img/flags/co/do/flag.svg",
 "is_locked": false
 }
@@ -770,10 +442,6 @@
 "pk": 55,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/26/Flag_of_East_Timor.svg",
-"base_dir": "co",
-"ref": "tl",
-"thumb": "travel/img/flags/co/tl/tl-32.png",
-"large": "travel/img/flags/co/tl/tl-128.png",
 "svg": "travel/img/flags/co/tl/flag.svg",
 "is_locked": false
 }
@@ -782,10 +450,6 @@
 "pk": 56,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e8/Flag_of_Ecuador.svg",
-"base_dir": "co",
-"ref": "ec",
-"thumb": "travel/img/flags/co/ec/ec-32.png",
-"large": "travel/img/flags/co/ec/ec-128.png",
 "svg": "travel/img/flags/co/ec/flag.svg",
 "is_locked": false
 }
@@ -794,10 +458,6 @@
 "pk": 57,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg",
-"base_dir": "co",
-"ref": "eg",
-"thumb": "travel/img/flags/co/eg/eg-32.png",
-"large": "travel/img/flags/co/eg/eg-128.png",
 "svg": "travel/img/flags/co/eg/flag.svg",
 "is_locked": false
 }
@@ -806,10 +466,6 @@
 "pk": 58,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_El_Salvador.svg",
-"base_dir": "co",
-"ref": "sv",
-"thumb": "travel/img/flags/co/sv/sv-32.png",
-"large": "travel/img/flags/co/sv/sv-128.png",
 "svg": "travel/img/flags/co/sv/flag.svg",
 "is_locked": false
 }
@@ -818,10 +474,6 @@
 "pk": 59,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Equatorial_Guinea.svg",
-"base_dir": "co",
-"ref": "gq",
-"thumb": "travel/img/flags/co/gq/gq-32.png",
-"large": "travel/img/flags/co/gq/gq-128.png",
 "svg": "travel/img/flags/co/gq/flag.svg",
 "is_locked": false
 }
@@ -830,10 +482,6 @@
 "pk": 60,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/29/Flag_of_Eritrea.svg",
-"base_dir": "co",
-"ref": "er",
-"thumb": "travel/img/flags/co/er/er-32.png",
-"large": "travel/img/flags/co/er/er-128.png",
 "svg": "travel/img/flags/co/er/flag.svg",
 "is_locked": false
 }
@@ -842,10 +490,6 @@
 "pk": 61,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/8f/Flag_of_Estonia.svg",
-"base_dir": "co",
-"ref": "ee",
-"thumb": "travel/img/flags/co/ee/ee-32.png",
-"large": "travel/img/flags/co/ee/ee-128.png",
 "svg": "travel/img/flags/co/ee/flag.svg",
 "is_locked": false
 }
@@ -854,10 +498,6 @@
 "pk": 62,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/71/Flag_of_Ethiopia.svg",
-"base_dir": "co",
-"ref": "et",
-"thumb": "travel/img/flags/co/et/et-32.png",
-"large": "travel/img/flags/co/et/et-128.png",
 "svg": "travel/img/flags/co/et/flag.svg",
 "is_locked": false
 }
@@ -866,10 +506,6 @@
 "pk": 63,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Flag_of_the_Federated_States_of_Micronesia.svg",
-"base_dir": "co",
-"ref": "fm",
-"thumb": "travel/img/flags/co/fm/fm-32.png",
-"large": "travel/img/flags/co/fm/fm-128.png",
 "svg": "travel/img/flags/co/fm/flag.svg",
 "is_locked": false
 }
@@ -878,10 +514,6 @@
 "pk": 64,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Fiji.svg",
-"base_dir": "co",
-"ref": "fj",
-"thumb": "travel/img/flags/co/fj/fj-32.png",
-"large": "travel/img/flags/co/fj/fj-128.png",
 "svg": "travel/img/flags/co/fj/flag.svg",
 "is_locked": false
 }
@@ -890,10 +522,6 @@
 "pk": 65,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Finland.svg",
-"base_dir": "co",
-"ref": "fi",
-"thumb": "travel/img/flags/co/fi/fi-32.png",
-"large": "travel/img/flags/co/fi/fi-128.png",
 "svg": "travel/img/flags/co/fi/flag.svg",
 "is_locked": false
 }
@@ -902,10 +530,6 @@
 "pk": 66,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-"base_dir": "co",
-"ref": "fr",
-"thumb": "travel/img/flags/co/fr/fr-32.png",
-"large": "travel/img/flags/co/fr/fr-128.png",
 "svg": "travel/img/flags/co/fr/flag.svg",
 "is_locked": false
 }
@@ -914,10 +538,6 @@
 "pk": 67,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/04/Flag_of_Gabon.svg",
-"base_dir": "co",
-"ref": "ga",
-"thumb": "travel/img/flags/co/ga/ga-32.png",
-"large": "travel/img/flags/co/ga/ga-128.png",
 "svg": "travel/img/flags/co/ga/flag.svg",
 "is_locked": false
 }
@@ -926,10 +546,6 @@
 "pk": 68,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_The_Gambia.svg",
-"base_dir": "co",
-"ref": "gm",
-"thumb": "travel/img/flags/co/gm/gm-32.png",
-"large": "travel/img/flags/co/gm/gm-128.png",
 "svg": "travel/img/flags/co/gm/flag.svg",
 "is_locked": false
 }
@@ -938,10 +554,6 @@
 "pk": 69,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Georgia.svg",
-"base_dir": "co",
-"ref": "ge",
-"thumb": "travel/img/flags/co/ge/ge-32.png",
-"large": "travel/img/flags/co/ge/ge-128.png",
 "svg": "travel/img/flags/co/ge/flag.svg",
 "is_locked": false
 }
@@ -950,10 +562,6 @@
 "pk": 70,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg",
-"base_dir": "co",
-"ref": "de",
-"thumb": "travel/img/flags/co/de/de-32.png",
-"large": "travel/img/flags/co/de/de-128.png",
 "svg": "travel/img/flags/co/de/flag.svg",
 "is_locked": false
 }
@@ -962,10 +570,6 @@
 "pk": 71,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Ghana.svg",
-"base_dir": "co",
-"ref": "gh",
-"thumb": "travel/img/flags/co/gh/gh-32.png",
-"large": "travel/img/flags/co/gh/gh-128.png",
 "svg": "travel/img/flags/co/gh/flag.svg",
 "is_locked": false
 }
@@ -974,10 +578,6 @@
 "pk": 72,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/02/Flag_of_Gibraltar.svg",
-"base_dir": "co",
-"ref": "gi",
-"thumb": "travel/img/flags/co/gi/gi-32.png",
-"large": "travel/img/flags/co/gi/gi-128.png",
 "svg": "travel/img/flags/co/gi/flag.svg",
 "is_locked": false
 }
@@ -986,10 +586,6 @@
 "pk": 73,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Greece.svg",
-"base_dir": "co",
-"ref": "gr",
-"thumb": "travel/img/flags/co/gr/gr-32.png",
-"large": "travel/img/flags/co/gr/gr-128.png",
 "svg": "travel/img/flags/co/gr/flag.svg",
 "is_locked": false
 }
@@ -998,10 +594,6 @@
 "pk": 74,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_Greenland.svg",
-"base_dir": "co",
-"ref": "gl",
-"thumb": "travel/img/flags/co/gl/gl-32.png",
-"large": "travel/img/flags/co/gl/gl-128.png",
 "svg": "travel/img/flags/co/gl/flag.svg",
 "is_locked": false
 }
@@ -1010,10 +602,6 @@
 "pk": 75,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Grenada.svg",
-"base_dir": "co",
-"ref": "gd",
-"thumb": "travel/img/flags/co/gd/gd-32.png",
-"large": "travel/img/flags/co/gd/gd-128.png",
 "svg": "travel/img/flags/co/gd/flag.svg",
 "is_locked": false
 }
@@ -1022,10 +610,6 @@
 "pk": 76,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/04/Flag_of_Guadeloupe_%28local%29.svg",
-"base_dir": "co",
-"ref": "gp",
-"thumb": "travel/img/flags/co/gp/gp-32.png",
-"large": "travel/img/flags/co/gp/gp-128.png",
 "svg": "travel/img/flags/co/gp/flag.svg",
 "is_locked": false
 }
@@ -1034,10 +618,6 @@
 "pk": 77,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ec/Flag_of_Guatemala.svg",
-"base_dir": "co",
-"ref": "gt",
-"thumb": "travel/img/flags/co/gt/gt-32.png",
-"large": "travel/img/flags/co/gt/gt-128.png",
 "svg": "travel/img/flags/co/gt/flag.svg",
 "is_locked": false
 }
@@ -1046,10 +626,6 @@
 "pk": 78,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ed/Flag_of_Guinea.svg",
-"base_dir": "co",
-"ref": "gn",
-"thumb": "travel/img/flags/co/gn/gn-32.png",
-"large": "travel/img/flags/co/gn/gn-128.png",
 "svg": "travel/img/flags/co/gn/flag.svg",
 "is_locked": false
 }
@@ -1058,10 +634,6 @@
 "pk": 79,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Guinea-Bissau.svg",
-"base_dir": "co",
-"ref": "gw",
-"thumb": "travel/img/flags/co/gw/gw-32.png",
-"large": "travel/img/flags/co/gw/gw-128.png",
 "svg": "travel/img/flags/co/gw/flag.svg",
 "is_locked": false
 }
@@ -1070,10 +642,6 @@
 "pk": 80,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_Guyana.svg",
-"base_dir": "co",
-"ref": "gy",
-"thumb": "travel/img/flags/co/gy/gy-32.png",
-"large": "travel/img/flags/co/gy/gy-128.png",
 "svg": "travel/img/flags/co/gy/flag.svg",
 "is_locked": false
 }
@@ -1082,10 +650,6 @@
 "pk": 81,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Haiti.svg",
-"base_dir": "co",
-"ref": "ht",
-"thumb": "travel/img/flags/co/ht/ht-32.png",
-"large": "travel/img/flags/co/ht/ht-128.png",
 "svg": "travel/img/flags/co/ht/flag.svg",
 "is_locked": false
 }
@@ -1094,10 +658,6 @@
 "pk": 82,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/82/Flag_of_Honduras.svg",
-"base_dir": "co",
-"ref": "hn",
-"thumb": "travel/img/flags/co/hn/hn-32.png",
-"large": "travel/img/flags/co/hn/hn-128.png",
 "svg": "travel/img/flags/co/hn/flag.svg",
 "is_locked": false
 }
@@ -1106,10 +666,6 @@
 "pk": 83,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/5b/Flag_of_Hong_Kong.svg",
-"base_dir": "co",
-"ref": "hk",
-"thumb": "travel/img/flags/co/hk/hk-32.png",
-"large": "travel/img/flags/co/hk/hk-128.png",
 "svg": "travel/img/flags/co/hk/flag.svg",
 "is_locked": false
 }
@@ -1118,10 +674,6 @@
 "pk": 84,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c1/Flag_of_Hungary.svg",
-"base_dir": "co",
-"ref": "hu",
-"thumb": "travel/img/flags/co/hu/hu-32.png",
-"large": "travel/img/flags/co/hu/hu-128.png",
 "svg": "travel/img/flags/co/hu/flag.svg",
 "is_locked": false
 }
@@ -1130,10 +682,6 @@
 "pk": 85,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Iceland.svg",
-"base_dir": "co",
-"ref": "is",
-"thumb": "travel/img/flags/co/is/is-32.png",
-"large": "travel/img/flags/co/is/is-128.png",
 "svg": "travel/img/flags/co/is/flag.svg",
 "is_locked": false
 }
@@ -1142,10 +690,6 @@
 "pk": 86,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_India.svg",
-"base_dir": "co",
-"ref": "in",
-"thumb": "travel/img/flags/co/in/in-32.png",
-"large": "travel/img/flags/co/in/in-128.png",
 "svg": "travel/img/flags/co/in/flag.svg",
 "is_locked": false
 }
@@ -1154,10 +698,6 @@
 "pk": 87,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg",
-"base_dir": "co",
-"ref": "id",
-"thumb": "travel/img/flags/co/id/id-32.png",
-"large": "travel/img/flags/co/id/id-128.png",
 "svg": "travel/img/flags/co/id/flag.svg",
 "is_locked": false
 }
@@ -1166,10 +706,6 @@
 "pk": 88,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/ca/Flag_of_Iran.svg",
-"base_dir": "co",
-"ref": "ir",
-"thumb": "travel/img/flags/co/ir/ir-32.png",
-"large": "travel/img/flags/co/ir/ir-128.png",
 "svg": "travel/img/flags/co/ir/flag.svg",
 "is_locked": false
 }
@@ -1178,10 +714,6 @@
 "pk": 89,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Iraq.svg",
-"base_dir": "co",
-"ref": "iq",
-"thumb": "travel/img/flags/co/iq/iq-32.png",
-"large": "travel/img/flags/co/iq/iq-128.png",
 "svg": "travel/img/flags/co/iq/flag.svg",
 "is_locked": false
 }
@@ -1190,10 +722,6 @@
 "pk": 90,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg",
-"base_dir": "co",
-"ref": "ie",
-"thumb": "travel/img/flags/co/ie/ie-32.png",
-"large": "travel/img/flags/co/ie/ie-128.png",
 "svg": "travel/img/flags/co/ie/flag.svg",
 "is_locked": false
 }
@@ -1202,10 +730,6 @@
 "pk": 91,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Israel.svg",
-"base_dir": "co",
-"ref": "il",
-"thumb": "travel/img/flags/co/il/il-32.png",
-"large": "travel/img/flags/co/il/il-128.png",
 "svg": "travel/img/flags/co/il/flag.svg",
 "is_locked": false
 }
@@ -1214,10 +738,6 @@
 "pk": 92,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg",
-"base_dir": "co",
-"ref": "it",
-"thumb": "travel/img/flags/co/it/it-32.png",
-"large": "travel/img/flags/co/it/it-128.png",
 "svg": "travel/img/flags/co/it/flag.svg",
 "is_locked": false
 }
@@ -1226,10 +746,6 @@
 "pk": 93,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/0a/Flag_of_Jamaica.svg",
-"base_dir": "co",
-"ref": "jm",
-"thumb": "travel/img/flags/co/jm/jm-32.png",
-"large": "travel/img/flags/co/jm/jm-128.png",
 "svg": "travel/img/flags/co/jm/flag.svg",
 "is_locked": false
 }
@@ -1238,10 +754,6 @@
 "pk": 94,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg",
-"base_dir": "co",
-"ref": "jp",
-"thumb": "travel/img/flags/co/jp/jp-32.png",
-"large": "travel/img/flags/co/jp/jp-128.png",
 "svg": "travel/img/flags/co/jp/flag.svg",
 "is_locked": false
 }
@@ -1250,10 +762,6 @@
 "pk": 95,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c0/Flag_of_Jordan.svg",
-"base_dir": "co",
-"ref": "jo",
-"thumb": "travel/img/flags/co/jo/jo-32.png",
-"large": "travel/img/flags/co/jo/jo-128.png",
 "svg": "travel/img/flags/co/jo/flag.svg",
 "is_locked": false
 }
@@ -1262,10 +770,6 @@
 "pk": 96,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kazakhstan.svg",
-"base_dir": "co",
-"ref": "kz",
-"thumb": "travel/img/flags/co/kz/kz-32.png",
-"large": "travel/img/flags/co/kz/kz-128.png",
 "svg": "travel/img/flags/co/kz/flag.svg",
 "is_locked": false
 }
@@ -1274,10 +778,6 @@
 "pk": 97,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Kenya.svg",
-"base_dir": "co",
-"ref": "ke",
-"thumb": "travel/img/flags/co/ke/ke-32.png",
-"large": "travel/img/flags/co/ke/ke-128.png",
 "svg": "travel/img/flags/co/ke/flag.svg",
 "is_locked": false
 }
@@ -1286,10 +786,6 @@
 "pk": 98,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Kiribati.svg",
-"base_dir": "co",
-"ref": "ki",
-"thumb": "travel/img/flags/co/ki/ki-32.png",
-"large": "travel/img/flags/co/ki/ki-128.png",
 "svg": "travel/img/flags/co/ki/flag.svg",
 "is_locked": false
 }
@@ -1298,10 +794,6 @@
 "pk": 99,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/aa/Flag_of_Kuwait.svg",
-"base_dir": "co",
-"ref": "kw",
-"thumb": "travel/img/flags/co/kw/kw-32.png",
-"large": "travel/img/flags/co/kw/kw-128.png",
 "svg": "travel/img/flags/co/kw/flag.svg",
 "is_locked": false
 }
@@ -1310,10 +802,6 @@
 "pk": 100,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c7/Flag_of_Kyrgyzstan.svg",
-"base_dir": "co",
-"ref": "kg",
-"thumb": "travel/img/flags/co/kg/kg-32.png",
-"large": "travel/img/flags/co/kg/kg-128.png",
 "svg": "travel/img/flags/co/kg/flag.svg",
 "is_locked": false
 }
@@ -1322,10 +810,6 @@
 "pk": 101,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/56/Flag_of_Laos.svg",
-"base_dir": "co",
-"ref": "la",
-"thumb": "travel/img/flags/co/la/la-32.png",
-"large": "travel/img/flags/co/la/la-128.png",
 "svg": "travel/img/flags/co/la/flag.svg",
 "is_locked": false
 }
@@ -1334,10 +818,6 @@
 "pk": 102,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Latvia.svg",
-"base_dir": "co",
-"ref": "lv",
-"thumb": "travel/img/flags/co/lv/lv-32.png",
-"large": "travel/img/flags/co/lv/lv-128.png",
 "svg": "travel/img/flags/co/lv/flag.svg",
 "is_locked": false
 }
@@ -1346,10 +826,6 @@
 "pk": 103,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/59/Flag_of_Lebanon.svg",
-"base_dir": "co",
-"ref": "lb",
-"thumb": "travel/img/flags/co/lb/lb-32.png",
-"large": "travel/img/flags/co/lb/lb-128.png",
 "svg": "travel/img/flags/co/lb/flag.svg",
 "is_locked": false
 }
@@ -1358,10 +834,6 @@
 "pk": 104,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4a/Flag_of_Lesotho.svg",
-"base_dir": "co",
-"ref": "ls",
-"thumb": "travel/img/flags/co/ls/ls-32.png",
-"large": "travel/img/flags/co/ls/ls-128.png",
 "svg": "travel/img/flags/co/ls/flag.svg",
 "is_locked": false
 }
@@ -1370,10 +842,6 @@
 "pk": 105,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Liberia.svg",
-"base_dir": "co",
-"ref": "lr",
-"thumb": "travel/img/flags/co/lr/lr-32.png",
-"large": "travel/img/flags/co/lr/lr-128.png",
 "svg": "travel/img/flags/co/lr/flag.svg",
 "is_locked": false
 }
@@ -1382,10 +850,6 @@
 "pk": 106,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Libya.svg",
-"base_dir": "co",
-"ref": "ly",
-"thumb": "travel/img/flags/co/ly/ly-32.png",
-"large": "travel/img/flags/co/ly/ly-128.png",
 "svg": "travel/img/flags/co/ly/flag.svg",
 "is_locked": false
 }
@@ -1394,10 +858,6 @@
 "pk": 107,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/47/Flag_of_Liechtenstein.svg",
-"base_dir": "co",
-"ref": "li",
-"thumb": "travel/img/flags/co/li/li-32.png",
-"large": "travel/img/flags/co/li/li-128.png",
 "svg": "travel/img/flags/co/li/flag.svg",
 "is_locked": false
 }
@@ -1406,10 +866,6 @@
 "pk": 108,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Lithuania.svg",
-"base_dir": "co",
-"ref": "lt",
-"thumb": "travel/img/flags/co/lt/lt-32.png",
-"large": "travel/img/flags/co/lt/lt-128.png",
 "svg": "travel/img/flags/co/lt/flag.svg",
 "is_locked": false
 }
@@ -1418,10 +874,6 @@
 "pk": 109,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/da/Flag_of_Luxembourg.svg",
-"base_dir": "co",
-"ref": "lu",
-"thumb": "travel/img/flags/co/lu/lu-32.png",
-"large": "travel/img/flags/co/lu/lu-128.png",
 "svg": "travel/img/flags/co/lu/flag.svg",
 "is_locked": false
 }
@@ -1430,10 +882,6 @@
 "pk": 110,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/63/Flag_of_Macau.svg",
-"base_dir": "co",
-"ref": "mo",
-"thumb": "travel/img/flags/co/mo/mo-32.png",
-"large": "travel/img/flags/co/mo/mo-128.png",
 "svg": "travel/img/flags/co/mo/flag.svg",
 "is_locked": false
 }
@@ -1442,10 +890,6 @@
 "pk": 111,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f8/Flag_of_Macedonia.svg",
-"base_dir": "co",
-"ref": "mk",
-"thumb": "travel/img/flags/co/mk/mk-32.png",
-"large": "travel/img/flags/co/mk/mk-128.png",
 "svg": "travel/img/flags/co/mk/flag.svg",
 "is_locked": false
 }
@@ -1454,10 +898,6 @@
 "pk": 112,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Madagascar.svg",
-"base_dir": "co",
-"ref": "mg",
-"thumb": "travel/img/flags/co/mg/mg-32.png",
-"large": "travel/img/flags/co/mg/mg-128.png",
 "svg": "travel/img/flags/co/mg/flag.svg",
 "is_locked": false
 }
@@ -1466,10 +906,6 @@
 "pk": 113,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d1/Flag_of_Malawi.svg",
-"base_dir": "co",
-"ref": "mw",
-"thumb": "travel/img/flags/co/mw/mw-32.png",
-"large": "travel/img/flags/co/mw/mw-128.png",
 "svg": "travel/img/flags/co/mw/flag.svg",
 "is_locked": false
 }
@@ -1478,10 +914,6 @@
 "pk": 114,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_Malaysia.svg",
-"base_dir": "co",
-"ref": "my",
-"thumb": "travel/img/flags/co/my/my-32.png",
-"large": "travel/img/flags/co/my/my-128.png",
 "svg": "travel/img/flags/co/my/flag.svg",
 "is_locked": false
 }
@@ -1490,10 +922,6 @@
 "pk": 115,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Maldives.svg",
-"base_dir": "co",
-"ref": "mv",
-"thumb": "travel/img/flags/co/mv/mv-32.png",
-"large": "travel/img/flags/co/mv/mv-128.png",
 "svg": "travel/img/flags/co/mv/flag.svg",
 "is_locked": false
 }
@@ -1502,10 +930,6 @@
 "pk": 116,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_Mali.svg",
-"base_dir": "co",
-"ref": "ml",
-"thumb": "travel/img/flags/co/ml/ml-32.png",
-"large": "travel/img/flags/co/ml/ml-128.png",
 "svg": "travel/img/flags/co/ml/flag.svg",
 "is_locked": false
 }
@@ -1514,10 +938,6 @@
 "pk": 117,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Malta.svg",
-"base_dir": "co",
-"ref": "mt",
-"thumb": "travel/img/flags/co/mt/mt-32.png",
-"large": "travel/img/flags/co/mt/mt-128.png",
 "svg": "travel/img/flags/co/mt/flag.svg",
 "is_locked": false
 }
@@ -1526,10 +946,6 @@
 "pk": 118,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/2e/Flag_of_the_Marshall_Islands.svg",
-"base_dir": "co",
-"ref": "mh",
-"thumb": "travel/img/flags/co/mh/mh-32.png",
-"large": "travel/img/flags/co/mh/mh-128.png",
 "svg": "travel/img/flags/co/mh/flag.svg",
 "is_locked": false
 }
@@ -1538,10 +954,6 @@
 "pk": 119,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/52/Flag_of_Martinique.svg",
-"base_dir": "co",
-"ref": "mq",
-"thumb": "travel/img/flags/co/mq/mq-32.png",
-"large": "travel/img/flags/co/mq/mq-128.png",
 "svg": "travel/img/flags/co/mq/flag.svg",
 "is_locked": false
 }
@@ -1550,10 +962,6 @@
 "pk": 120,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/43/Flag_of_Mauritania.svg",
-"base_dir": "co",
-"ref": "mr",
-"thumb": "travel/img/flags/co/mr/mr-32.png",
-"large": "travel/img/flags/co/mr/mr-128.png",
 "svg": "travel/img/flags/co/mr/flag.svg",
 "is_locked": false
 }
@@ -1562,10 +970,6 @@
 "pk": 121,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Mauritius.svg",
-"base_dir": "co",
-"ref": "mu",
-"thumb": "travel/img/flags/co/mu/mu-32.png",
-"large": "travel/img/flags/co/mu/mu-128.png",
 "svg": "travel/img/flags/co/mu/flag.svg",
 "is_locked": false
 }
@@ -1574,10 +978,6 @@
 "pk": 122,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg",
-"base_dir": "co",
-"ref": "mx",
-"thumb": "travel/img/flags/co/mx/mx-32.png",
-"large": "travel/img/flags/co/mx/mx-128.png",
 "svg": "travel/img/flags/co/mx/flag.svg",
 "is_locked": false
 }
@@ -1586,10 +986,6 @@
 "pk": 123,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/27/Flag_of_Moldova.svg",
-"base_dir": "co",
-"ref": "md",
-"thumb": "travel/img/flags/co/md/md-32.png",
-"large": "travel/img/flags/co/md/md-128.png",
 "svg": "travel/img/flags/co/md/flag.svg",
 "is_locked": false
 }
@@ -1598,10 +994,6 @@
 "pk": 124,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ea/Flag_of_Monaco.svg",
-"base_dir": "co",
-"ref": "mc",
-"thumb": "travel/img/flags/co/mc/mc-32.png",
-"large": "travel/img/flags/co/mc/mc-128.png",
 "svg": "travel/img/flags/co/mc/flag.svg",
 "is_locked": false
 }
@@ -1610,10 +1002,6 @@
 "pk": 125,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Mongolia.svg",
-"base_dir": "co",
-"ref": "mn",
-"thumb": "travel/img/flags/co/mn/mn-32.png",
-"large": "travel/img/flags/co/mn/mn-128.png",
 "svg": "travel/img/flags/co/mn/flag.svg",
 "is_locked": false
 }
@@ -1622,10 +1010,6 @@
 "pk": 126,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Montenegro.svg",
-"base_dir": "co",
-"ref": "me",
-"thumb": "travel/img/flags/co/me/me-32.png",
-"large": "travel/img/flags/co/me/me-128.png",
 "svg": "travel/img/flags/co/me/flag.svg",
 "is_locked": false
 }
@@ -1634,10 +1018,6 @@
 "pk": 127,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/2c/Flag_of_Morocco.svg",
-"base_dir": "co",
-"ref": "ma",
-"thumb": "travel/img/flags/co/ma/ma-32.png",
-"large": "travel/img/flags/co/ma/ma-128.png",
 "svg": "travel/img/flags/co/ma/flag.svg",
 "is_locked": false
 }
@@ -1646,10 +1026,6 @@
 "pk": 128,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Mozambique.svg",
-"base_dir": "co",
-"ref": "mz",
-"thumb": "travel/img/flags/co/mz/mz-32.png",
-"large": "travel/img/flags/co/mz/mz-128.png",
 "svg": "travel/img/flags/co/mz/flag.svg",
 "is_locked": false
 }
@@ -1658,10 +1034,6 @@
 "pk": 129,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Namibia.svg",
-"base_dir": "co",
-"ref": "na",
-"thumb": "travel/img/flags/co/na/na-32.png",
-"large": "travel/img/flags/co/na/na-128.png",
 "svg": "travel/img/flags/co/na/flag.svg",
 "is_locked": false
 }
@@ -1670,10 +1042,6 @@
 "pk": 130,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Nauru.svg",
-"base_dir": "co",
-"ref": "nr",
-"thumb": "travel/img/flags/co/nr/nr-32.png",
-"large": "travel/img/flags/co/nr/nr-128.png",
 "svg": "travel/img/flags/co/nr/flag.svg",
 "is_locked": false
 }
@@ -1682,10 +1050,6 @@
 "pk": 131,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Nepal.svg",
-"base_dir": "co",
-"ref": "np",
-"thumb": "travel/img/flags/co/np/np-32.png",
-"large": "travel/img/flags/co/np/np-128.png",
 "svg": "travel/img/flags/co/np/flag.svg",
 "is_locked": false
 }
@@ -1694,10 +1058,6 @@
 "pk": 132,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d3/Flag_of_Sint_Maarten.svg",
-"base_dir": "co",
-"ref": "an",
-"thumb": "travel/img/flags/co/an/an-32.png",
-"large": "travel/img/flags/co/an/an-128.png",
 "svg": "travel/img/flags/co/an/flag.svg",
 "is_locked": false
 }
@@ -1706,10 +1066,6 @@
 "pk": 133,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg",
-"base_dir": "co",
-"ref": "nl",
-"thumb": "travel/img/flags/co/nl/nl-32.png",
-"large": "travel/img/flags/co/nl/nl-128.png",
 "svg": "travel/img/flags/co/nl/flag.svg",
 "is_locked": false
 }
@@ -1718,10 +1074,6 @@
 "pk": 134,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg",
-"base_dir": "co",
-"ref": "nz",
-"thumb": "travel/img/flags/co/nz/nz-32.png",
-"large": "travel/img/flags/co/nz/nz-128.png",
 "svg": "travel/img/flags/co/nz/flag.svg",
 "is_locked": false
 }
@@ -1730,10 +1082,6 @@
 "pk": 135,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Nicaragua.svg",
-"base_dir": "co",
-"ref": "ni",
-"thumb": "travel/img/flags/co/ni/ni-32.png",
-"large": "travel/img/flags/co/ni/ni-128.png",
 "svg": "travel/img/flags/co/ni/flag.svg",
 "is_locked": false
 }
@@ -1742,10 +1090,6 @@
 "pk": 136,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f4/Flag_of_Niger.svg",
-"base_dir": "co",
-"ref": "ne",
-"thumb": "travel/img/flags/co/ne/ne-32.png",
-"large": "travel/img/flags/co/ne/ne-128.png",
 "svg": "travel/img/flags/co/ne/flag.svg",
 "is_locked": false
 }
@@ -1754,10 +1098,6 @@
 "pk": 137,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_Nigeria.svg",
-"base_dir": "co",
-"ref": "ng",
-"thumb": "travel/img/flags/co/ng/ng-32.png",
-"large": "travel/img/flags/co/ng/ng-128.png",
 "svg": "travel/img/flags/co/ng/flag.svg",
 "is_locked": false
 }
@@ -1766,10 +1106,6 @@
 "pk": 138,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/51/Flag_of_North_Korea.svg",
-"base_dir": "co",
-"ref": "kp",
-"thumb": "travel/img/flags/co/kp/kp-32.png",
-"large": "travel/img/flags/co/kp/kp-128.png",
 "svg": "travel/img/flags/co/kp/flag.svg",
 "is_locked": false
 }
@@ -1778,10 +1114,6 @@
 "pk": 139,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/2/20/St_Patrick%27s_saltire.svg",
-"base_dir": "co",
-"ref": "xi",
-"thumb": "travel/img/flags/co/xi/xi-32.png",
-"large": "travel/img/flags/co/xi/xi-128.png",
 "svg": "travel/img/flags/co/xi/flag.svg",
 "is_locked": false
 }
@@ -1790,10 +1122,6 @@
 "pk": 140,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
-"base_dir": "co",
-"ref": "no",
-"thumb": "travel/img/flags/co/no/no-32.png",
-"large": "travel/img/flags/co/no/no-128.png",
 "svg": "travel/img/flags/co/no/flag.svg",
 "is_locked": false
 }
@@ -1802,10 +1130,6 @@
 "pk": 141,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Palestine.svg",
-"base_dir": "co",
-"ref": "ps",
-"thumb": "travel/img/flags/co/ps/ps-32.png",
-"large": "travel/img/flags/co/ps/ps-128.png",
 "svg": "travel/img/flags/co/ps/flag.svg",
 "is_locked": false
 }
@@ -1814,10 +1138,6 @@
 "pk": 142,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Oman.svg",
-"base_dir": "co",
-"ref": "om",
-"thumb": "travel/img/flags/co/om/om-32.png",
-"large": "travel/img/flags/co/om/om-128.png",
 "svg": "travel/img/flags/co/om/flag.svg",
 "is_locked": false
 }
@@ -1826,10 +1146,6 @@
 "pk": 143,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg",
-"base_dir": "co",
-"ref": "pk",
-"thumb": "travel/img/flags/co/pk/pk-32.png",
-"large": "travel/img/flags/co/pk/pk-128.png",
 "svg": "travel/img/flags/co/pk/flag.svg",
 "is_locked": false
 }
@@ -1838,10 +1154,6 @@
 "pk": 144,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Palau.svg",
-"base_dir": "co",
-"ref": "pw",
-"thumb": "travel/img/flags/co/pw/pw-32.png",
-"large": "travel/img/flags/co/pw/pw-128.png",
 "svg": "travel/img/flags/co/pw/flag.svg",
 "is_locked": false
 }
@@ -1850,10 +1162,6 @@
 "pk": 145,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/ab/Flag_of_Panama.svg",
-"base_dir": "co",
-"ref": "pa",
-"thumb": "travel/img/flags/co/pa/pa-32.png",
-"large": "travel/img/flags/co/pa/pa-128.png",
 "svg": "travel/img/flags/co/pa/flag.svg",
 "is_locked": false
 }
@@ -1862,10 +1170,6 @@
 "pk": 146,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e3/Flag_of_Papua_New_Guinea.svg",
-"base_dir": "co",
-"ref": "pg",
-"thumb": "travel/img/flags/co/pg/pg-32.png",
-"large": "travel/img/flags/co/pg/pg-128.png",
 "svg": "travel/img/flags/co/pg/flag.svg",
 "is_locked": false
 }
@@ -1874,10 +1178,6 @@
 "pk": 147,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/27/Flag_of_Paraguay.svg",
-"base_dir": "co",
-"ref": "py",
-"thumb": "travel/img/flags/co/py/py-32.png",
-"large": "travel/img/flags/co/py/py-128.png",
 "svg": "travel/img/flags/co/py/flag.svg",
 "is_locked": false
 }
@@ -1886,10 +1186,6 @@
 "pk": 148,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Peru.svg",
-"base_dir": "co",
-"ref": "pe",
-"thumb": "travel/img/flags/co/pe/pe-32.png",
-"large": "travel/img/flags/co/pe/pe-128.png",
 "svg": "travel/img/flags/co/pe/flag.svg",
 "is_locked": false
 }
@@ -1898,10 +1194,6 @@
 "pk": 149,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/99/Flag_of_the_Philippines.svg",
-"base_dir": "co",
-"ref": "ph",
-"thumb": "travel/img/flags/co/ph/ph-32.png",
-"large": "travel/img/flags/co/ph/ph-128.png",
 "svg": "travel/img/flags/co/ph/flag.svg",
 "is_locked": false
 }
@@ -1910,10 +1202,6 @@
 "pk": 150,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/12/Flag_of_Poland.svg",
-"base_dir": "co",
-"ref": "pl",
-"thumb": "travel/img/flags/co/pl/pl-32.png",
-"large": "travel/img/flags/co/pl/pl-128.png",
 "svg": "travel/img/flags/co/pl/flag.svg",
 "is_locked": false
 }
@@ -1922,10 +1210,6 @@
 "pk": 151,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg",
-"base_dir": "co",
-"ref": "pt",
-"thumb": "travel/img/flags/co/pt/pt-32.png",
-"large": "travel/img/flags/co/pt/pt-128.png",
 "svg": "travel/img/flags/co/pt/flag.svg",
 "is_locked": false
 }
@@ -1934,10 +1218,6 @@
 "pk": 152,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Qatar.svg",
-"base_dir": "co",
-"ref": "qa",
-"thumb": "travel/img/flags/co/qa/qa-32.png",
-"large": "travel/img/flags/co/qa/qa-128.png",
 "svg": "travel/img/flags/co/qa/flag.svg",
 "is_locked": false
 }
@@ -1946,10 +1226,6 @@
 "pk": 153,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Romania.svg",
-"base_dir": "co",
-"ref": "ro",
-"thumb": "travel/img/flags/co/ro/ro-32.png",
-"large": "travel/img/flags/co/ro/ro-128.png",
 "svg": "travel/img/flags/co/ro/flag.svg",
 "is_locked": false
 }
@@ -1958,10 +1234,6 @@
 "pk": 154,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg",
-"base_dir": "co",
-"ref": "ru",
-"thumb": "travel/img/flags/co/ru/ru-32.png",
-"large": "travel/img/flags/co/ru/ru-128.png",
 "svg": "travel/img/flags/co/ru/flag.svg",
 "is_locked": false
 }
@@ -1970,10 +1242,6 @@
 "pk": 155,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Rwanda.svg",
-"base_dir": "co",
-"ref": "rw",
-"thumb": "travel/img/flags/co/rw/rw-32.png",
-"large": "travel/img/flags/co/rw/rw-128.png",
 "svg": "travel/img/flags/co/rw/flag.svg",
 "is_locked": false
 }
@@ -1982,10 +1250,6 @@
 "pk": 156,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/df/Flag_of_Saint_Barthelemy_%28local%29.svg",
-"base_dir": "co",
-"ref": "bl",
-"thumb": "travel/img/flags/co/bl/bl-32.png",
-"large": "travel/img/flags/co/bl/bl-128.png",
 "svg": "travel/img/flags/co/bl/flag.svg",
 "is_locked": false
 }
@@ -1994,10 +1258,6 @@
 "pk": 157,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Saint_Kitts_and_Nevis.svg",
-"base_dir": "co",
-"ref": "kn",
-"thumb": "travel/img/flags/co/kn/kn-32.png",
-"large": "travel/img/flags/co/kn/kn-128.png",
 "svg": "travel/img/flags/co/kn/flag.svg",
 "is_locked": false
 }
@@ -2006,10 +1266,6 @@
 "pk": 158,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Saint_Lucia.svg",
-"base_dir": "co",
-"ref": "lc",
-"thumb": "travel/img/flags/co/lc/lc-32.png",
-"large": "travel/img/flags/co/lc/lc-128.png",
 "svg": "travel/img/flags/co/lc/flag.svg",
 "is_locked": false
 }
@@ -2018,10 +1274,6 @@
 "pk": 159,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/6d/Flag_of_Saint_Vincent_and_the_Grenadines.svg",
-"base_dir": "co",
-"ref": "vc",
-"thumb": "travel/img/flags/co/vc/vc-32.png",
-"large": "travel/img/flags/co/vc/vc-128.png",
 "svg": "travel/img/flags/co/vc/flag.svg",
 "is_locked": false
 }
@@ -2030,10 +1282,6 @@
 "pk": 160,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/31/Flag_of_Samoa.svg",
-"base_dir": "co",
-"ref": "ws",
-"thumb": "travel/img/flags/co/ws/ws-32.png",
-"large": "travel/img/flags/co/ws/ws-128.png",
 "svg": "travel/img/flags/co/ws/flag.svg",
 "is_locked": false
 }
@@ -2042,10 +1290,6 @@
 "pk": 161,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_San_Marino.svg",
-"base_dir": "co",
-"ref": "sm",
-"thumb": "travel/img/flags/co/sm/sm-32.png",
-"large": "travel/img/flags/co/sm/sm-128.png",
 "svg": "travel/img/flags/co/sm/flag.svg",
 "is_locked": false
 }
@@ -2054,10 +1298,6 @@
 "pk": 162,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4f/Flag_of_Sao_Tome_and_Principe.svg",
-"base_dir": "co",
-"ref": "st",
-"thumb": "travel/img/flags/co/st/st-32.png",
-"large": "travel/img/flags/co/st/st-128.png",
 "svg": "travel/img/flags/co/st/flag.svg",
 "is_locked": false
 }
@@ -2066,10 +1306,6 @@
 "pk": 163,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg",
-"base_dir": "co",
-"ref": "sa",
-"thumb": "travel/img/flags/co/sa/sa-32.png",
-"large": "travel/img/flags/co/sa/sa-128.png",
 "svg": "travel/img/flags/co/sa/flag.svg",
 "is_locked": false
 }
@@ -2078,10 +1314,6 @@
 "pk": 164,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/10/Flag_of_Scotland.svg",
-"base_dir": "co",
-"ref": "xs",
-"thumb": "travel/img/flags/co/xs/xs-32.png",
-"large": "travel/img/flags/co/xs/xs-128.png",
 "svg": "travel/img/flags/co/xs/flag.svg",
 "is_locked": false
 }
@@ -2090,10 +1322,6 @@
 "pk": 165,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fd/Flag_of_Senegal.svg",
-"base_dir": "co",
-"ref": "sn",
-"thumb": "travel/img/flags/co/sn/sn-32.png",
-"large": "travel/img/flags/co/sn/sn-128.png",
 "svg": "travel/img/flags/co/sn/flag.svg",
 "is_locked": false
 }
@@ -2102,10 +1330,6 @@
 "pk": 166,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/ff/Flag_of_Serbia.svg",
-"base_dir": "co",
-"ref": "rs",
-"thumb": "travel/img/flags/co/rs/rs-32.png",
-"large": "travel/img/flags/co/rs/rs-128.png",
 "svg": "travel/img/flags/co/rs/flag.svg",
 "is_locked": false
 }
@@ -2114,10 +1338,6 @@
 "pk": 167,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Seychelles.svg",
-"base_dir": "co",
-"ref": "sc",
-"thumb": "travel/img/flags/co/sc/sc-32.png",
-"large": "travel/img/flags/co/sc/sc-128.png",
 "svg": "travel/img/flags/co/sc/flag.svg",
 "is_locked": false
 }
@@ -2126,10 +1346,6 @@
 "pk": 168,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Sierra_Leone.svg",
-"base_dir": "co",
-"ref": "sl",
-"thumb": "travel/img/flags/co/sl/sl-32.png",
-"large": "travel/img/flags/co/sl/sl-128.png",
 "svg": "travel/img/flags/co/sl/flag.svg",
 "is_locked": false
 }
@@ -2138,10 +1354,6 @@
 "pk": 169,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg",
-"base_dir": "co",
-"ref": "sg",
-"thumb": "travel/img/flags/co/sg/sg-32.png",
-"large": "travel/img/flags/co/sg/sg-128.png",
 "svg": "travel/img/flags/co/sg/flag.svg",
 "is_locked": false
 }
@@ -2150,10 +1362,6 @@
 "pk": 170,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e6/Flag_of_Slovakia.svg",
-"base_dir": "co",
-"ref": "sk",
-"thumb": "travel/img/flags/co/sk/sk-32.png",
-"large": "travel/img/flags/co/sk/sk-128.png",
 "svg": "travel/img/flags/co/sk/flag.svg",
 "is_locked": false
 }
@@ -2162,10 +1370,6 @@
 "pk": 171,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f0/Flag_of_Slovenia.svg",
-"base_dir": "co",
-"ref": "si",
-"thumb": "travel/img/flags/co/si/si-32.png",
-"large": "travel/img/flags/co/si/si-128.png",
 "svg": "travel/img/flags/co/si/flag.svg",
 "is_locked": false
 }
@@ -2174,10 +1378,6 @@
 "pk": 172,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_the_Solomon_Islands.svg",
-"base_dir": "co",
-"ref": "sb",
-"thumb": "travel/img/flags/co/sb/sb-32.png",
-"large": "travel/img/flags/co/sb/sb-128.png",
 "svg": "travel/img/flags/co/sb/flag.svg",
 "is_locked": false
 }
@@ -2186,10 +1386,6 @@
 "pk": 173,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Somalia.svg",
-"base_dir": "co",
-"ref": "so",
-"thumb": "travel/img/flags/co/so/so-32.png",
-"large": "travel/img/flags/co/so/so-128.png",
 "svg": "travel/img/flags/co/so/flag.svg",
 "is_locked": false
 }
@@ -2198,10 +1394,6 @@
 "pk": 174,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_South_Africa.svg",
-"base_dir": "co",
-"ref": "za",
-"thumb": "travel/img/flags/co/za/za-32.png",
-"large": "travel/img/flags/co/za/za-128.png",
 "svg": "travel/img/flags/co/za/flag.svg",
 "is_locked": false
 }
@@ -2210,10 +1402,6 @@
 "pk": 175,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg",
-"base_dir": "co",
-"ref": "kr",
-"thumb": "travel/img/flags/co/kr/kr-32.png",
-"large": "travel/img/flags/co/kr/kr-128.png",
 "svg": "travel/img/flags/co/kr/flag.svg",
 "is_locked": false
 }
@@ -2222,10 +1410,6 @@
 "pk": 176,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg",
-"base_dir": "co",
-"ref": "es",
-"thumb": "travel/img/flags/co/es/es-32.png",
-"large": "travel/img/flags/co/es/es-128.png",
 "svg": "travel/img/flags/co/es/flag.svg",
 "is_locked": false
 }
@@ -2234,10 +1418,6 @@
 "pk": 177,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Sri_Lanka.svg",
-"base_dir": "co",
-"ref": "lk",
-"thumb": "travel/img/flags/co/lk/lk-32.png",
-"large": "travel/img/flags/co/lk/lk-128.png",
 "svg": "travel/img/flags/co/lk/flag.svg",
 "is_locked": false
 }
@@ -2246,10 +1426,6 @@
 "pk": 178,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Sudan.svg",
-"base_dir": "co",
-"ref": "sd",
-"thumb": "travel/img/flags/co/sd/sd-32.png",
-"large": "travel/img/flags/co/sd/sd-128.png",
 "svg": "travel/img/flags/co/sd/flag.svg",
 "is_locked": false
 }
@@ -2258,10 +1434,6 @@
 "pk": 179,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/60/Flag_of_Suriname.svg",
-"base_dir": "co",
-"ref": "sr",
-"thumb": "travel/img/flags/co/sr/sr-32.png",
-"large": "travel/img/flags/co/sr/sr-128.png",
 "svg": "travel/img/flags/co/sr/flag.svg",
 "is_locked": false
 }
@@ -2270,10 +1442,6 @@
 "pk": 180,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1e/Flag_of_Swaziland.svg",
-"base_dir": "co",
-"ref": "sz",
-"thumb": "travel/img/flags/co/sz/sz-32.png",
-"large": "travel/img/flags/co/sz/sz-128.png",
 "svg": "travel/img/flags/co/sz/flag.svg",
 "is_locked": false
 }
@@ -2282,10 +1450,6 @@
 "pk": 181,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg",
-"base_dir": "co",
-"ref": "se",
-"thumb": "travel/img/flags/co/se/se-32.png",
-"large": "travel/img/flags/co/se/se-128.png",
 "svg": "travel/img/flags/co/se/flag.svg",
 "is_locked": false
 }
@@ -2294,10 +1458,6 @@
 "pk": 182,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg",
-"base_dir": "co",
-"ref": "ch",
-"thumb": "travel/img/flags/co/ch/ch-32.png",
-"large": "travel/img/flags/co/ch/ch-128.png",
 "svg": "travel/img/flags/co/ch/flag.svg",
 "is_locked": false
 }
@@ -2306,10 +1466,6 @@
 "pk": 183,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/53/Flag_of_Syria.svg",
-"base_dir": "co",
-"ref": "sy",
-"thumb": "travel/img/flags/co/sy/sy-32.png",
-"large": "travel/img/flags/co/sy/sy-128.png",
 "svg": "travel/img/flags/co/sy/flag.svg",
 "is_locked": false
 }
@@ -2318,10 +1474,6 @@
 "pk": 184,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/72/Flag_of_the_Republic_of_China.svg",
-"base_dir": "co",
-"ref": "tw",
-"thumb": "travel/img/flags/co/tw/tw-32.png",
-"large": "travel/img/flags/co/tw/tw-128.png",
 "svg": "travel/img/flags/co/tw/flag.svg",
 "is_locked": false
 }
@@ -2330,10 +1482,6 @@
 "pk": 185,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Tajikistan.svg",
-"base_dir": "co",
-"ref": "tj",
-"thumb": "travel/img/flags/co/tj/tj-32.png",
-"large": "travel/img/flags/co/tj/tj-128.png",
 "svg": "travel/img/flags/co/tj/flag.svg",
 "is_locked": false
 }
@@ -2342,10 +1490,6 @@
 "pk": 186,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Tanzania.svg",
-"base_dir": "co",
-"ref": "tz",
-"thumb": "travel/img/flags/co/tz/tz-32.png",
-"large": "travel/img/flags/co/tz/tz-128.png",
 "svg": "travel/img/flags/co/tz/flag.svg",
 "is_locked": false
 }
@@ -2354,10 +1498,6 @@
 "pk": 187,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg",
-"base_dir": "co",
-"ref": "th",
-"thumb": "travel/img/flags/co/th/th-32.png",
-"large": "travel/img/flags/co/th/th-128.png",
 "svg": "travel/img/flags/co/th/flag.svg",
 "is_locked": false
 }
@@ -2366,10 +1506,6 @@
 "pk": 188,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/68/Flag_of_Togo.svg",
-"base_dir": "co",
-"ref": "tg",
-"thumb": "travel/img/flags/co/tg/tg-32.png",
-"large": "travel/img/flags/co/tg/tg-128.png",
 "svg": "travel/img/flags/co/tg/flag.svg",
 "is_locked": false
 }
@@ -2378,10 +1514,6 @@
 "pk": 189,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Tonga.svg",
-"base_dir": "co",
-"ref": "to",
-"thumb": "travel/img/flags/co/to/to-32.png",
-"large": "travel/img/flags/co/to/to-128.png",
 "svg": "travel/img/flags/co/to/flag.svg",
 "is_locked": false
 }
@@ -2390,10 +1522,6 @@
 "pk": 190,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/64/Flag_of_Trinidad_and_Tobago.svg",
-"base_dir": "co",
-"ref": "tt",
-"thumb": "travel/img/flags/co/tt/tt-32.png",
-"large": "travel/img/flags/co/tt/tt-128.png",
 "svg": "travel/img/flags/co/tt/flag.svg",
 "is_locked": false
 }
@@ -2402,10 +1530,6 @@
 "pk": 191,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Tunisia.svg",
-"base_dir": "co",
-"ref": "tn",
-"thumb": "travel/img/flags/co/tn/tn-32.png",
-"large": "travel/img/flags/co/tn/tn-128.png",
 "svg": "travel/img/flags/co/tn/flag.svg",
 "is_locked": false
 }
@@ -2414,10 +1538,6 @@
 "pk": 192,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg",
-"base_dir": "co",
-"ref": "tr",
-"thumb": "travel/img/flags/co/tr/tr-32.png",
-"large": "travel/img/flags/co/tr/tr-128.png",
 "svg": "travel/img/flags/co/tr/flag.svg",
 "is_locked": false
 }
@@ -2426,10 +1546,6 @@
 "pk": 193,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1b/Flag_of_Turkmenistan.svg",
-"base_dir": "co",
-"ref": "tm",
-"thumb": "travel/img/flags/co/tm/tm-32.png",
-"large": "travel/img/flags/co/tm/tm-128.png",
 "svg": "travel/img/flags/co/tm/flag.svg",
 "is_locked": false
 }
@@ -2438,10 +1554,6 @@
 "pk": 194,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_the_Turks_and_Caicos_Islands.svg",
-"base_dir": "co",
-"ref": "tc",
-"thumb": "travel/img/flags/co/tc/tc-32.png",
-"large": "travel/img/flags/co/tc/tc-128.png",
 "svg": "travel/img/flags/co/tc/flag.svg",
 "is_locked": false
 }
@@ -2450,10 +1562,6 @@
 "pk": 195,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/38/Flag_of_Tuvalu.svg",
-"base_dir": "co",
-"ref": "tv",
-"thumb": "travel/img/flags/co/tv/tv-32.png",
-"large": "travel/img/flags/co/tv/tv-128.png",
 "svg": "travel/img/flags/co/tv/flag.svg",
 "is_locked": false
 }
@@ -2462,10 +1570,6 @@
 "pk": 196,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4e/Flag_of_Uganda.svg",
-"base_dir": "co",
-"ref": "ug",
-"thumb": "travel/img/flags/co/ug/ug-32.png",
-"large": "travel/img/flags/co/ug/ug-128.png",
 "svg": "travel/img/flags/co/ug/flag.svg",
 "is_locked": false
 }
@@ -2474,10 +1578,6 @@
 "pk": 197,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg",
-"base_dir": "co",
-"ref": "ua",
-"thumb": "travel/img/flags/co/ua/ua-32.png",
-"large": "travel/img/flags/co/ua/ua-128.png",
 "svg": "travel/img/flags/co/ua/flag.svg",
 "is_locked": false
 }
@@ -2486,10 +1586,6 @@
 "pk": 198,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_United_Arab_Emirates.svg",
-"base_dir": "co",
-"ref": "ae",
-"thumb": "travel/img/flags/co/ae/ae-32.png",
-"large": "travel/img/flags/co/ae/ae-128.png",
 "svg": "travel/img/flags/co/ae/flag.svg",
 "is_locked": false
 }
@@ -2498,10 +1594,6 @@
 "pk": 199,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/ae/Flag_of_the_United_Kingdom.svg",
-"base_dir": "co",
-"ref": "gb",
-"thumb": "travel/img/flags/co/gb/gb-32.png",
-"large": "travel/img/flags/co/gb/gb-128.png",
 "svg": "travel/img/flags/co/gb/flag.svg",
 "is_locked": false
 }
@@ -2510,10 +1602,6 @@
 "pk": 200,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg",
-"base_dir": "co",
-"ref": "us",
-"thumb": "travel/img/flags/co/us/us-32.png",
-"large": "travel/img/flags/co/us/us-128.png",
 "svg": "travel/img/flags/co/us/flag.svg",
 "is_locked": false
 }
@@ -2522,10 +1610,6 @@
 "pk": 201,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Uruguay.svg",
-"base_dir": "co",
-"ref": "uy",
-"thumb": "travel/img/flags/co/uy/uy-32.png",
-"large": "travel/img/flags/co/uy/uy-128.png",
 "svg": "travel/img/flags/co/uy/flag.svg",
 "is_locked": false
 }
@@ -2534,10 +1618,6 @@
 "pk": 202,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/84/Flag_of_Uzbekistan.svg",
-"base_dir": "co",
-"ref": "uz",
-"thumb": "travel/img/flags/co/uz/uz-32.png",
-"large": "travel/img/flags/co/uz/uz-128.png",
 "svg": "travel/img/flags/co/uz/flag.svg",
 "is_locked": false
 }
@@ -2546,10 +1626,6 @@
 "pk": 203,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Vanuatu.svg",
-"base_dir": "co",
-"ref": "vu",
-"thumb": "travel/img/flags/co/vu/vu-32.png",
-"large": "travel/img/flags/co/vu/vu-128.png",
 "svg": "travel/img/flags/co/vu/flag.svg",
 "is_locked": false
 }
@@ -2558,10 +1634,6 @@
 "pk": 204,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_the_Vatican_City.svg",
-"base_dir": "co",
-"ref": "va",
-"thumb": "travel/img/flags/co/va/va-32.png",
-"large": "travel/img/flags/co/va/va-128.png",
 "svg": "travel/img/flags/co/va/flag.svg",
 "is_locked": false
 }
@@ -2570,10 +1642,6 @@
 "pk": 205,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Venezuela.svg",
-"base_dir": "co",
-"ref": "ve",
-"thumb": "travel/img/flags/co/ve/ve-32.png",
-"large": "travel/img/flags/co/ve/ve-128.png",
 "svg": "travel/img/flags/co/ve/flag.svg",
 "is_locked": false
 }
@@ -2582,10 +1650,6 @@
 "pk": 206,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg",
-"base_dir": "co",
-"ref": "vn",
-"thumb": "travel/img/flags/co/vn/vn-32.png",
-"large": "travel/img/flags/co/vn/vn-128.png",
 "svg": "travel/img/flags/co/vn/flag.svg",
 "is_locked": false
 }
@@ -2594,10 +1658,6 @@
 "pk": 207,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/2/26/Flag_of_the_Sahrawi_Arab_Democratic_Republic.svg",
-"base_dir": "co",
-"ref": "eh",
-"thumb": "travel/img/flags/co/eh/eh-32.png",
-"large": "travel/img/flags/co/eh/eh-128.png",
 "svg": "travel/img/flags/co/eh/flag.svg",
 "is_locked": false
 }
@@ -2606,10 +1666,6 @@
 "pk": 208,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/89/Flag_of_Yemen.svg",
-"base_dir": "co",
-"ref": "ye",
-"thumb": "travel/img/flags/co/ye/ye-32.png",
-"large": "travel/img/flags/co/ye/ye-128.png",
 "svg": "travel/img/flags/co/ye/flag.svg",
 "is_locked": false
 }
@@ -2618,10 +1674,6 @@
 "pk": 209,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/06/Flag_of_Zambia.svg",
-"base_dir": "co",
-"ref": "zm",
-"thumb": "travel/img/flags/co/zm/zm-32.png",
-"large": "travel/img/flags/co/zm/zm-128.png",
 "svg": "travel/img/flags/co/zm/flag.svg",
 "is_locked": false
 }
@@ -2630,10 +1682,6 @@
 "pk": 210,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/6a/Flag_of_Zimbabwe.svg",
-"base_dir": "co",
-"ref": "zw",
-"thumb": "travel/img/flags/co/zw/zw-32.png",
-"large": "travel/img/flags/co/zw/zw-128.png",
 "svg": "travel/img/flags/co/zw/flag.svg",
 "is_locked": false
 }
@@ -2642,10 +1690,6 @@
 "pk": 211,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/5/52/Flag_of_%C3%85land.svg",
-"base_dir": "co",
-"ref": "ax",
-"thumb": "travel/img/flags/co/ax/ax-32.png",
-"large": "travel/img/flags/co/ax/ax-128.png",
 "svg": "travel/img/flags/co/ax/flag.svg",
 "is_locked": false
 }
@@ -2654,10 +1698,6 @@
 "pk": 212,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/be/Flag_of_England.svg",
-"base_dir": "co",
-"ref": "xe",
-"thumb": "travel/img/flags/co/xe/xe-32.png",
-"large": "travel/img/flags/co/xe/xe-128.png",
 "svg": "travel/img/flags/co/xe/flag.svg",
 "is_locked": false
 }
@@ -2666,10 +1706,6 @@
 "pk": 213,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e6/Flag_of_Alaska.svg",
-"base_dir": "st/us",
-"ref": "ak",
-"thumb": "travel/img/flags/st/us/ak/ak-32.png",
-"large": "travel/img/flags/st/us/ak/ak-128.png",
 "svg": "travel/img/flags/st/us/ak/flag.svg",
 "is_locked": false
 }
@@ -2678,10 +1714,6 @@
 "pk": 214,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Alabama.svg",
-"base_dir": "st/us",
-"ref": "al",
-"thumb": "travel/img/flags/st/us/al/al-32.png",
-"large": "travel/img/flags/st/us/al/al-128.png",
 "svg": "travel/img/flags/st/us/al/flag.svg",
 "is_locked": false
 }
@@ -2690,10 +1722,6 @@
 "pk": 215,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg",
-"base_dir": "st/us",
-"ref": "ar",
-"thumb": "travel/img/flags/st/us/ar/ar-32.png",
-"large": "travel/img/flags/st/us/ar/ar-128.png",
 "svg": "travel/img/flags/st/us/ar/flag.svg",
 "is_locked": false
 }
@@ -2702,10 +1730,6 @@
 "pk": 216,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arizona.svg",
-"base_dir": "st/us",
-"ref": "az",
-"thumb": "travel/img/flags/st/us/az/az-32.png",
-"large": "travel/img/flags/st/us/az/az-128.png",
 "svg": "travel/img/flags/st/us/az/flag.svg",
 "is_locked": false
 }
@@ -2714,10 +1738,6 @@
 "pk": 217,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg",
-"base_dir": "st/us",
-"ref": "ca",
-"thumb": "travel/img/flags/st/us/ca/ca-32.png",
-"large": "travel/img/flags/st/us/ca/ca-128.png",
 "svg": "travel/img/flags/st/us/ca/flag.svg",
 "is_locked": false
 }
@@ -2726,10 +1746,6 @@
 "pk": 218,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Colorado.svg",
-"base_dir": "st/us",
-"ref": "co",
-"thumb": "travel/img/flags/st/us/co/co-32.png",
-"large": "travel/img/flags/st/us/co/co-128.png",
 "svg": "travel/img/flags/st/us/co/flag.svg",
 "is_locked": false
 }
@@ -2738,10 +1754,6 @@
 "pk": 219,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/96/Flag_of_Connecticut.svg",
-"base_dir": "st/us",
-"ref": "ct",
-"thumb": "travel/img/flags/st/us/ct/ct-32.png",
-"large": "travel/img/flags/st/us/ct/ct-128.png",
 "svg": "travel/img/flags/st/us/ct/flag.svg",
 "is_locked": false
 }
@@ -2750,10 +1762,6 @@
 "pk": 220,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c6/Flag_of_Delaware.svg",
-"base_dir": "st/us",
-"ref": "de",
-"thumb": "travel/img/flags/st/us/de/de-32.png",
-"large": "travel/img/flags/st/us/de/de-128.png",
 "svg": "travel/img/flags/st/us/de/flag.svg",
 "is_locked": false
 }
@@ -2762,10 +1770,6 @@
 "pk": 221,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg",
-"base_dir": "st/us",
-"ref": "fl",
-"thumb": "travel/img/flags/st/us/fl/fl-32.png",
-"large": "travel/img/flags/st/us/fl/fl-128.png",
 "svg": "travel/img/flags/st/us/fl/flag.svg",
 "is_locked": false
 }
@@ -2774,10 +1778,6 @@
 "pk": 222,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/54/Flag_of_Georgia_%28U.S._state%29.svg",
-"base_dir": "st/us",
-"ref": "ga",
-"thumb": "travel/img/flags/st/us/ga/ga-32.png",
-"large": "travel/img/flags/st/us/ga/ga-128.png",
 "svg": "travel/img/flags/st/us/ga/flag.svg",
 "is_locked": false
 }
@@ -2786,10 +1786,6 @@
 "pk": 223,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ef/Flag_of_Hawaii.svg",
-"base_dir": "st/us",
-"ref": "hi",
-"thumb": "travel/img/flags/st/us/hi/hi-32.png",
-"large": "travel/img/flags/st/us/hi/hi-128.png",
 "svg": "travel/img/flags/st/us/hi/flag.svg",
 "is_locked": false
 }
@@ -2798,10 +1794,6 @@
 "pk": 224,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/aa/Flag_of_Iowa.svg",
-"base_dir": "st/us",
-"ref": "ia",
-"thumb": "travel/img/flags/st/us/ia/ia-32.png",
-"large": "travel/img/flags/st/us/ia/ia-128.png",
 "svg": "travel/img/flags/st/us/ia/flag.svg",
 "is_locked": false
 }
@@ -2810,10 +1802,6 @@
 "pk": 225,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_Idaho.svg",
-"base_dir": "st/us",
-"ref": "id",
-"thumb": "travel/img/flags/st/us/id/id-32.png",
-"large": "travel/img/flags/st/us/id/id-128.png",
 "svg": "travel/img/flags/st/us/id/flag.svg",
 "is_locked": false
 }
@@ -2822,10 +1810,6 @@
 "pk": 226,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Illinois.svg",
-"base_dir": "st/us",
-"ref": "il",
-"thumb": "travel/img/flags/st/us/il/il-32.png",
-"large": "travel/img/flags/st/us/il/il-128.png",
 "svg": "travel/img/flags/st/us/il/flag.svg",
 "is_locked": false
 }
@@ -2834,10 +1818,6 @@
 "pk": 227,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/ac/Flag_of_Indiana.svg",
-"base_dir": "st/us",
-"ref": "in",
-"thumb": "travel/img/flags/st/us/in/in-32.png",
-"large": "travel/img/flags/st/us/in/in-128.png",
 "svg": "travel/img/flags/st/us/in/flag.svg",
 "is_locked": false
 }
@@ -2846,10 +1826,6 @@
 "pk": 228,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/da/Flag_of_Kansas.svg",
-"base_dir": "st/us",
-"ref": "ks",
-"thumb": "travel/img/flags/st/us/ks/ks-32.png",
-"large": "travel/img/flags/st/us/ks/ks-128.png",
 "svg": "travel/img/flags/st/us/ks/flag.svg",
 "is_locked": false
 }
@@ -2858,10 +1834,6 @@
 "pk": 229,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/8d/Flag_of_Kentucky.svg",
-"base_dir": "st/us",
-"ref": "ky",
-"thumb": "travel/img/flags/st/us/ky/ky-32.png",
-"large": "travel/img/flags/st/us/ky/ky-128.png",
 "svg": "travel/img/flags/st/us/ky/flag.svg",
 "is_locked": false
 }
@@ -2870,10 +1842,6 @@
 "pk": 230,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e0/Flag_of_Louisiana.svg",
-"base_dir": "st/us",
-"ref": "la",
-"thumb": "travel/img/flags/st/us/la/la-32.png",
-"large": "travel/img/flags/st/us/la/la-128.png",
 "svg": "travel/img/flags/st/us/la/flag.svg",
 "is_locked": false
 }
@@ -2882,10 +1850,6 @@
 "pk": 231,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f2/Flag_of_Massachusetts.svg",
-"base_dir": "st/us",
-"ref": "ma",
-"thumb": "travel/img/flags/st/us/ma/ma-32.png",
-"large": "travel/img/flags/st/us/ma/ma-128.png",
 "svg": "travel/img/flags/st/us/ma/flag.svg",
 "is_locked": false
 }
@@ -2894,10 +1858,6 @@
 "pk": 232,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Maryland.svg",
-"base_dir": "st/us",
-"ref": "md",
-"thumb": "travel/img/flags/st/us/md/md-32.png",
-"large": "travel/img/flags/st/us/md/md-128.png",
 "svg": "travel/img/flags/st/us/md/flag.svg",
 "is_locked": false
 }
@@ -2906,10 +1866,6 @@
 "pk": 233,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Maine.svg",
-"base_dir": "st/us",
-"ref": "me",
-"thumb": "travel/img/flags/st/us/me/me-32.png",
-"large": "travel/img/flags/st/us/me/me-128.png",
 "svg": "travel/img/flags/st/us/me/flag.svg",
 "is_locked": false
 }
@@ -2918,10 +1874,6 @@
 "pk": 234,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b5/Flag_of_Michigan.svg",
-"base_dir": "st/us",
-"ref": "mi",
-"thumb": "travel/img/flags/st/us/mi/mi-32.png",
-"large": "travel/img/flags/st/us/mi/mi-128.png",
 "svg": "travel/img/flags/st/us/mi/flag.svg",
 "is_locked": false
 }
@@ -2930,10 +1882,6 @@
 "pk": 235,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Minnesota.svg",
-"base_dir": "st/us",
-"ref": "mn",
-"thumb": "travel/img/flags/st/us/mn/mn-32.png",
-"large": "travel/img/flags/st/us/mn/mn-128.png",
 "svg": "travel/img/flags/st/us/mn/flag.svg",
 "is_locked": false
 }
@@ -2942,10 +1890,6 @@
 "pk": 236,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/5a/Flag_of_Missouri.svg",
-"base_dir": "st/us",
-"ref": "mo",
-"thumb": "travel/img/flags/st/us/mo/mo-32.png",
-"large": "travel/img/flags/st/us/mo/mo-128.png",
 "svg": "travel/img/flags/st/us/mo/flag.svg",
 "is_locked": false
 }
@@ -2954,10 +1898,6 @@
 "pk": 237,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_Mississippi.svg",
-"base_dir": "st/us",
-"ref": "ms",
-"thumb": "travel/img/flags/st/us/ms/ms-32.png",
-"large": "travel/img/flags/st/us/ms/ms-128.png",
 "svg": "travel/img/flags/st/us/ms/flag.svg",
 "is_locked": false
 }
@@ -2966,10 +1906,6 @@
 "pk": 238,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_Montana.svg",
-"base_dir": "st/us",
-"ref": "mt",
-"thumb": "travel/img/flags/st/us/mt/mt-32.png",
-"large": "travel/img/flags/st/us/mt/mt-128.png",
 "svg": "travel/img/flags/st/us/mt/flag.svg",
 "is_locked": false
 }
@@ -2978,10 +1914,6 @@
 "pk": 239,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bb/Flag_of_North_Carolina.svg",
-"base_dir": "st/us",
-"ref": "nc",
-"thumb": "travel/img/flags/st/us/nc/nc-32.png",
-"large": "travel/img/flags/st/us/nc/nc-128.png",
 "svg": "travel/img/flags/st/us/nc/flag.svg",
 "is_locked": false
 }
@@ -2990,10 +1922,6 @@
 "pk": 240,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_North_Dakota.svg",
-"base_dir": "st/us",
-"ref": "nd",
-"thumb": "travel/img/flags/st/us/nd/nd-32.png",
-"large": "travel/img/flags/st/us/nd/nd-128.png",
 "svg": "travel/img/flags/st/us/nd/flag.svg",
 "is_locked": false
 }
@@ -3002,10 +1930,6 @@
 "pk": 241,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4d/Flag_of_Nebraska.svg",
-"base_dir": "st/us",
-"ref": "ne",
-"thumb": "travel/img/flags/st/us/ne/ne-32.png",
-"large": "travel/img/flags/st/us/ne/ne-128.png",
 "svg": "travel/img/flags/st/us/ne/flag.svg",
 "is_locked": false
 }
@@ -3014,10 +1938,6 @@
 "pk": 242,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_New_Hampshire.svg",
-"base_dir": "st/us",
-"ref": "nh",
-"thumb": "travel/img/flags/st/us/nh/nh-32.png",
-"large": "travel/img/flags/st/us/nh/nh-128.png",
 "svg": "travel/img/flags/st/us/nh/flag.svg",
 "is_locked": false
 }
@@ -3026,10 +1946,6 @@
 "pk": 243,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/92/Flag_of_New_Jersey.svg",
-"base_dir": "st/us",
-"ref": "nj",
-"thumb": "travel/img/flags/st/us/nj/nj-32.png",
-"large": "travel/img/flags/st/us/nj/nj-128.png",
 "svg": "travel/img/flags/st/us/nj/flag.svg",
 "is_locked": false
 }
@@ -3038,10 +1954,6 @@
 "pk": 244,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_New_Mexico.svg",
-"base_dir": "st/us",
-"ref": "nm",
-"thumb": "travel/img/flags/st/us/nm/nm-32.png",
-"large": "travel/img/flags/st/us/nm/nm-128.png",
 "svg": "travel/img/flags/st/us/nm/flag.svg",
 "is_locked": false
 }
@@ -3050,10 +1962,6 @@
 "pk": 245,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f1/Flag_of_Nevada.svg",
-"base_dir": "st/us",
-"ref": "nv",
-"thumb": "travel/img/flags/st/us/nv/nv-32.png",
-"large": "travel/img/flags/st/us/nv/nv-128.png",
 "svg": "travel/img/flags/st/us/nv/flag.svg",
 "is_locked": false
 }
@@ -3062,10 +1970,6 @@
 "pk": 246,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_New_York.svg",
-"base_dir": "st/us",
-"ref": "ny",
-"thumb": "travel/img/flags/st/us/ny/ny-32.png",
-"large": "travel/img/flags/st/us/ny/ny-128.png",
 "svg": "travel/img/flags/st/us/ny/flag.svg",
 "is_locked": false
 }
@@ -3074,10 +1978,6 @@
 "pk": 247,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Ohio.svg",
-"base_dir": "st/us",
-"ref": "oh",
-"thumb": "travel/img/flags/st/us/oh/oh-32.png",
-"large": "travel/img/flags/st/us/oh/oh-128.png",
 "svg": "travel/img/flags/st/us/oh/flag.svg",
 "is_locked": false
 }
@@ -3086,10 +1986,6 @@
 "pk": 248,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/6e/Flag_of_Oklahoma.svg",
-"base_dir": "st/us",
-"ref": "ok",
-"thumb": "travel/img/flags/st/us/ok/ok-32.png",
-"large": "travel/img/flags/st/us/ok/ok-128.png",
 "svg": "travel/img/flags/st/us/ok/flag.svg",
 "is_locked": false
 }
@@ -3098,10 +1994,6 @@
 "pk": 249,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Oregon.svg",
-"base_dir": "st/us",
-"ref": "or",
-"thumb": "travel/img/flags/st/us/or/or-32.png",
-"large": "travel/img/flags/st/us/or/or-128.png",
 "svg": "travel/img/flags/st/us/or/flag.svg",
 "is_locked": false
 }
@@ -3110,10 +2002,6 @@
 "pk": 250,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Pennsylvania.svg",
-"base_dir": "st/us",
-"ref": "pa",
-"thumb": "travel/img/flags/st/us/pa/pa-32.png",
-"large": "travel/img/flags/st/us/pa/pa-128.png",
 "svg": "travel/img/flags/st/us/pa/flag.svg",
 "is_locked": false
 }
@@ -3122,10 +2010,6 @@
 "pk": 251,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Rhode_Island.svg",
-"base_dir": "st/us",
-"ref": "ri",
-"thumb": "travel/img/flags/st/us/ri/ri-32.png",
-"large": "travel/img/flags/st/us/ri/ri-128.png",
 "svg": "travel/img/flags/st/us/ri/flag.svg",
 "is_locked": false
 }
@@ -3134,10 +2018,6 @@
 "pk": 252,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/69/Flag_of_South_Carolina.svg",
-"base_dir": "st/us",
-"ref": "sc",
-"thumb": "travel/img/flags/st/us/sc/sc-32.png",
-"large": "travel/img/flags/st/us/sc/sc-128.png",
 "svg": "travel/img/flags/st/us/sc/flag.svg",
 "is_locked": false
 }
@@ -3146,10 +2026,6 @@
 "pk": 253,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_South_Dakota.svg",
-"base_dir": "st/us",
-"ref": "sd",
-"thumb": "travel/img/flags/st/us/sd/sd-32.png",
-"large": "travel/img/flags/st/us/sd/sd-128.png",
 "svg": "travel/img/flags/st/us/sd/flag.svg",
 "is_locked": false
 }
@@ -3158,10 +2034,6 @@
 "pk": 254,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Tennessee.svg",
-"base_dir": "st/us",
-"ref": "tn",
-"thumb": "travel/img/flags/st/us/tn/tn-32.png",
-"large": "travel/img/flags/st/us/tn/tn-128.png",
 "svg": "travel/img/flags/st/us/tn/flag.svg",
 "is_locked": false
 }
@@ -3170,10 +2042,6 @@
 "pk": 255,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg",
-"base_dir": "st/us",
-"ref": "tx",
-"thumb": "travel/img/flags/st/us/tx/tx-32.png",
-"large": "travel/img/flags/st/us/tx/tx-128.png",
 "svg": "travel/img/flags/st/us/tx/flag.svg",
 "is_locked": false
 }
@@ -3182,10 +2050,6 @@
 "pk": 256,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Utah.svg",
-"base_dir": "st/us",
-"ref": "ut",
-"thumb": "travel/img/flags/st/us/ut/ut-32.png",
-"large": "travel/img/flags/st/us/ut/ut-128.png",
 "svg": "travel/img/flags/st/us/ut/flag.svg",
 "is_locked": false
 }
@@ -3194,10 +2058,6 @@
 "pk": 257,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/47/Flag_of_Virginia.svg",
-"base_dir": "st/us",
-"ref": "va",
-"thumb": "travel/img/flags/st/us/va/va-32.png",
-"large": "travel/img/flags/st/us/va/va-128.png",
 "svg": "travel/img/flags/st/us/va/flag.svg",
 "is_locked": false
 }
@@ -3206,10 +2066,6 @@
 "pk": 258,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Vermont.svg",
-"base_dir": "st/us",
-"ref": "vt",
-"thumb": "travel/img/flags/st/us/vt/vt-32.png",
-"large": "travel/img/flags/st/us/vt/vt-128.png",
 "svg": "travel/img/flags/st/us/vt/flag.svg",
 "is_locked": false
 }
@@ -3218,10 +2074,6 @@
 "pk": 259,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/54/Flag_of_Washington.svg",
-"base_dir": "st/us",
-"ref": "wa",
-"thumb": "travel/img/flags/st/us/wa/wa-32.png",
-"large": "travel/img/flags/st/us/wa/wa-128.png",
 "svg": "travel/img/flags/st/us/wa/flag.svg",
 "is_locked": false
 }
@@ -3230,10 +2082,6 @@
 "pk": 260,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/22/Flag_of_Wisconsin.svg",
-"base_dir": "st/us",
-"ref": "wi",
-"thumb": "travel/img/flags/st/us/wi/wi-32.png",
-"large": "travel/img/flags/st/us/wi/wi-128.png",
 "svg": "travel/img/flags/st/us/wi/flag.svg",
 "is_locked": false
 }
@@ -3242,10 +2090,6 @@
 "pk": 261,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/22/Flag_of_West_Virginia.svg",
-"base_dir": "st/us",
-"ref": "wv",
-"thumb": "travel/img/flags/st/us/wv/wv-32.png",
-"large": "travel/img/flags/st/us/wv/wv-128.png",
 "svg": "travel/img/flags/st/us/wv/flag.svg",
 "is_locked": false
 }
@@ -3254,10 +2098,6 @@
 "pk": 262,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_Wyoming.svg",
-"base_dir": "st/us",
-"ref": "wy",
-"thumb": "travel/img/flags/st/us/wy/wy-32.png",
-"large": "travel/img/flags/st/us/wy/wy-128.png",
 "svg": "travel/img/flags/st/us/wy/flag.svg",
 "is_locked": false
 }
@@ -3266,10 +2106,6 @@
 "pk": 263,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/87/Flag_of_American_Samoa.svg",
-"base_dir": "co",
-"ref": "as",
-"thumb": "travel/img/flags/co/as/as-32.png",
-"large": "travel/img/flags/co/as/as-128.png",
 "svg": "travel/img/flags/co/as/flag.svg",
 "is_locked": false
 }
@@ -3278,10 +2114,6 @@
 "pk": 264,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Anguilla.svg",
-"base_dir": "co",
-"ref": "ai",
-"thumb": "travel/img/flags/co/ai/ai-32.png",
-"large": "travel/img/flags/co/ai/ai-128.png",
 "svg": "travel/img/flags/co/ai/flag.svg",
 "is_locked": false
 }
@@ -3290,10 +2122,6 @@
 "pk": 265,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_the_Cayman_Islands.svg",
-"base_dir": "co",
-"ref": "ky",
-"thumb": "travel/img/flags/co/ky/ky-32.png",
-"large": "travel/img/flags/co/ky/ky-128.png",
 "svg": "travel/img/flags/co/ky/flag.svg",
 "is_locked": false
 }
@@ -3302,10 +2130,6 @@
 "pk": 266,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/db/Flag_of_French_Polynesia.svg",
-"base_dir": "co",
-"ref": "pf",
-"thumb": "travel/img/flags/co/pf/pf-32.png",
-"large": "travel/img/flags/co/pf/pf-128.png",
 "svg": "travel/img/flags/co/pf/flag.svg",
 "is_locked": false
 }
@@ -3314,10 +2138,6 @@
 "pk": 267,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_Falkland_Islands.svg",
-"base_dir": "co",
-"ref": "fk",
-"thumb": "travel/img/flags/co/fk/fk-32.png",
-"large": "travel/img/flags/co/fk/fk-128.png",
 "svg": "travel/img/flags/co/fk/flag.svg",
 "is_locked": false
 }
@@ -3326,10 +2146,6 @@
 "pk": 268,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/67/Flag_of_Christmas_Island.svg",
-"base_dir": "co",
-"ref": "cx",
-"thumb": "travel/img/flags/co/cx/cx-32.png",
-"large": "travel/img/flags/co/cx/cx-128.png",
 "svg": "travel/img/flags/co/cx/flag.svg",
 "is_locked": false
 }
@@ -3338,10 +2154,6 @@
 "pk": 269,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_the_Cook_Islands.svg",
-"base_dir": "co",
-"ref": "ck",
-"thumb": "travel/img/flags/co/ck/ck-32.png",
-"large": "travel/img/flags/co/ck/ck-128.png",
 "svg": "travel/img/flags/co/ck/flag.svg",
 "is_locked": false
 }
@@ -3350,10 +2162,6 @@
 "pk": 270,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/07/Flag_of_Guam.svg",
-"base_dir": "st/us",
-"ref": "gu",
-"thumb": "travel/img/flags/st/us/gu/gu-32.png",
-"large": "travel/img/flags/st/us/gu/gu-128.png",
 "svg": "travel/img/flags/st/us/gu/flag.svg",
 "is_locked": false
 }
@@ -3362,10 +2170,6 @@
 "pk": 271,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_Washington%2C_D.C..svg",
-"base_dir": "st/us",
-"ref": "dc",
-"thumb": "travel/img/flags/st/us/dc/dc-32.png",
-"large": "travel/img/flags/st/us/dc/dc-128.png",
 "svg": "travel/img/flags/st/us/dc/flag.svg",
 "is_locked": false
 }
@@ -3374,10 +2178,6 @@
 "pk": 272,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/f/f8/Flag_of_the_United_States_Virgin_Islands.svg",
-"base_dir": "st/us",
-"ref": "vi",
-"thumb": "travel/img/flags/st/us/vi/vi-32.png",
-"large": "travel/img/flags/st/us/vi/vi-128.png",
 "svg": "travel/img/flags/st/us/vi/flag.svg",
 "is_locked": false
 }
@@ -3386,10 +2186,6 @@
 "pk": 273,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_Puerto_Rico.svg",
-"base_dir": "st/us",
-"ref": "pr",
-"thumb": "travel/img/flags/st/us/pr/pr-32.png",
-"large": "travel/img/flags/st/us/pr/pr-128.png",
 "svg": "travel/img/flags/st/us/pr/flag.svg",
 "is_locked": false
 }
@@ -3398,10 +2194,6 @@
 "pk": 274,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/e0/Flag_of_the_Northern_Mariana_Islands.svg",
-"base_dir": "st/us",
-"ref": "mp",
-"thumb": "travel/img/flags/st/us/mp/mp-32.png",
-"large": "travel/img/flags/st/us/mp/mp-128.png",
 "svg": "travel/img/flags/st/us/mp/flag.svg",
 "is_locked": false
 }
@@ -3410,10 +2202,6 @@
 "pk": 275,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/87/Flag_of_American_Samoa.svg",
-"base_dir": "st/us",
-"ref": "as",
-"thumb": "travel/img/flags/st/us/as/as-32.png",
-"large": "travel/img/flags/st/us/as/as-128.png",
 "svg": "travel/img/flags/st/us/as/flag.svg",
 "is_locked": false
 }
@@ -3422,10 +2210,6 @@
 "pk": 276,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/6/6e/Flag_of_the_British_Indian_Ocean_Territory.svg",
-"base_dir": "co",
-"ref": "io",
-"thumb": "travel/img/flags/co/io/io-32.png",
-"large": "travel/img/flags/co/io/io-128.png",
 "svg": "travel/img/flags/co/io/flag.svg",
 "is_locked": false
 }
@@ -3434,10 +2218,6 @@
 "pk": 277,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_British_Virgin_Islands.svg",
-"base_dir": "co",
-"ref": "vg",
-"thumb": "travel/img/flags/co/vg/vg-32.png",
-"large": "travel/img/flags/co/vg/vg-128.png",
 "svg": "travel/img/flags/co/vg/flag.svg",
 "is_locked": false
 }
@@ -3446,10 +2226,6 @@
 "pk": 278,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_the_Cocos_%28Keeling%29_Islands.svg",
-"base_dir": "co",
-"ref": "cc",
-"thumb": "travel/img/flags/co/cc/cc-32.png",
-"large": "travel/img/flags/co/cc/cc-128.png",
 "svg": "travel/img/flags/co/cc/flag.svg",
 "is_locked": false
 }
@@ -3458,10 +2234,6 @@
 "pk": 279,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/3/3c/Flag_of_the_Faroe_Islands.svg",
-"base_dir": "co",
-"ref": "fo",
-"thumb": "travel/img/flags/co/fo/fo-32.png",
-"large": "travel/img/flags/co/fo/fo-128.png",
 "svg": "travel/img/flags/co/fo/flag.svg",
 "is_locked": false
 }
@@ -3470,10 +2242,6 @@
 "pk": 280,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a7/Flag_of_the_French_Southern_and_Antarctic_Lands.svg",
-"base_dir": "co",
-"ref": "tf",
-"thumb": "travel/img/flags/co/tf/tf-32.png",
-"large": "travel/img/flags/co/tf/tf-128.png",
 "svg": "travel/img/flags/co/tf/flag.svg",
 "is_locked": false
 }
@@ -3482,10 +2250,6 @@
 "pk": 281,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/bc/Flag_of_the_Isle_of_Man.svg",
-"base_dir": "co",
-"ref": "im",
-"thumb": "travel/img/flags/co/im/im-32.png",
-"large": "travel/img/flags/co/im/im-128.png",
 "svg": "travel/img/flags/co/im/flag.svg",
 "is_locked": false
 }
@@ -3494,10 +2258,6 @@
 "pk": 282,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Montserrat.svg",
-"base_dir": "co",
-"ref": "ms",
-"thumb": "travel/img/flags/co/ms/ms-32.png",
-"large": "travel/img/flags/co/ms/ms-128.png",
 "svg": "travel/img/flags/co/ms/flag.svg",
 "is_locked": false
 }
@@ -3506,10 +2266,6 @@
 "pk": 283,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_Niue.svg",
-"base_dir": "co",
-"ref": "nu",
-"thumb": "travel/img/flags/co/nu/nu-32.png",
-"large": "travel/img/flags/co/nu/nu-128.png",
 "svg": "travel/img/flags/co/nu/flag.svg",
 "is_locked": false
 }
@@ -3518,10 +2274,6 @@
 "pk": 284,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Norfolk_Island.svg",
-"base_dir": "co",
-"ref": "nf",
-"thumb": "travel/img/flags/co/nf/nf-32.png",
-"large": "travel/img/flags/co/nf/nf-128.png",
 "svg": "travel/img/flags/co/nf/flag.svg",
 "is_locked": false
 }
@@ -3530,10 +2282,6 @@
 "pk": 285,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/88/Flag_of_the_Pitcairn_Islands.svg",
-"base_dir": "co",
-"ref": "pn",
-"thumb": "travel/img/flags/co/pn/pn-32.png",
-"large": "travel/img/flags/co/pn/pn-128.png",
 "svg": "travel/img/flags/co/pn/flag.svg",
 "is_locked": false
 }
@@ -3542,10 +2290,6 @@
 "pk": 286,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/0/00/Flag_of_Saint_Helena.svg",
-"base_dir": "co",
-"ref": "sh",
-"thumb": "travel/img/flags/co/sh/sh-32.png",
-"large": "travel/img/flags/co/sh/sh-128.png",
 "svg": "travel/img/flags/co/sh/flag.svg",
 "is_locked": false
 }
@@ -3554,10 +2298,6 @@
 "pk": 287,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_Saint-Pierre_and_Miquelon.svg",
-"base_dir": "co",
-"ref": "pm",
-"thumb": "travel/img/flags/co/pm/pm-32.png",
-"large": "travel/img/flags/co/pm/pm-128.png",
 "svg": "travel/img/flags/co/pm/flag.svg",
 "is_locked": false
 }
@@ -3566,10 +2306,6 @@
 "pk": 288,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/e/ed/Flag_of_South_Georgia_and_the_South_Sandwich_Islands.svg",
-"base_dir": "co",
-"ref": "gs",
-"thumb": "travel/img/flags/co/gs/gs-32.png",
-"large": "travel/img/flags/co/gs/gs-128.png",
 "svg": "travel/img/flags/co/gs/flag.svg",
 "is_locked": false
 }
@@ -3578,10 +2314,6 @@
 "pk": 289,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/8/8e/Flag_of_Tokelau.svg",
-"base_dir": "co",
-"ref": "tk",
-"thumb": "travel/img/flags/co/tk/tk-32.png",
-"large": "travel/img/flags/co/tk/tk-128.png",
 "svg": "travel/img/flags/co/tk/flag.svg",
 "is_locked": false
 }
@@ -3590,10 +2322,6 @@
 "pk": 290,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-"base_dir": "co",
-"ref": "gf",
-"thumb": "travel/img/flags/co/gf/gf-32.png",
-"large": "travel/img/flags/co/gf/gf-128.png",
 "svg": "travel/img/flags/co/gf/flag.svg",
 "is_locked": false
 }
@@ -3602,10 +2330,6 @@
 "pk": 291,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_New_Caledonia.svg",
-"base_dir": "co",
-"ref": "nc",
-"thumb": "travel/img/flags/co/nc/nc-32.png",
-"large": "travel/img/flags/co/nc/nc-128.png",
 "svg": "travel/img/flags/co/nc/flag.svg",
 "is_locked": false
 }
@@ -3614,10 +2338,6 @@
 "pk": 292,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg",
-"base_dir": "co",
-"ref": "um",
-"thumb": "travel/img/flags/co/um/um-32.png",
-"large": "travel/img/flags/co/um/um-128.png",
 "svg": "travel/img/flags/co/um/flag.svg",
 "is_locked": false
 }
@@ -3626,10 +2346,6 @@
 "pk": 293,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-"base_dir": "co",
-"ref": "wf",
-"thumb": "travel/img/flags/co/wf/wf-32.png",
-"large": "travel/img/flags/co/wf/wf-128.png",
 "svg": "travel/img/flags/co/wf/flag.svg",
 "is_locked": false
 }
@@ -3638,10 +2354,6 @@
 "pk": 294,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
-"base_dir": "co",
-"ref": "sj",
-"thumb": "travel/img/flags/co/sj/sj-32.png",
-"large": "travel/img/flags/co/sj/sj-128.png",
 "svg": "travel/img/flags/co/sj/flag.svg",
 "is_locked": false
 }
@@ -3650,10 +2362,6 @@
 "pk": 295,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-"base_dir": "co",
-"ref": "yt",
-"thumb": "travel/img/flags/co/yt/yt-32.png",
-"large": "travel/img/flags/co/yt/yt-128.png",
 "svg": "travel/img/flags/co/yt/flag.svg",
 "is_locked": false
 }
@@ -3662,10 +2370,6 @@
 "pk": 296,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
-"base_dir": "co",
-"ref": "re",
-"thumb": "travel/img/flags/co/re/re-32.png",
-"large": "travel/img/flags/co/re/re-128.png",
 "svg": "travel/img/flags/co/re/flag.svg",
 "is_locked": false
 }
@@ -3674,10 +2378,6 @@
 "pk": 387,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/5/59/Flag_of_Wales_2.svg",
-"base_dir": "co",
-"ref": "xw",
-"thumb": "travel/img/flags/co/xw/xw-32.png",
-"large": "travel/img/flags/co/xw/xw-128.png",
 "svg": "travel/img/flags/co/xw/flag.svg",
 "is_locked": false
 }
@@ -3686,10 +2386,6 @@
 "pk": 394,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/7/7a/Flag_of_South_Sudan.svg",
-"base_dir": "co",
-"ref": "ss",
-"thumb": "travel/img/flags/co/ss/ss-32.png",
-"large": "travel/img/flags/co/ss/ss-128.png",
 "svg": "travel/img/flags/co/ss/flag.svg",
 "is_locked": false
 }
@@ -3698,10 +2394,6 @@
 "pk": 395,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/en/b/b9/Flag_of_Australia.svg",
-"base_dir": "co",
-"ref": "hm",
-"thumb": "travel/img/flags/co/hm/hm-32.png",
-"large": "travel/img/flags/co/hm/hm-128.png",
 "svg": "travel/img/flags/co/hm/flag.svg",
 "is_locked": false
 }
@@ -3710,10 +2402,6 @@
 "pk": 396,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg",
-"base_dir": "co",
-"ref": "bv",
-"thumb": "travel/img/flags/co/bv/bv-32.png",
-"large": "travel/img/flags/co/bv/bv-128.png",
 "svg": "travel/img/flags/co/bv/flag.svg",
 "is_locked": false
 }
@@ -3722,10 +2410,6 @@
 "pk": 412,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_Cura%C3%A7ao.svg",
-"base_dir": "co",
-"ref": "cw",
-"thumb": "travel/img/flags/co/cw/cw-32.png",
-"large": "travel/img/flags/co/cw/cw-128.png",
 "svg": "travel/img/flags/co/cw/flag.svg",
 "is_locked": false
 }
@@ -3734,10 +2418,6 @@
 "pk": 430,
 "fields": {
 "source": "http://upload.wikimedia.org/wikipedia/commons/1/1f/Flag_of_Kosovo.svg",
-"base_dir": "co",
-"ref": "xk",
-"thumb": "travel/img/flags/co/xk/xk-32.png",
-"large": "travel/img/flags/co/xk/xk-128.png",
 "svg": "travel/img/flags/co/xk/flag.svg",
 "is_locked": false
 }
@@ -3746,10 +2426,6 @@
 "pk": 437,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Flag_of_Guernsey.svg",
-"base_dir": "co",
-"ref": "gg",
-"thumb": "travel/img/flags/co/gg/gg-32.png",
-"large": "travel/img/flags/co/gg/gg-128.png",
 "svg": "travel/img/flags/co/gg/flag.svg",
 "is_locked": false
 }
@@ -3758,10 +2434,6 @@
 "pk": 438,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Flag_of_Jersey.svg",
-"base_dir": "co",
-"ref": "je",
-"thumb": "travel/img/flags/co/je/je-32.png",
-"large": "travel/img/flags/co/je/je-128.png",
 "svg": "travel/img/flags/co/je/flag.svg",
 "is_locked": false
 }
@@ -3770,10 +2442,6 @@
 "pk": 439,
 "fields": {
 "source": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Flag_of_Bonaire.svg",
-"base_dir": "co",
-"ref": "bq",
-"thumb": "travel/img/flags/co/bq/bq-32.png",
-"large": "travel/img/flags/co/bq/bq-128.png",
 "svg": "travel/img/flags/co/bq/flag.svg",
 "is_locked": false
 }
@@ -15913,390 +14581,6 @@
 "area": 9629091,
 "languages": [],
 "neighbors": []
-}
-}, {
-"model": "auth.permission",
-"pk": 1,
-"fields": {
-"name": "Can add travel flag",
-"content_type": 1,
-"codename": "add_travelflag"
-}
-}, {
-"model": "auth.permission",
-"pk": 2,
-"fields": {
-"name": "Can change travel flag",
-"content_type": 1,
-"codename": "change_travelflag"
-}
-}, {
-"model": "auth.permission",
-"pk": 3,
-"fields": {
-"name": "Can delete travel flag",
-"content_type": 1,
-"codename": "delete_travelflag"
-}
-}, {
-"model": "auth.permission",
-"pk": 4,
-"fields": {
-"name": "Can add travel bucket list",
-"content_type": 2,
-"codename": "add_travelbucketlist"
-}
-}, {
-"model": "auth.permission",
-"pk": 5,
-"fields": {
-"name": "Can change travel bucket list",
-"content_type": 2,
-"codename": "change_travelbucketlist"
-}
-}, {
-"model": "auth.permission",
-"pk": 6,
-"fields": {
-"name": "Can delete travel bucket list",
-"content_type": 2,
-"codename": "delete_travelbucketlist"
-}
-}, {
-"model": "auth.permission",
-"pk": 7,
-"fields": {
-"name": "Can add travel profile",
-"content_type": 3,
-"codename": "add_travelprofile"
-}
-}, {
-"model": "auth.permission",
-"pk": 8,
-"fields": {
-"name": "Can change travel profile",
-"content_type": 3,
-"codename": "change_travelprofile"
-}
-}, {
-"model": "auth.permission",
-"pk": 9,
-"fields": {
-"name": "Can delete travel profile",
-"content_type": 3,
-"codename": "delete_travelprofile"
-}
-}, {
-"model": "auth.permission",
-"pk": 10,
-"fields": {
-"name": "Can add travel entity type",
-"content_type": 4,
-"codename": "add_travelentitytype"
-}
-}, {
-"model": "auth.permission",
-"pk": 11,
-"fields": {
-"name": "Can change travel entity type",
-"content_type": 4,
-"codename": "change_travelentitytype"
-}
-}, {
-"model": "auth.permission",
-"pk": 12,
-"fields": {
-"name": "Can delete travel entity type",
-"content_type": 4,
-"codename": "delete_travelentitytype"
-}
-}, {
-"model": "auth.permission",
-"pk": 13,
-"fields": {
-"name": "Can add travel entity",
-"content_type": 5,
-"codename": "add_travelentity"
-}
-}, {
-"model": "auth.permission",
-"pk": 14,
-"fields": {
-"name": "Can change travel entity",
-"content_type": 5,
-"codename": "change_travelentity"
-}
-}, {
-"model": "auth.permission",
-"pk": 15,
-"fields": {
-"name": "Can delete travel entity",
-"content_type": 5,
-"codename": "delete_travelentity"
-}
-}, {
-"model": "auth.permission",
-"pk": 16,
-"fields": {
-"name": "Can add travel log",
-"content_type": 6,
-"codename": "add_travellog"
-}
-}, {
-"model": "auth.permission",
-"pk": 17,
-"fields": {
-"name": "Can change travel log",
-"content_type": 6,
-"codename": "change_travellog"
-}
-}, {
-"model": "auth.permission",
-"pk": 18,
-"fields": {
-"name": "Can delete travel log",
-"content_type": 6,
-"codename": "delete_travellog"
-}
-}, {
-"model": "auth.permission",
-"pk": 19,
-"fields": {
-"name": "Can add travel language",
-"content_type": 7,
-"codename": "add_travellanguage"
-}
-}, {
-"model": "auth.permission",
-"pk": 20,
-"fields": {
-"name": "Can change travel language",
-"content_type": 7,
-"codename": "change_travellanguage"
-}
-}, {
-"model": "auth.permission",
-"pk": 21,
-"fields": {
-"name": "Can delete travel language",
-"content_type": 7,
-"codename": "delete_travellanguage"
-}
-}, {
-"model": "auth.permission",
-"pk": 22,
-"fields": {
-"name": "Can add travel currency",
-"content_type": 8,
-"codename": "add_travelcurrency"
-}
-}, {
-"model": "auth.permission",
-"pk": 23,
-"fields": {
-"name": "Can change travel currency",
-"content_type": 8,
-"codename": "change_travelcurrency"
-}
-}, {
-"model": "auth.permission",
-"pk": 24,
-"fields": {
-"name": "Can delete travel currency",
-"content_type": 8,
-"codename": "delete_travelcurrency"
-}
-}, {
-"model": "auth.permission",
-"pk": 25,
-"fields": {
-"name": "Can add travel entity info",
-"content_type": 9,
-"codename": "add_travelentityinfo"
-}
-}, {
-"model": "auth.permission",
-"pk": 26,
-"fields": {
-"name": "Can change travel entity info",
-"content_type": 9,
-"codename": "change_travelentityinfo"
-}
-}, {
-"model": "auth.permission",
-"pk": 27,
-"fields": {
-"name": "Can delete travel entity info",
-"content_type": 9,
-"codename": "delete_travelentityinfo"
-}
-}, {
-"model": "auth.permission",
-"pk": 37,
-"fields": {
-"name": "Can add permission",
-"content_type": 13,
-"codename": "add_permission"
-}
-}, {
-"model": "auth.permission",
-"pk": 38,
-"fields": {
-"name": "Can change permission",
-"content_type": 13,
-"codename": "change_permission"
-}
-}, {
-"model": "auth.permission",
-"pk": 39,
-"fields": {
-"name": "Can delete permission",
-"content_type": 13,
-"codename": "delete_permission"
-}
-}, {
-"model": "auth.permission",
-"pk": 40,
-"fields": {
-"name": "Can add group",
-"content_type": 14,
-"codename": "add_group"
-}
-}, {
-"model": "auth.permission",
-"pk": 41,
-"fields": {
-"name": "Can change group",
-"content_type": 14,
-"codename": "change_group"
-}
-}, {
-"model": "auth.permission",
-"pk": 42,
-"fields": {
-"name": "Can delete group",
-"content_type": 14,
-"codename": "delete_group"
-}
-}, {
-"model": "auth.permission",
-"pk": 43,
-"fields": {
-"name": "Can add user",
-"content_type": 15,
-"codename": "add_user"
-}
-}, {
-"model": "auth.permission",
-"pk": 44,
-"fields": {
-"name": "Can change user",
-"content_type": 15,
-"codename": "change_user"
-}
-}, {
-"model": "auth.permission",
-"pk": 45,
-"fields": {
-"name": "Can delete user",
-"content_type": 15,
-"codename": "delete_user"
-}
-}, {
-"model": "auth.permission",
-"pk": 46,
-"fields": {
-"name": "Can add content type",
-"content_type": 16,
-"codename": "add_contenttype"
-}
-}, {
-"model": "auth.permission",
-"pk": 47,
-"fields": {
-"name": "Can change content type",
-"content_type": 16,
-"codename": "change_contenttype"
-}
-}, {
-"model": "auth.permission",
-"pk": 48,
-"fields": {
-"name": "Can delete content type",
-"content_type": 16,
-"codename": "delete_contenttype"
-}
-}, {
-"model": "auth.permission",
-"pk": 49,
-"fields": {
-"name": "Can add session",
-"content_type": 17,
-"codename": "add_session"
-}
-}, {
-"model": "auth.permission",
-"pk": 50,
-"fields": {
-"name": "Can change session",
-"content_type": 17,
-"codename": "change_session"
-}
-}, {
-"model": "auth.permission",
-"pk": 51,
-"fields": {
-"name": "Can delete session",
-"content_type": 17,
-"codename": "delete_session"
-}
-}, {
-"model": "auth.permission",
-"pk": 52,
-"fields": {
-"name": "Can add site",
-"content_type": 18,
-"codename": "add_site"
-}
-}, {
-"model": "auth.permission",
-"pk": 53,
-"fields": {
-"name": "Can change site",
-"content_type": 18,
-"codename": "change_site"
-}
-}, {
-"model": "auth.permission",
-"pk": 54,
-"fields": {
-"name": "Can delete site",
-"content_type": 18,
-"codename": "delete_site"
-}
-}, {
-"model": "auth.permission",
-"pk": 55,
-"fields": {
-"name": "Can add log entry",
-"content_type": 19,
-"codename": "add_logentry"
-}
-}, {
-"model": "auth.permission",
-"pk": 56,
-"fields": {
-"name": "Can change log entry",
-"content_type": 19,
-"codename": "change_logentry"
-}
-}, {
-"model": "auth.permission",
-"pk": 57,
-"fields": {
-"name": "Can delete log entry",
-"content_type": 19,
-"codename": "delete_logentry"
 }
 }, {
 "model": "auth.user",

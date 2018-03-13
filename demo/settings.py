@@ -16,8 +16,6 @@ INSTALLED_APPS = [
     'bootstrap3',
     'travel',
     'pagination',
-
-    'anymail',
     'django_extensions',
 ]
 

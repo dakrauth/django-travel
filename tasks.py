@@ -16,7 +16,7 @@ def test(ctx, verbose=False):
 
 
 @task
-def test_cov(ctx):
+def testcov(ctx):
     '''Runs unit tests with coverage'''
     ctx.run(
         'py.test {} && open htmlcov/index.html'.format(COVERAGE_PARAMS),

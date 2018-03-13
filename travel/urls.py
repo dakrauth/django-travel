@@ -30,7 +30,7 @@ bucket_list_patterns = [
     url(r'^$',               views.bucket_lists, name='travel-buckets'),
     url(r'^(\d+)/$',         views.bucket_list, name='travel-bucket'),
     url(r'^(\d+)/([^/]+)/$', views.bucket_list_for_user, name='travel-bucket-for_user'),
-    url(r'^(\d+)/(.+)/$',    views.bucket_list_comparison, name='travel-bucket-for_user'),
+    url(r'^(\d+)/(.+)/$', views.bucket_list_comparison, name='travel-bucket-comparison'),
 ]
 
 language_patterns = [

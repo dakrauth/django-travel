@@ -2,13 +2,19 @@ import pytest
 from django.contrib.auth.models import User
 from travel.models import (
     TravelEntityType,
-    TravelEntity
+    TravelEntity,
+    TravelBucketList
 )
 
 
 @pytest.fixture
 def user():
     return User.objects.create_user(username='user')
+
+
+@pytest.fixture
+def user2():
+    return User.objects.create_user(username='user2')
 
 
 @pytest.fixture
@@ -41,4 +47,15 @@ def country(continent, country_type):
         continent=continent,
         full_name=name,
     )
+
+
+@pytest.fixture
+def bucketlist(country):
+    bl = TravelBucketList.objects.create(
+        owner=None,
+        title='Test Bucket List',
+        is_public=True,
+    )
+    bl.entities.add(country)
+    return bl
 

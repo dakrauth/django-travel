@@ -3,10 +3,9 @@ import io
 import re
 import json
 import datetime
+from decimal import Decimal, localcontext
 from urllib.parse import quote_plus, unquote
 
-from decimal import Decimal, localcontext
-import requests
 from PIL import Image
 from dateutil.parser import parser, parserinfo
 from unidecode import unidecode

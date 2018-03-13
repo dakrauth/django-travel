@@ -44,10 +44,7 @@ class TestUrls:
         r = client.get(url)
         assert r.status_code == 200
         
-    def test_buckets(self, client, user):
-        r = client.get(reverse('travel-buckets'))
-        assert r.status_code == 200
-
+    def test_no_bucketlist(self, client, user):
         # bucket_list r'^buckets/(\d+)/$'
         r = client.get(reverse('travel-bucket', args=[0]))
         assert r.status_code == 404
@@ -57,8 +54,28 @@ class TestUrls:
         assert r.status_code == 404
 
         # bucket_list_comparison r'^buckets/(\d+)/(.+)/$'
-        r = client.get(reverse('travel-bucket-for_user', args=[user.id, 0]))
+        r = client.get(reverse('travel-bucket-comparison', args=[0, 'foo/bar']))
         assert r.status_code == 404
+
+    def test_bucketlist(self, client, user, bucketlist, user2):
+        r = client.get(reverse('travel-buckets'))
+        assert r.status_code == 200
+
+        # bucket_list r'^buckets/(\d+)/$'
+        r = client.get(reverse('travel-bucket', args=[bucketlist.id]))
+        assert r.status_code == 200
+
+        # bucket_list_for_user r'^buckets/(\d+)/(\w+)/$'
+        r = client.get(reverse('travel-bucket-for_user', args=[bucketlist.id, user.username]))
+        assert r.status_code == 200
+
+        # bucket_list_comparison r'^buckets/(\d+)/(.+)/$'
+        r = client.get(reverse('travel-bucket-comparison', args=[
+            bucketlist.id,
+            '/'.join([user.username, user2.username])
+        ]))
+        assert r.status_code == 200
+
 
     def test_profiles(self, client, user):
         # all_profiles r'^profiles/$',
