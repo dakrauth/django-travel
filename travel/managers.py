@@ -1,4 +1,5 @@
 import operator
+from functools import reduce
 from django.db.models import Manager, Q, Count, Min, Max
 
 __all__ = (

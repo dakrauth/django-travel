@@ -4,7 +4,7 @@ from django.urls import reverse
 @pytest.mark.django_db
 class TestUrls:
 
-    def test_search(self, client):
+    def test_search(self, client, user):
         r = client.get(reverse('travel-search'))
         assert r.status_code == 200
 
@@ -12,7 +12,10 @@ class TestUrls:
         r = client.get(reverse('travel-search-advanced'))
         assert r.status_code == 302
 
-    
+        client.force_login(user)
+        r = client.get(reverse('travel-search-advanced') + '?search=us')
+        assert r.status_code == 200
+
     def test_entities(self, country, continent, client):
         # by_locale r'^i/(?P<ref>\w+)/$'
         r = client.get(reverse('travel-by-locale', args=[country.type.abbr]))
