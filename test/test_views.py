@@ -1,8 +1,10 @@
 import pytest
 from django.urls import reverse
+from travel import models as travel
+
 
 @pytest.mark.django_db
-class TestUrls:
+class TestViews:
 
     def test_search(self, client, user):
         r = client.get(reverse('travel-search'))
@@ -16,7 +18,7 @@ class TestUrls:
         r = client.get(reverse('travel-search-advanced') + '?search=us')
         assert r.status_code == 200
 
-    def test_entities(self, country, continent, client):
+    def test_entities(self, country, continent, client, user):
         # by_locale r'^i/(?P<ref>\w+)/$'
         r = client.get(reverse('travel-by-locale', args=[country.type.abbr]))
         assert r.status_code == 200
@@ -46,6 +48,37 @@ class TestUrls:
         ])
         r = client.get(url)
         assert r.status_code == 200
+
+    def test_logs(self, client, continent, user):
+        client.force_login(user)
+        
+        # entity r'^i/(?P<ref>\w+)/(?P<code>\w+)(?:-(?P<aux>\w+))?/$'
+        r = client.get(reverse('travel-entity', args=[
+            continent.type.abbr,
+            continent.code
+        ]))
+        assert r.status_code == 200
+
+        r = client.post(reverse('travel-entity', args=[
+            continent.type.abbr,
+            continent.code
+        ]), {'arrival': '2018-03-07'})
+        assert r.status_code == 302
+
+        log = travel.TravelLog.objects.latest()
+
+        # r'^([^/]+)/log/(\d+)/$
+        r = client.get(reverse('travel-log-entry', args=[
+            user.username,
+            log.id
+        ]))
+        assert r.status_code == 200
+
+        r = client.post(reverse('travel-log-entry', args=[
+            user.username,
+            log.id
+        ]), {'arrival': '2018-03-15'})
+        assert r.status_code == 302
         
     def test_no_bucketlist(self, client, user):
         # bucket_list r'^buckets/(\d+)/$'
@@ -78,6 +111,35 @@ class TestUrls:
             '/'.join([user.username, user2.username])
         ]))
         assert r.status_code == 200
+
+    def test_add_co(self, client, admin_user, continent, country_type):
+        r = client.get(reverse('travel-entity-add-co'))
+        assert r.status_code == 302
+
+        client.force_login(admin_user)
+        r = client.get(reverse('travel-entity-add-co'))
+        assert r.status_code == 200
+
+        r = client.post(reverse('travel-entity-add-co'), {})
+        assert r.status_code == 200
+
+        data = {
+            'name': 'New Country',
+            'full_name': 'New Full Name',
+            'code': 'XZ',
+            'locality': 'locality',
+            'tz': 'UTC',
+            'flag_url': '',
+            'lat_lon': 'not good',
+            'continent': continent.id
+        }
+        r = client.post(reverse('travel-entity-add-co'), data)
+        assert r.status_code == 200
+
+        data['lat_lon'] = '12.34 56.78'
+        r = client.post(reverse('travel-entity-add-co'), data)
+        assert r.status_code == 302
+        assert travel.TravelEntity.objects.country('XZ')
 
 
     def test_profiles(self, client, user):
@@ -121,7 +183,9 @@ class TestUrls:
 
         #client.force_login(page.user)
 
-
-    def test_urls(self, client):
+    def test_misc_views(self, client):
         assert client.get(reverse('travel-plugs')).status_code == 200
+        assert client.get(reverse('travel-flag-quiz')).status_code == 200
+
+
 

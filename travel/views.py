@@ -14,13 +14,19 @@ superuser_required = user_passes_test(
     lambda u: u.is_authenticated and u.is_active and u.is_superuser
 )
 
-def render_travel(request, base_templates, data):
+def render_travel(
+    request,
+    base_templates,
+    context=None,
+    content_type=None,
+    status=None
+):
     if isinstance(base_templates, str):
         base_templates = [base_templates]
     
     custom = ['travel/custom' + base for base in base_templates]
     templates = custom + ['travel/' + base for base in base_templates]
-    return render(request, templates, data)
+    return render(request, templates, context, content_type, status)
 
 
 def all_profiles(request):

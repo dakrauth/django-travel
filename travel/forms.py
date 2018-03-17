@@ -77,7 +77,11 @@ class DateUtilField(forms.Field):
 
 class TravelLogForm(forms.ModelForm):
     arrival = DateUtilField(required=False)
-    rating = forms.ChoiceField(choices=travel.TravelLog.RATING_CHOICES, initial='3')
+    rating = forms.ChoiceField(
+        choices=travel.TravelLog.RATING_CHOICES,
+        initial=3,
+        required=False
+    )
     note = forms.CharField(required=False, widget=forms.Textarea)
 
     class Meta:
@@ -157,13 +161,18 @@ class BaseTravelEntityForm(forms.ModelForm):
         if flag_url:
             instance.update_flag(flag_url)
 
-    def save(self, *args, **kws):
-        instance = super(BaseTravelEntityForm, self).save(*args, **kws)
+    def save(self, entity_type, **extra_fields):
+        instance = super().save(commit=False)
+        instance.full_name = instance.full_name or instance.name
+        instance.type = entity_type
+        for key, value in extra_fields.items():
+            setattr(instance, key, value)
+
         lat_lon = self.cleaned_data.get('lat_lon')
         if lat_lon:
             instance.lat, instance.lon = lat_lon
-            instance.save()
-            
+
+        instance.save()
         self.save_flag(instance)
         return instance
 
@@ -176,18 +185,7 @@ class EditTravelEntityForm(BaseTravelEntityForm):
 
 
 class NewTravelEntityForm(BaseTravelEntityForm):
-
-    def save(self, entity_type, **extra_fields):
-        instance = super(NewTravelEntityForm, self).save(commit=False)
-        instance.type = entity_type
-        instance.full_name = instance.full_name or instance.name
-        
-        for key, value in extra_fields.items():
-            setattr(instance, key, value)
-            
-        instance.save()
-        self.save_flag(instance)
-        return instance
+    pass
 
 
 class NewCountryForm(NewTravelEntityForm):
