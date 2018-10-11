@@ -356,6 +356,23 @@ class TravelEntity(models.Model):
             return GOOGLE_MAPS.format(travel_utils.nice_url(self.name),)
 
 
+class ExternalSource(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    url = models.URLField(blank=True)
+
+
+class ExternalReference(models.Model):
+    source = models.ForeignKey(ExternalSource, on_delete=models.CASCADE)
+    ref = models.CharField(max_length=255)
+    entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
+
+
+class TravelAlias(models.Model):
+    category = models.CharField(max_length=50)
+    entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
+    alias = models.CharField(max_length=255)
+
+
 class TravelLog(models.Model):
 
     RATING_CHOICES = (
@@ -460,6 +477,12 @@ class EntityImage(object):
         self.url = settings.MEDIA_URL + '/'.join(['travel/img', location, fn])
 
 
+class TravelRegion(models.Model):
+    name = models.CharField(max_length=50)
+    un_code = models.CharField(max_length=5, db_index=True)
+    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+
+
 class TravelEntityInfo(models.Model):
     entity = models.OneToOneField(TravelEntity, related_name='entityinfo',  on_delete=models.CASCADE)
     iso3 = models.CharField(blank=True, max_length=3)
@@ -475,6 +498,7 @@ class TravelEntityInfo(models.Model):
     area = models.IntegerField(blank=True, null=True, default=None)
     languages = models.ManyToManyField(TravelLanguage, blank=True)
     neighbors = models.ManyToManyField(TravelEntity, blank=True)
+    region = models.ForeignKey(TravelRegion, blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         db_table = 'travel_entityinfo'
