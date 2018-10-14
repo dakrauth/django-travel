@@ -17,14 +17,14 @@ from choice_enum import ChoiceEnumeration
 import travel.utils as travel_utils
 from .managers import *
 
-GOOGLE_MAPS             = 'http://maps.google.com/maps?q={}'
-GOOGLE_MAPS_LATLON      = 'http://maps.google.com/maps?q={},+{}&iwloc=A&z=10'
-WIKIPEDIA_URL           = 'http://en.wikipedia.org/wiki/Special:Search?search={}&go=Go'
-WORLD_HERITAGE_URL      = 'http://whc.unesco.org/en/list/{}'
-BASE_FLAG_DIR           = 'travel/img/flags'
-STAR                    = mark_safe('&#9733;')
+GOOGLE_MAPS = 'http://maps.google.com/maps?q={}'
+GOOGLE_MAPS_LATLON = 'http://maps.google.com/maps?q={},+{}&iwloc=A&z=10'
+WIKIPEDIA_URL = 'http://en.wikipedia.org/wiki/Special:Search?search={}&go=Go'
+WORLD_HERITAGE_URL = 'http://whc.unesco.org/en/list/{}'
+BASE_FLAG_DIR = 'travel/img/flags'
+STAR = mark_safe('&#9733;')
 WORLD_HERITAGE_CATEGORY = { 'C': 'Cultural', 'N': 'Natural', 'M': 'Mixed' }
-SUBNATIONAL_CATEGORY    = {
+SUBNATIONAL_CATEGORY = {
     'A': 'Autonomous Community',
     'W': 'Commonwealth',
     'U': 'Commune',
@@ -106,11 +106,11 @@ class TravelBucketList(models.Model):
 class TravelProfile(models.Model):
 
     class Access(ChoiceEnumeration):
-        PUBLIC    = ChoiceEnumeration.Option('PUB',  'Public')
-        PRIVATE   = ChoiceEnumeration.Option('PRI',  'Private')
-        PROTECTED = ChoiceEnumeration.Option('PRO',  'Protected', default=True)
+        PUBLIC = ChoiceEnumeration.Option('PUB', 'Public')
+        PRIVATE = ChoiceEnumeration.Option('PRI', 'Private')
+        PROTECTED = ChoiceEnumeration.Option('PRO', 'Protected', default=True)
 
-    user   = models.OneToOneField(User, related_name='travel_profile',  on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='travel_profile', on_delete=models.CASCADE)
     access = models.CharField(max_length=3, choices=Access.CHOICES, default=Access.DEFAULT)
 
     objects = TravelProfileManager()
@@ -127,8 +127,8 @@ class TravelProfile(models.Model):
     def history_json(self):
         return TravelLog.history_json(self.user)
 
-    is_public    = property(lambda self: self.access == self.Access.PUBLIC)
-    is_private   = property(lambda self: self.access == self.Access.PRIVATE)
+    is_public = property(lambda self: self.access == self.Access.PUBLIC)
+    is_private = property(lambda self: self.access == self.Access.PRIVATE)
     is_protected = property(lambda self: self.access == self.Access.PROTECTED)
 
 
@@ -140,7 +140,7 @@ models.signals.post_save.connect(profile_factory, sender=User)
 
 
 class TravelEntityType(models.Model):
-    abbr  = models.CharField(max_length=4, db_index=True)
+    abbr = models.CharField(max_length=4, db_index=True)
     title = models.CharField(max_length=25)
 
     class Meta:
@@ -148,6 +148,11 @@ class TravelEntityType(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TravelClassification(models.Model):
+    type = models.ForeignKey(TravelEntityType, on_delete=models.CASCADE)
+    title = models.CharField(max_length=30)
 
 
 class Extern(object):
@@ -182,24 +187,31 @@ class Extern(object):
 
 class TravelEntity(models.Model):
     geonameid = models.IntegerField(default=0)
-    type      = models.ForeignKey(TravelEntityType, related_name='entity_set', on_delete=models.PROTECT)
-    code      = models.CharField(max_length=6, db_index=True)
-    name      = models.CharField(max_length=175)
+    type = models.ForeignKey(TravelEntityType, related_name='entity_set', on_delete=models.PROTECT)
+    code = models.CharField(max_length=6, db_index=True)
+    name = models.CharField(max_length=175)
     full_name = models.CharField(max_length=175)
-    lat       = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
-    lon       = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
-    category  = models.CharField(blank=True, max_length=4)
-    locality  = models.CharField(max_length=256, blank=True)
+    lat = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
+    lon = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
+    category = models.CharField(blank=True, max_length=4)
+    locality = models.CharField(max_length=256, blank=True)
 
-    flag      = models.ForeignKey(TravelFlag, null=True, blank=True,    on_delete=models.SET_NULL)
-    capital   = models.ForeignKey('self', related_name='capital_set',   on_delete=models.SET_NULL, blank=True, null=True)
-    state     = models.ForeignKey('self', related_name='state_set',     on_delete=models.SET_NULL, blank=True, null=True)
-    country   = models.ForeignKey('self', related_name='country_set',   on_delete=models.SET_NULL, blank=True, null=True)
-    continent = models.ForeignKey('self', related_name='continent_set', on_delete=models.SET_NULL, blank=True, null=True)
-    tz        = models.CharField('timezone', max_length=40, blank=True)
-    #extras    = models.TextField(blank=True)
+    classification = models.ForeignKey(TravelClassification, on_delete=models.CASCADE,
+        blank=True, null=True)
+    flag = models.ForeignKey(TravelFlag, null=True, blank=True, on_delete=models.SET_NULL)
+    capital = models.ForeignKey('self', related_name='capital_set', on_delete=models.SET_NULL,
+        blank=True, null=True)
+    state = models.ForeignKey('self', related_name='state_set', on_delete=models.SET_NULL,
+        blank=True, null=True)
+    country = models.ForeignKey('self', related_name='country_set', on_delete=models.SET_NULL,
+        blank=True, null=True)
+    continent = models.ForeignKey('self', related_name='continent_set', on_delete=models.SET_NULL,
+        blank=True, null=True)
 
-    objects   = TravelEntityManager()
+    tz = models.CharField('timezone', max_length=40, blank=True)
+    #extras = models.TextField(blank=True)
+
+    objects = TravelEntityManager()
 
     class Meta:
         ordering = ('name',)
@@ -387,7 +399,7 @@ class TravelLog(models.Model):
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES, default=3)
     user = models.ForeignKey(User, related_name='travellog_set', on_delete=models.CASCADE)
     notes = models.TextField(blank=True)
-    entity = models.ForeignKey(TravelEntity,  on_delete=models.CASCADE)
+    entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
 
     objects = TravelLogManager()
 
@@ -440,7 +452,7 @@ class TravelLanguage(models.Model):
     iso639_1 = models.CharField(blank=True, max_length=2)
     iso639_2 = models.CharField(blank=True, max_length=12)
     iso639_3 = models.CharField(blank=True, max_length=3)
-    name     = models.CharField(max_length=60)
+    name = models.CharField(max_length=60)
 
     def __str__(self):
         return self.name
@@ -484,7 +496,7 @@ class TravelRegion(models.Model):
 
 
 class TravelEntityInfo(models.Model):
-    entity = models.OneToOneField(TravelEntity, related_name='entityinfo',  on_delete=models.CASCADE)
+    entity = models.OneToOneField(TravelEntity, related_name='entityinfo', on_delete=models.CASCADE)
     iso3 = models.CharField(blank=True, max_length=3)
     currency = models.ForeignKey(TravelCurrency, blank=True, null=True, on_delete=models.SET_NULL)
     denom = models.CharField(blank=True, max_length=40)
