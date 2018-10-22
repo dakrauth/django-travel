@@ -9,7 +9,7 @@ class TravelEntityAdmin(admin.ModelAdmin):
         'type',
         'code',
         'name',
-        'category',
+        'classification',
         'capital',
         'state',
         'country',

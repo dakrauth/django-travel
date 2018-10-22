@@ -23,25 +23,10 @@ WIKIPEDIA_URL = 'http://en.wikipedia.org/wiki/Special:Search?search={}&go=Go'
 WORLD_HERITAGE_URL = 'http://whc.unesco.org/en/list/{}'
 BASE_FLAG_DIR = 'travel/img/flags'
 STAR = mark_safe('&#9733;')
-WORLD_HERITAGE_CATEGORY = { 'C': 'Cultural', 'N': 'Natural', 'M': 'Mixed' }
-SUBNATIONAL_CATEGORY = {
-    'A': 'Autonomous Community',
-    'W': 'Commonwealth',
-    'U': 'Commune',
-    'C': 'County',
-    'E': 'Department',
-    'D': 'District',
-    'P': 'Province',
-    'R': 'Region',
-    'S': 'State',
-    'T': 'Territory',
-}
 
-def flag_upload_32(*args, **kws): pass
-def flag_upload_128(*args, **kws): pass
 
 def svg_upload(instance, filename):
-    return  '{}/{}-{}'.format(BASE_FLAG_DIR, instance.id/ filename)
+    return  '{}/{}-{}'.format(BASE_FLAG_DIR, instance.id, filename)
 
 
 class TravelFlag(models.Model):
@@ -186,14 +171,13 @@ class Extern(object):
 
 
 class TravelEntity(models.Model):
-    geonameid = models.IntegerField(default=0)
     type = models.ForeignKey(TravelEntityType, related_name='entity_set', on_delete=models.PROTECT)
-    code = models.CharField(max_length=6, db_index=True)
+    code = models.CharField(max_length=8, db_index=True)
+    alt_code = models.CharField(max_length=8, db_index=True, default='')
     name = models.CharField(max_length=175)
     full_name = models.CharField(max_length=175)
     lat = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
     lon = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
-    category = models.CharField(blank=True, max_length=4)
     locality = models.CharField(max_length=256, blank=True)
 
     classification = models.ForeignKey(TravelClassification, on_delete=models.CASCADE,
@@ -278,14 +262,10 @@ class TravelEntity(models.Model):
 
     @cached_property
     def category_detail(self):
-        kind = self.type
-        if kind.abbr == 'wh':
-            return WORLD_HERITAGE_CATEGORY.get(self.category, 'Unknown')
+        if self.classification:
+            return self.classification.title
 
-        elif kind.abbr == 'st':
-            return SUBNATIONAL_CATEGORY.get(self.category, kind.title)
-
-        return kind.title
+        return self.type.title
 
     @cached_property
     def timezone(self):
