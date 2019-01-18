@@ -14,7 +14,7 @@
                 <a class="external" href="{{ extern.url }}">{{ extern.name }} <small class="glyphicon glyphicon-new-window"></small></a>
                 {% endwith %}
             </dd>
-            
+
             {% if entity.capital %}
             <dt>Capital</dt>
             <dd>
@@ -22,28 +22,28 @@
                 <a class="mapit" href="{{ entity.capital.google_maps_url }}">Map</a>
             </dd>
             {% endif %}
-            
+
             {% if entity.country %}
             <dt>Country</dt>
             <dd>
                 <a href="{{ entity.country.get_absolute_url }}">{{ entity.country }}</a>
             </dd>
             {% endif %}
-            
+
             {% having entity.get_continent as continent %}
             <dt>Continent</dt>
             <dd>
                 <a href="{{ continent.get_absolute_url }}">{{ continent }}</a>
             </dd>
             {% endhaving %}
-            
+
             {% if entity.state %}
             <dt>State</dt>
             <dd>
                 <a href="{{ entity.state.get_absolute_url }}">{{ entity.state }}</a>
             </dd>
             {% endif %}
-            
+
             {% if entity.locality or entity.lat %}
             <dt>Location</dt>
             <dd>
@@ -51,12 +51,12 @@
                 {% include "travel/entities/detail/snippets/map.html" %}
             </dd>
             {% endif %}
-            
+
             {% if entity.code %}
             <dt>Code</dt>
             <dd>{{ entity.code }}</dd>
             {% endif %}
-            
+
             {% if entity.tzinfo %}
             {% load tz %}
             {% timezone entity.tzinfo %}
@@ -123,7 +123,7 @@
         </div>
         {% endhaving %}
         {% endif %}
-        
+
     </div>
     <div class="col-xs-5 images">
     {% block travel_images %}
@@ -154,9 +154,9 @@
             }
             return delta_str;
         };
-        
+
         function update_time() {
-            _.each(document.querySelectorAll('.tz-clock'), function(el) {
+            Array.prototype.forEach.call(document.querySelectorAll('.tz-clock'), function(el) {
                 var tz = el.getAttribute('data-timezone');
                 var loc = moment();
                 var there = loc.clone().tz(tz);
@@ -164,7 +164,7 @@
             });
             setTimeout(update_time, 1000)
         };
-        
+
         update_time();
     })();
 </script>

@@ -1,14 +1,14 @@
+import json
 from django import http
-from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 
-from travel import models as travel
-from travel import forms
-from travel import utils
-
+from . import models as travel
+from . import forms
+from . import utils
+from .api.serializers import logs_for_user
 
 superuser_required = user_passes_test(
     lambda u: u.is_authenticated and u.is_active and u.is_superuser
@@ -37,7 +37,8 @@ def all_profiles(request):
 
 def profile(request, username):
     return render_travel(request, 'profile/profile.html', {
-        'profile': get_object_or_404(travel.TravelProfile, user__username=username)
+        'profile': get_object_or_404(travel.TravelProfile, user__username=username),
+        'history': json.dumps(logs_for_user(username), indent=4),
     })
 
 

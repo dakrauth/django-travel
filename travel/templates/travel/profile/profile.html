@@ -70,13 +70,11 @@
 {% block travel_end_body %}
     {% if profile.is_public %}
     <script src="/static/pikaday/pikaday.js"></script>
-    <script type="text/javascript" charset="utf-8">
+    <script>
         (function() {
-            var history = {{ profile.history_json|safe }};
             Travelogue.profileHistory(
-                history.entities,
-                history.logs,
-                {'mediaPrefix': '{{ MEDIA_URL }}'}
+                {{ history|safe }},
+                {'mediaPrefix': ''}
             );
         })();
     </script>

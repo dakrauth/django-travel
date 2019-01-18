@@ -2,133 +2,118 @@
 // Sample entity object
 //------------------------------------------------------------------------------
 // entity = {
-//     "flag__svg": "img/wh-32.png",
+//     "flag_svg": "img/wh-32.png",
 //     "code": "3",
 //     "name": "Aachen Cathedral",
 //     "locality": "State of North Rhine-Westphalia (Nordrhein-Westfalen)",
-//     "country__flag__svg": "img/flags/co/de/de-32.png",
-//     "country__code": "DE",
-//     "country__name": "Germany",
-//     "type__abbr": "wh",
+//     "country_flag_svg": "img/flags/co/de/de-32.png",
+//     "country_code": "DE",
+//     "country_name": "Germany",
+//     "type_abbr": "wh",
 //     "id": 11942
 // }
 //}
 //------------------------------------------------------------------------------
 
-;var Travelogue = (function(root) {
-    var TYPE_MAPPING = {
+;const Travelogue = (function(root) {
+    const TYPE_MAPPING = {
         'cn': 'Continents', 'co': 'Countries', 'wh': 'World Heritage sites',
         'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
         'lm': 'Landmarks',  'ct': 'Cities'
     };
-    
-    var sorters = {
-        'type': function(a, b) {
-            return (b.entity.type__abbr > a.entity.type__abbr) ? 1: -1;
-        },
-        'name': function(a, b) {
-            return (b.entity.name > a.name) ? 1 : -1;
-        },
-        'recent_visit': function(a, b) {
-            return b.arrival.valueOf() - a.arrival.valueOf();
-        },
-        'first_visit':  function(a, b) {
-            a = a.entity.logs;
-            b = b.entity.logs;
-            return b[b.length - 1].arrival.valueOf() - a[a.length - 1].arrival.valueOf();
-        },
-        'num_visits':   function(a, b) {
-            return b.entity.logs.length - a.entity.logs.length;
-        },
-        'rating': function(a, b) {
-            return a.rating - b.rating;
-        }
-    };
-    
-    var DATE_STRING  = 'MMM Do YYYY';
-    var TIME_STRING  = 'ddd h:ssa';
-    var MEDIA_PREFIX = '/media/';
-    var DATE_FORMAT  = 'YYYY-MM-DD';
-    var STARS        = '★★★★★';
 
-    var stars = function(rating) { return STARS.substr(rating - 1); };
-    
-    var DOM = {
-        get: function(q, ctx) { return document.querySelector(q, ctx); },
-        create: function(tag) {
-            var j, key, arg;
-            var el = document.createElement(tag);
-            for(var i = 1; i < arguments.length; i++) {
-                arg = arguments[i];
+    const sorters = {
+        type: (a, b) => (b.entity.type_abbr > a.entity.type_abbr) ? 1: -1,
+        name: (a, b) => (b.entity.name > a.name) ? 1 : -1,
+        recent_visit: (a, b) => b.arrival.valueOf() - a.arrival.valueOf(),
+        first_visit: (a, b) => {
+            const aLogs = a.entity.logs;
+            const bLogs = b.entity.logs;
+            return (
+                bLogs[bLogs.length - 1].arrival.valueOf()
+              - aLogs[aLogs.length - 1].arrival.valueOf()
+            );
+        },
+        num_visits: (a, b) => b.entity.logs.length - a.entity.logs.length,
+        rating: (a, b) => a.rating - b.rating
+    };
+
+    const DATE_STRING  = 'MMM Do YYYY';
+    const TIME_STRING  = 'ddd h:ssa';
+    const DATE_FORMAT  = 'YYYY-MM-DD';
+
+    const stars = rating => '★★★★★'.substr(rating - 1);
+
+    const DOM = {
+        get(q, ctx) {
+            return document.querySelector(q, ctx)
+        },
+        create(tag, ...args) {
+            const el = document.createElement(tag);
+            for(const arg of args) {
                 if(Array.isArray(arg)) {
-                    Array.from(arg).forEach(function(child) {
-                        el.appendChild(child);
-                    });
+                    arg.forEach(child => el.appendChild(child));
                 }
                 else if(typeof arg === 'string') {
                     el.textContent = arg;
                 }
                 else {
-                    Object.keys(arg).forEach(function(key) {
-                        el.setAttribute(key, arg[key]);
-                    });
+                    Object.keys(arg).forEach(key => el.setAttribute(key, arg[key]));
                 }
-            }
+            };
             return el;
         }
     };
-    
-    var dateTags = function(dtw) {
-        return [
-            DOM.create('div', dtw.format(DATE_STRING)),
-            DOM.create('div', dtw.format(TIME_STRING))
-        ];
-    };
-    
-    var createLogRow = function(log) {
-        var e = log.entity;
-        var nameTd = DOM.create('td');
-        var flagTd = DOM.create('td');
-        var extras = [];
-        var firstArrival = e.logs[e.logs.length-1].arrival;
-        var attrs = {
+
+    const dateTags = dtw => [
+        DOM.create('div', dtw.format(DATE_STRING)),
+        DOM.create('div', dtw.format(TIME_STRING))
+    ];
+
+    const createLogRow = log => {
+        let extras = [];
+        const e = log.entity;
+        const nameTd = DOM.create('td');
+        const flagTd = DOM.create('td');
+        const firstArrival = e.logs[e.logs.length-1].arrival;
+        const attrs = {
             'data-id': e.id,
             'data-name': e.name,
             'data-arrival': log.arrival.valueOf(),
             'data-first': firstArrival.valueOf(),
             'data-count': e.logs.length,
             'data-rating': log.rating,
-            'class': e.type__abbr + ' co-' + (
-                e.country__code ?
-                e.country__code :
-                (e.type__abbr == 'co' ? e.code : '')
+            'class': e.type_abbr + ' co-' + (
+                e.country_code ?
+                e.country_code :
+                (e.type_abbr == 'co' ? e.code : '')
             )
         };
 
         nameTd.appendChild(DOM.create('a', e.name, {'href': e.url()}));
-        if(e.flag__svg) {
-            flagTd.appendChild(DOM.create('img', {'src': e.flag__svg, 'class': 'flag flag-sm'}));
+        if(e.flag_svg) {
+            flagTd.appendChild(DOM.create('img', {'src': e.flag_svg, 'class': 'flag flag-sm'}));
         }
-        
+
         e.locality && extras.push(e.locality);
-        e.country__name && extras.push(e.country__name);
+        e.country_name && extras.push(e.country_name);
         if(extras.length) {
             nameTd.appendChild(DOM.create('span', extras.join(', ')));
         }
-        
-        if(e.country__flag__emoji) {
-            nameTd.appendChild(DOM.create('span', e.country__flag__emoji));    
+
+        if(e.country_flag_emoji) {
+            nameTd.appendChild(DOM.create('span', e.country_flag_emoji));
         }
-        else if(e.country__flag__svg) {
+        else if(e.country_flag_svg) {
             nameTd.appendChild(DOM.create('img', {
-                'src': e.country__flag__svg,
+                'src': e.country_flag_svg,
                 'class': 'flag flag-xs'
             }));
         }
 
         return DOM.create('tr', attrs, [
             flagTd,
-            DOM.create('td', TYPE_MAPPING[e.type__abbr]),
+            DOM.create('td', TYPE_MAPPING[e.type_abbr]),
             nameTd,
             DOM.create('td', {'class': 'when'}, dateTags(log.arrival)),
             DOM.create('td', {'class': 'when'}, dateTags(firstArrival)),
@@ -136,10 +121,10 @@
             DOM.create('td', stars(log.rating))
         ]);
     };
-    
-    var getOrdering = function(el) {
-        var ordering = {'column': el.dataset.column, 'order': el.dataset.order};
-        var current = el.parentElement.querySelector('.current');
+
+    const getOrdering = el => {
+        const ordering = {'column': el.dataset.column, 'order': el.dataset.order};
+        const current = el.parentElement.querySelector('.current');
         if(el === current) {
             ordering.order = (ordering.order === 'desc') ? 'asc' : 'desc';
             el.dataset.order = ordering.order;
@@ -150,16 +135,16 @@
         }
         return ordering;
     };
-    
-    var showSummary = function(summary) {
-        var el = DOM.get('#summary');
+
+    const showSummary = summary => {
+        const el = DOM.get('#summary');
         while(el.lastChild) {
           el.removeChild(el.lastChild);
         }
 
         el.appendChild(DOM.create('strong', 'Summary: '));
-        Object.keys(summary).forEach(function(key) {
-            var items = Object.keys(summary[key]).length;
+        for(const key of Object.keys(summary)) {
+            const items = Object.keys(summary[key]).length;
             if(items) {
                 el.appendChild(DOM.create(
                     'span',
@@ -167,74 +152,64 @@
                     TYPE_MAPPING[key] + ': ' + items
                 ));
             }
-        });
+        }
     };
-    
-    var Summary = Object.create({
-        init: function() {
-            Object.keys(TYPE_MAPPING).forEach(function(key) {
+
+    class Summary {
+        constructor() {
+            for(const key of Object.keys(TYPE_MAPPING)) {
                 this[key] = {};
-            }, this);
-            return this;
-        },
-        add: function(e) {
-            var kind = this[e.type__abbr];
+            }
+        }
+        add(e) {
+            const kind = this[e.type_abbr];
             kind[e.id] = 1 + (kind[e.id] || 0);
         }
-    });
+    }
 
-    var LogEntry = Object.create({
-        init: function(e, mediaPrefix) {
+    class LogEntry{
+        constructor(e) {
             Object.assign(this, e);
             this.logs = [];
-            if(this.flag__svg) {
-                this.flag__svg = mediaPrefix + this.flag__svg;    
-            }
-            
-            if(this.country__flag__svg) {
-                this.country__flag__svg = mediaPrefix + this.country__flag__svg;
-            }
-            return this;
-        },
-        url: function() {
-            var bit = this.code;
-            if(this.type__abbr == 'wh' || this.type__abbr == 'st') {
-                bit = this.country__code + '-' + bit;
-            } 
-            return '/i/' + this.type__abbr + '/' + bit + '/';
         }
-    });
-    
-    var TravelLogs = Object.create({
-        init: function(logs, summary) {
+        url() {
+            let bit = this.code;
+            if(this.type_abbr == 'wh' || this.type_abbr == 'st') {
+                bit = this.country_code + '-' + bit;
+            }
+            return '/i/' + this.type_abbr + '/' + bit + '/';
+        }
+    }
+
+    class TravelLogs {
+        constructor(logs, summary) {
             this.logs = logs;
             this.summary = summary;
-            return this;
-        },
-        sortLogs: function(column, order) {
+        }
+        sortLogs(column, order) {
             console.log('ordering', column, order);
             this.logs.sort(sorters[column]);
             if(order === 'desc') {
                 this.logs.reverse()
             }
-        },
-        filter: function(bits) {
+        }
+        filter(bits) {
             console.log('filter bits', bits);
-            this.summary = Object.create(Summary).init();
-            this.logs.forEach(function(log) {
-                var e = log.entity;
-                var good = true;
+            this.summary = new Summary();
+            for(const log of this.logs) {
+                const e = log.entity;
+                let good = true;
                 if(bits.type) {
-                    good = (e.type__abbr === bits.type);
+                    good = (e.type_abbr === bits.type);
                 }
 
                 if(good && bits.co) {
                     good = (
-                        e.country__code === bits.co ||
-                        (e.type__abbr === 'co' && e.code === bits.co)
+                        e.country_code === bits.co ||
+                        (e.type_abbr === 'co' && e.code === bits.co)
                     );
                 }
-                
+
                 if(good && bits.limit) {
                     if(e.logs.length === 1) {
                         good = true;
@@ -262,82 +237,92 @@
                             good = false;
                     }
                 }
-                
+
                 if(good) {
                     this.summary.add(e);
                 }
-                
+
                 log.isActive = good;
-            }, this);
+            }
 
             return this;
         }
-    });
-    var showLogs = function(travelLogs) {
-        var count = travelLogs.logs.length;
-        var parent = DOM.get('#history');
-        var el = parent.querySelector('tbody');
-        var start = new Date();
-        
+    }
+
+    const showLogs = travelLogs => {
+        const start = new Date();
+        const count = travelLogs.logs.length;
+        let parent = DOM.get('#history');
+        let el = parent.querySelector('tbody');
+
         DOM.get('#id_count').textContent = (count + ' entr' + (count > 1 ? 'ies' : 'y'));
         el.parentNode.removeChild(el);
         el = DOM.create('tbody');
-        travelLogs.logs.forEach(function(log) {
+        for(const log of travelLogs.logs) {
             if(log.isActive) {
-                el.appendChild(createLogRow(log));    
+                el.appendChild(createLogRow(log));
             }
-            
-        });
+        }
         parent.appendChild(el);
         showSummary(travelLogs.summary);
         console.log('delta', new Date() - start);
     };
-    
-    var initOrderingByColumns = function(history) {
-        var columns = '#history thead th[data-column]';
-        Array.from(document.querySelectorAll(columns)).forEach(function(e) {
-            e.addEventListener('click', function(evt) {
-                var ordering = getOrdering(this);
+
+    const initOrderingByColumns = controller => {
+        for(const e of document.querySelectorAll('#history thead th[data-column]')) {
+            e.addEventListener('click', evt => {
+                const ordering = getOrdering(e);
                 if(ordering.order === 'asc') {
                     HashBits.fromFilters().update();
                 }
-                history.sortCurrent(ordering.column, ordering.order);
-            }, false);
-        });
+                controller.sortLogs(ordering.column, ordering.order);
+            }, false)
+        };
     };
 
-    var createCountryOptions = function(countries) {
-        var cos = DOM.get('#id_co');
-        Object.keys(countries).sort().forEach(function(key) {
+    const createCountryOptions = countries => {
+        const cos = DOM.get('#id_co');
+        for(const key of Object.keys(countries).sort()) {
             cos.appendChild(DOM.create('option', countries[key], {'value': key}));
-        });
+        }
     };
-    
-    var createYearsOption = function(keys) {
-        var sel = DOM.create('select', {
+
+    const createYearsOption = keys => {
+        const sel = DOM.create('select', {
             'class': 'filter_ctrl form-control input-sm',
             'id': 'id_years'
         });
 
         sel.style.display = 'none';
-        keys.sort(function(a, b) { return b - a; }).forEach(function(yr) {
+        for(const yr of keys.sort((a, b) => { return b - a; })) {
             sel.appendChild(DOM.create('option', yr, {'value': yr}));
-        });
+        }
         DOM.get('#id_date').parentElement.appendChild(sel);
     };
 
-    var initProfileFilter = function(conf) {
-        var dateEl = DOM.get('#id_date');
-        var picker = new Pikaday({
+    const initProfileFilter = (controller, conf) => {
+        const onFilterChange = () => {
+            const bits = HashBits.fromFilters();
+            console.log(bits);
+            bits.update();
+            controller.filterLogs(bits);
+        };
+        const onHashChange = () => {
+            const bits = HashBits.fromHash();
+            setFilterFields(bits);
+            controller.filterLogs(bits);
+        };
+        const dateEl = DOM.get('#id_date');
+        new Pikaday({
             field: dateEl,
             format: DATE_FORMAT,
             minDate: new Date(1920,1,1),
             yearRange: [1920, (new Date()).getFullYear()],
-            onSelect: function(dt) { console.log(dt, this); }
+            onSelect: dt => { console.log(dt, this); }
         });
 
         window.addEventListener('hashchange', onHashChange, false);
-        DOM.get('#id_timeframe').addEventListener('change', function() {
+        DOM.get('#id_timeframe').addEventListener('change', () => {
             if(this.value === '=') {
                 DOM.get('#id_years').style.display = 'inline-block';
                 dateEl.style.display = 'none';
@@ -350,122 +335,106 @@
 
         dateEl.addEventListener('input', onFilterChange, false);
         dateEl.addEventListener('propertychange', onFilterChange, false);
-        Array.from(document.querySelectorAll('.filter_ctrl')).forEach(function(e) {
+        for(const e of document.querySelectorAll('.filter_ctrl')) {
             e.addEventListener('change', onFilterChange, false);
-        });
+        }
 
         onHashChange();
     };
-    
-    var controller = {
-        initialize: function(entities, logs, conf) {
-            var mediaPrefix = conf.mediaPrefix || MEDIA_PREFIX;
-            var countries = {};
-            var yearSet = {};
-            var summary = Object.create(Summary).init();
-            var entityDict = {};
+
+    const controller = {
+        initialize(entities, logs, conf) {
+            const countries = {};
+            const yearSet = {};
+            const summary = new Summary();
+            const entityDict = {};
             this.logEntries = [];
-            entities.forEach(function(e) {
-                var e = Object.create(LogEntry).init(e, mediaPrefix);
+            for(const entity of entities) {
+                const e = new LogEntry(entity);
                 this.logEntries.push(e);
-                if(e.country__code) {
-                    countries[e.country__code] = e.country__name;
+                if(e.country_code) {
+                    countries[e.country_code] = e.country_name;
                 }
                 entityDict[e.id] = e;
-            }, this);
-            
-            logs = logs.map(function(log) {
-                log.entity = entityDict[log.entity__id];
+            }
+            for(const log of logs) {
+                log.entity = entityDict[log.entity];
                 if(!log.entity) { console.log(log); }
+
                 log.entity.logs.push(log);
-                log.arrival = moment(log.arrival.value);
+                log.arrival = moment(log.arrival);
                 log.isActive = true;
                 yearSet[log.arrival.year()] = true;
                 summary.add(log.entity);
-                return log;
-            }, this);
-            
-            this.logs = Object.create(TravelLogs).init(logs, summary);
+            }
+
+            this.logs = new TravelLogs(logs, summary);
             console.log(summary);
             createCountryOptions(countries);
             initOrderingByColumns(this);
             createYearsOption(Object.keys(yearSet));
-            initProfileFilter(conf);
+            initProfileFilter(this, conf);
         },
-    
-        filterLogs: function(bits) {
+        filterLogs(bits) {
             this.logs.filter(bits);
             showLogs(this.logs);
         },
-    
-        sortLogs: function(column, order) {
+        sortLogs(column, order) {
             this.logs.sortLogs(column, order);
             showLogs(this.logs);
         }
     };
-        
-    var onFilterChange = function() {
-        var bits = Object.create(HashBits).fromFilters();
-        console.log(bits);
-        bits.update();
-        controller.filterLogs(bits);
-    };
 
-    var onHashChange = function() {
-        var bits = HashBits.fromHash();
-        setFilterFields(bits);
-        controller.filterLogs(bits);
-    };
-        
-    var HashBits = Object.create({
-        fromHash: function(hash) {
+    class HashBits {
+        static fromHash(hash) {
+            const bits = new HashBits();
             hash = hash || window.location.hash;
             if(hash && hash[0] == '#') {
                 hash = hash.substr(1);
             }
-            
-            if(hash) {
-                hash.split('/').forEach(function(bit) {
-                    var kvp = bit.split(':');
-                    this[kvp[0]] = (kvp.length === 2) ? kvp[1] : true;
-                }, this);
 
-                if(this.date) {
-                    this.timeframe = this.date[0];
-                    this.date = (this.timeframe === '=') ? 
-                        parseInt(this.date.substr(1))    :
-                        moment(this.date.substr(1));
+            if(hash) {
+                for(const bit of hash.split('/')) {
+                    const kvp = bit.split(':');
+                    bits[kvp[0]] = (kvp.length === 2) ? kvp[1] : true;
+                }
+
+                if(bits.date) {
+                    bits.timeframe = bits.date[0];
+                    bits.date = (bits.timeframe === '=')
+                              ? parseInt(bits.date.substr(1))
+                              : moment(bits.date.substr(1));
                 }
             }
-            return this;
-        },
-        fromFilters: function() {
-            var dt    = DOM.get('#id_date').value;
-            var el    = document.querySelector('#history thead .current');
-            this.type = DOM.get('#id_filter').value;
-            this.co   = DOM.get('#id_co').value;
-            this.timeframe = DOM.get('#id_timeframe').value;
-            this.limit = DOM.get('#id_limit').value;
+            return bits;
+        }
+        static fromFilters() {
+            const bits = new HashBits();
+            const dt = DOM.get('#id_date').value;
+            const el = document.querySelector('#history thead .current');
+            bits.type = DOM.get('#id_filter').value;
+            bits.co   = DOM.get('#id_co').value;
+            bits.timeframe = DOM.get('#id_timeframe').value;
+            bits.limit = DOM.get('#id_limit').value;
 
-            if(this.timeframe === '=') {
-                this.date = parseInt(DOM.get('#id_years').value);
+            if(bits.timeframe === '=') {
+                bits.date = parseInt(DOM.get('#id_years').value);
             }
-            else if(this.timeframe) {
-                this.date = dt ? moment(dt) : null;
+            else if(bits.timeframe) {
+                bits.date = dt ? moment(dt) : null;
             }
             if(el && el.dataset.order == 'asc') {
-                this.asc = el.dataset.column;
+                bits.asc = el.dataset.column;
             }
-            return this;
-        },
-        toString: function() {
-            var a = [];
-            ['type', 'co', 'asc', 'limit'].forEach(function(bit) {
+            return bits;
+        }
+        toString() {
+            let a = [];
+            for(const bit of ['type', 'co', 'asc', 'limit']) {
                 if(this[bit]) {
                     a.push(bit + ':' + this[bit]);
                 }
-            }, this);
-
+            }
             if(this.timeframe === '-' || this.timeframe === '+') {
                 if(this.date) {
                     a.push('date:' + this.timeframe + this.date.format(DATE_FORMAT));
@@ -477,15 +446,15 @@
                 }
             }
             return a.length ? '#' + a.join('/') : './';
-        },
-        update: function() {
+        }
+        update() {
             window.history.pushState({}, '', this.toString());
         }
-    });
-    
-    var setFilterFields = function(bits) {
-        var yearsEl = DOM.get('#id_years');
-        var dateEl = DOM.get('#id_date');
+    }
+
+    const setFilterFields = bits => {
+        const yearsEl = DOM.get('#id_years');
+        const dateEl = DOM.get('#id_date');
         DOM.get('#id_filter').value = bits.type || '';
         DOM.get('#id_timeframe').value = bits.timeframe || '';
         DOM.get('#id_co').value = bits.co || '';
@@ -504,25 +473,20 @@
             }
         }
     };
-    
+
     return {
-        parseHash: function(hash) {
-            return Object.create(HashBits).fromHash(hash);
-        },
-        timeit: function(fn) {
-            var args = Array.from(arguments);
-            var start, end, result;
-            args.shift();
-            start = new Date();
-            result = fn.call(undefined, args);
-            end = new Date();
+        parseHash: hash => HashBits.fromHash(hash),
+        timeit: (fn, ...args) => {
+            let start = new Date();
+            let result = fn.call(undefined, args);
+            let end = new Date();
             console.log(start + ' | ' + end + ' = ' + (end - start));
             return result;
         },
         DOM: DOM,
         controller: controller,
-        profileHistory: function(entities, logs, conf) {
-            controller.initialize(entities, logs, conf);
+        profileHistory: (history, conf) => {
+            controller.initialize(history.entities, history.logs, conf);
         }
     };
 }(window));
