@@ -15,7 +15,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'bootstrap3',
     'travel',
-    'pagination',
     'django_extensions',
 ]
 
