@@ -1,10 +1,17 @@
-from django.http import JsonResponse
-from rest_framework.decorators  import api_view
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-from .serializers import logs_for_user
+from . import serializers
 
 
-@api_view(['GET'])
-def log_list(request, username):
-    return JsonResponse(logs_for_user(username))
+class LogListView(APIView):
 
+    def get(self, request, username):
+        return Response(serializers.logs_for_user(username))
+
+
+class FlagGameView(APIView):
+
+    def get(self, request):
+        serializer = serializers.FlagSerializer()
+        return Response(serializer.data)

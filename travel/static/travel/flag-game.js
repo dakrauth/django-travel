@@ -43,7 +43,7 @@
         },
         updateImage(img, country, correct_id) {
             img.src = country.image;
-            img.dataset.id = country.id;
+            img.dataset.id = country.code;
             img.dataset.correct = correct_id;
         }
     };
@@ -65,7 +65,7 @@
             const correct = countries[co_id];
             const imgs = item.querySelectorAll('#item img');
             for(const [i, id] of group.entries()) {
-                View.updateImage(imgs[i], countries[id], correct.id)
+                View.updateImage(imgs[i], countries[id], correct.code)
             }
 
             document.getElementById('co-name').textContent = correct.name;
@@ -73,22 +73,29 @@
         }
     };
 
-    return (countries, groupIds) => {
-        const cycler = groupCycler(countries, groupIds);
-        for(const el of document.querySelectorAll('#item img')) {
-            el.addEventListener('click', () => {
-                const is_correct = (el.dataset.correct == el.dataset.id);
-                View.toggleCorrect(is_correct);
-                View.upateScore(is_correct);
-                setTimeout(() => cycler(), 1000);
+    return () => {
+        Travelogue.fetch('/api/v1/flag-game/', (data) => {
+            const countries = data.countries.reduce((accum, value) => {
+                accum[value.code] = value;
+                return accum;
+            }, {});
+            const cycler = groupCycler(countries, data.groups);
+            for(const el of document.querySelectorAll('#item img')) {
+                el.addEventListener('click', () => {
+                    const is_correct = (el.dataset.correct == el.dataset.id);
+                    View.toggleCorrect(is_correct);
+                    View.upateScore(is_correct);
+                    setTimeout(() => cycler(), 1000);
+                });
+            }
+
+            document.getElementById('next_button').addEventListener('click', () => {
+                View.upateScore(false);
+                cycler();
             });
-        }
 
-        document.getElementById('next_button').addEventListener('click', () => {
-            View.upateScore(false);
             cycler();
-        });
 
-        cycler();
+        });
     };
 }(window));

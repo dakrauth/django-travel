@@ -71,12 +71,7 @@
     {% if profile.is_public %}
     <script src="/static/pikaday/pikaday.js"></script>
     <script>
-        (function() {
-            Travelogue.profileHistory(
-                {{ history|safe }},
-                {'mediaPrefix': ''}
-            );
-        })();
+        Travelogue.loadLogs(window.location.pathname);
     </script>
     {% endif %}
 {% endblock travel_end_body %}

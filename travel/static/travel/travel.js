@@ -16,6 +16,14 @@
 //------------------------------------------------------------------------------
 
 ;const Travelogue = (function(root) {
+    const fetch = function(url, handler) {
+        const success_wrapper = function() { handler(JSON.parse(xhr.responseText)); };
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', success_wrapper);
+        xhr.open("GET", url);
+        xhr.send();
+    };
+
     const TYPE_MAPPING = {
         'cn': 'Continents', 'co': 'Countries', 'wh': 'World Heritage sites',
         'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
@@ -474,7 +482,18 @@
         }
     };
 
+    const loadLogs = (path) => {
+        const m = path.match(/\/([^\/]+)\/?$/);
+        if(m) {
+            fetch(`/api/v1/logs/${m[1]}/`, (data) => {
+                controller.initialize(data.entities, data.logs, {'mediaPrefix': ''})
+            });
+        }
+    };
+
     return {
+        fetch: fetch,
+        loadLogs: loadLogs,
         parseHash: hash => HashBits.fromHash(hash),
         timeit: (fn, ...args) => {
             let start = new Date();
@@ -485,8 +504,5 @@
         },
         DOM: DOM,
         controller: controller,
-        profileHistory: (history, conf) => {
-            controller.initialize(history.entities, history.logs, conf);
-        }
     };
 }(window));
