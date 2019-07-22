@@ -16,19 +16,147 @@
 //------------------------------------------------------------------------------
 
 ;const Travelogue = (function(root) {
-    const fetch = function(url, handler) {
-        const success_wrapper = function() { handler(JSON.parse(xhr.responseText)); };
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', success_wrapper);
-        xhr.open("GET", url);
-        xhr.send();
+
+    const MISSING_FLAG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>'
+    const DATE_FORMAT  = 'YYYY-MM-DD';
+    const TYPE_MAPPING = {
+        'cn': 'Continent', 'co': 'Country', 'wh': 'World Heritage',
+        'st': 'State',     'ap': 'Airport',  'np': 'National Park',
+        'lm': 'Landmark',  'ct': 'City'
     };
 
-    const TYPE_MAPPING = {
-        'cn': 'Continents', 'co': 'Countries', 'wh': 'World Heritage sites',
-        'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
-        'lm': 'Landmarks',  'ct': 'Cities'
+    const renderTemplate = function(templateId, data) {
+        const template = document.getElementById(templateId);
+        const node = template.content.cloneNode(true);
+        for(const [key, value] of Object.entries(data)) {
+            const el = node.querySelector(`.${key}`)
+            if(el) {
+                if(typeof value === 'string') {
+                    el.textContent = value;
+                }
+            }
+        }
+        return node;
     };
+
+    const createLogRow = log => {
+        let extras = [];
+        const e = log.entity;
+        const firstArrival = e.logs[e.logs.length-1].arrival;
+        const dateFormat  = 'ddd MMM Do YYYY h:ssa';
+        const stars = rating => '★★★★★'.substr(rating - 1);
+
+        e.locality && extras.push(e.locality);
+        e.country_name && extras.push(e.country_name);
+
+        const node = renderTemplate('log-row', {
+            'log-category': TYPE_MAPPING[e.type_abbr],
+            'log-country': extras.join(', '),
+            'log-count': e.logs.length.toString(),
+            'log-rating': stars(log.rating),
+            'log-recent-visit': log.arrival.format(dateFormat),
+            'log-country-flag-emoji': e.country_flag_emoji,
+            'log-first-visit': firstArrival.format(dateFormat)
+        });
+
+        const countryFlag = node.querySelector('.log-country-flag');
+        if(countryFlag) {
+            countryFlag.src = e.country_flag_svg;
+        }
+        else {
+            countryFlag.remove();
+        }
+
+        const logName = node.querySelector('.log-name');
+        logName.href = e.url;
+        logName.textContent = e.name;
+
+        const logImage = node.querySelector('.log-image');
+        logImage.src = e.flag_svg || MISSING_FLAG;
+
+        const tr = node.querySelector('tr');
+        tr.dataset.id = e.id;
+        tr.dataset.name = e.name;
+        tr.dataset.arrival = log.arrival.valueOf();
+        tr.dataset.first = firstArrival.valueOf();
+        tr.dataset.count = e.logs.length;
+        tr.dataset.rating = log.rating;
+
+        tr.className = e.type_abbr + ' co-' + (
+            e.country_code ?
+            e.country_code :
+            (e.type_abbr == 'co' ? e.code : '')
+        );
+        return node;
+    };
+
+    const showLogs = travelLogs => {
+        console.time('showLogs');
+        const count = travelLogs.logs.length;
+        let parent = document.getElementById('history');
+        let el = parent.querySelector('tbody');
+
+        document.getElementById('id_count').textContent = (count + ' entr' + (count > 1 ? 'ies' : 'y'));
+        el.parentNode.removeChild(el);
+        el = document.createElement('tbody');
+
+        console.time('createLogRows');
+        for(const log of travelLogs.logs) {
+            if(log.isActive) {
+                el.appendChild(createLogRow(log));
+            }
+        }
+        console.timeEnd('createLogRows');
+
+        parent.appendChild(el);
+        travelLogs.summary.render();
+        console.timeEnd('showLogs');
+    };
+
+    const getOrdering = el => {
+        const ordering = {'column': el.dataset.column, 'order': el.dataset.order};
+        const current = el.parentElement.querySelector('.current');
+        if(el === current) {
+            ordering.order = (ordering.order === 'desc') ? 'asc' : 'desc';
+            el.dataset.order = ordering.order;
+        }
+        else {
+            current.className = '';
+            el.className = 'current';
+        }
+        return ordering;
+    };
+
+    class Summary {
+        constructor() {
+            for(const key of Object.keys(TYPE_MAPPING)) {
+                this[key] = {};
+            }
+        }
+        add(e) {
+            const kind = this[e.type_abbr];
+            kind[e.id] = 1 + (kind[e.id] || 0);
+        }
+        render() {
+            const el = document.getElementById('summary');
+            while(el.lastChild) {
+              el.removeChild(el.lastChild);
+            }
+
+            const strong = document.createElement('strong');
+            strong.textContent = 'Summary: ';
+            el.appendChild(strong);
+            for(const key of Object.keys(this)) {
+                const items = Object.keys(this[key]).length;
+                if(items) {
+                    const span = document.createElement('span');
+                    span.className = 'label label-info';
+                    span.textContent = TYPE_MAPPING[key] + ': ' + items
+                    el.appendChild(span);
+                }
+            }
+        }
+    }
 
     const sorters = {
         type: (a, b) => (b.entity.type_abbr > a.entity.type_abbr) ? 1: -1,
@@ -46,146 +174,10 @@
         rating: (a, b) => a.rating - b.rating
     };
 
-    const DATE_STRING  = 'MMM Do YYYY';
-    const TIME_STRING  = 'ddd h:ssa';
-    const DATE_FORMAT  = 'YYYY-MM-DD';
-
-    const stars = rating => '★★★★★'.substr(rating - 1);
-
-    const DOM = {
-        get(q, ctx) {
-            return document.querySelector(q, ctx)
-        },
-        create(tag, ...args) {
-            const el = document.createElement(tag);
-            for(const arg of args) {
-                if(Array.isArray(arg)) {
-                    arg.forEach(child => el.appendChild(child));
-                }
-                else if(typeof arg === 'string') {
-                    el.textContent = arg;
-                }
-                else {
-                    Object.keys(arg).forEach(key => el.setAttribute(key, arg[key]));
-                }
-            };
-            return el;
-        }
-    };
-
-    const dateTags = dtw => [
-        DOM.create('div', dtw.format(DATE_STRING)),
-        DOM.create('div', dtw.format(TIME_STRING))
-    ];
-
-    const createLogRow = log => {
-        let extras = [];
-        const e = log.entity;
-        const nameTd = DOM.create('td');
-        const flagTd = DOM.create('td');
-        const firstArrival = e.logs[e.logs.length-1].arrival;
-        const attrs = {
-            'data-id': e.id,
-            'data-name': e.name,
-            'data-arrival': log.arrival.valueOf(),
-            'data-first': firstArrival.valueOf(),
-            'data-count': e.logs.length,
-            'data-rating': log.rating,
-            'class': e.type_abbr + ' co-' + (
-                e.country_code ?
-                e.country_code :
-                (e.type_abbr == 'co' ? e.code : '')
-            )
-        };
-
-        nameTd.appendChild(DOM.create('a', e.name, {'href': e.url()}));
-        if(e.flag_svg) {
-            flagTd.appendChild(DOM.create('img', {'src': e.flag_svg, 'class': 'flag flag-sm'}));
-        }
-
-        e.locality && extras.push(e.locality);
-        e.country_name && extras.push(e.country_name);
-        if(extras.length) {
-            nameTd.appendChild(DOM.create('span', extras.join(', ')));
-        }
-
-        if(e.country_flag_emoji) {
-            nameTd.appendChild(DOM.create('span', e.country_flag_emoji));
-        }
-        else if(e.country_flag_svg) {
-            nameTd.appendChild(DOM.create('img', {
-                'src': e.country_flag_svg,
-                'class': 'flag flag-xs'
-            }));
-        }
-
-        return DOM.create('tr', attrs, [
-            flagTd,
-            DOM.create('td', TYPE_MAPPING[e.type_abbr]),
-            nameTd,
-            DOM.create('td', {'class': 'when'}, dateTags(log.arrival)),
-            DOM.create('td', {'class': 'when'}, dateTags(firstArrival)),
-            DOM.create('td', e.logs.length.toString()),
-            DOM.create('td', stars(log.rating))
-        ]);
-    };
-
-    const getOrdering = el => {
-        const ordering = {'column': el.dataset.column, 'order': el.dataset.order};
-        const current = el.parentElement.querySelector('.current');
-        if(el === current) {
-            ordering.order = (ordering.order === 'desc') ? 'asc' : 'desc';
-            el.dataset.order = ordering.order;
-        }
-        else {
-            current.className = '';
-            el.className = 'current';
-        }
-        return ordering;
-    };
-
-    const showSummary = summary => {
-        const el = DOM.get('#summary');
-        while(el.lastChild) {
-          el.removeChild(el.lastChild);
-        }
-
-        el.appendChild(DOM.create('strong', 'Summary: '));
-        for(const key of Object.keys(summary)) {
-            const items = Object.keys(summary[key]).length;
-            if(items) {
-                el.appendChild(DOM.create(
-                    'span',
-                    {'class': 'label label-info'},
-                    TYPE_MAPPING[key] + ': ' + items
-                ));
-            }
-        }
-    };
-
-    class Summary {
-        constructor() {
-            for(const key of Object.keys(TYPE_MAPPING)) {
-                this[key] = {};
-            }
-        }
-        add(e) {
-            const kind = this[e.type_abbr];
-            kind[e.id] = 1 + (kind[e.id] || 0);
-        }
-    }
-
     class LogEntry{
         constructor(e) {
             Object.assign(this, e);
             this.logs = [];
-        }
-        url() {
-            let bit = this.code;
-            if(this.type_abbr == 'wh' || this.type_abbr == 'st') {
-                bit = this.country_code + '-' + bit;
-            }
-            return '/i/' + this.type_abbr + '/' + bit + '/';
         }
     }
 
@@ -257,25 +249,6 @@
         }
     }
 
-    const showLogs = travelLogs => {
-        const start = new Date();
-        const count = travelLogs.logs.length;
-        let parent = DOM.get('#history');
-        let el = parent.querySelector('tbody');
-
-        DOM.get('#id_count').textContent = (count + ' entr' + (count > 1 ? 'ies' : 'y'));
-        el.parentNode.removeChild(el);
-        el = DOM.create('tbody');
-        for(const log of travelLogs.logs) {
-            if(log.isActive) {
-                el.appendChild(createLogRow(log));
-            }
-        }
-        parent.appendChild(el);
-        showSummary(travelLogs.summary);
-        console.log('delta', new Date() - start);
-    };
-
     const initOrderingByColumns = controller => {
         for(const e of document.querySelectorAll('#history thead th[data-column]')) {
             e.addEventListener('click', evt => {
@@ -289,23 +262,27 @@
     };
 
     const createCountryOptions = countries => {
-        const cos = DOM.get('#id_co');
+        const cos = document.getElementById('id_co');
         for(const key of Object.keys(countries).sort()) {
-            cos.appendChild(DOM.create('option', countries[key], {'value': key}));
+            const el = document.createElement('option');
+            el.textContent = countries[key];
+            el.value = key;
+            cos.appendChild(el);
         }
     };
 
     const createYearsOption = keys => {
-        const sel = DOM.create('select', {
-            'class': 'filter_ctrl form-control input-sm',
-            'id': 'id_years'
-        });
-
+        const sel = document.createElement('select');
+        sel.className = 'filter_ctrl form-control input-sm';
+        sel.id = 'id_years';
         sel.style.display = 'none';
         for(const yr of keys.sort((a, b) => { return b - a; })) {
-            sel.appendChild(DOM.create('option', yr, {'value': yr}));
+            const el = document.createElement('option');
+            el.textContent = yr;
+            el.value = yr;
+            sel.appendChild(el);
         }
-        DOM.get('#id_date').parentElement.appendChild(sel);
+        document.getElementById('id_date').parentElement.appendChild(sel);
     };
 
     const initProfileFilter = (controller, conf) => {
@@ -320,24 +297,24 @@
             setFilterFields(bits);
             controller.filterLogs(bits);
         };
-        const dateEl = DOM.get('#id_date');
-        new Pikaday({
-            field: dateEl,
-            format: DATE_FORMAT,
-            minDate: new Date(1920,1,1),
-            yearRange: [1920, (new Date()).getFullYear()],
-            onSelect: dt => { console.log(dt, this); }
-        });
+        const dateEl = document.getElementById('id_date');
+        //new Pikaday({
+        //    field: dateEl,
+        //    format: DATE_FORMAT,
+        //    minDate: new Date(1920,1,1),
+        //    yearRange: [1920, (new Date()).getFullYear()],
+        //    onSelect: dt => { console.log(dt, this); }
+        //});
 
         window.addEventListener('hashchange', onHashChange, false);
-        DOM.get('#id_timeframe').addEventListener('change', () => {
+        document.getElementById('id_timeframe').addEventListener('change', () => {
             if(this.value === '=') {
-                DOM.get('#id_years').style.display = 'inline-block';
+                document.getElementById('id_years').style.display = 'inline-block';
                 dateEl.style.display = 'none';
             }
             else {
                 dateEl.style.display = 'inline-block';
-                DOM.get('#id_years').style.display = 'none';
+                document.getElementById('id_years').style.display = 'none';
             }
         }, false);
 
@@ -418,15 +395,15 @@
         }
         static fromFilters() {
             const bits = new HashBits();
-            const dt = DOM.get('#id_date').value;
+            const dt = document.getElementById('id_date').value;
             const el = document.querySelector('#history thead .current');
-            bits.type = DOM.get('#id_filter').value;
-            bits.co   = DOM.get('#id_co').value;
-            bits.timeframe = DOM.get('#id_timeframe').value;
-            bits.limit = DOM.get('#id_limit').value;
+            bits.type = document.getElementById('id_filter').value;
+            bits.co   = document.getElementById('id_co').value;
+            bits.timeframe = document.getElementById('id_timeframe').value;
+            bits.limit = document.getElementById('id_limit').value;
 
             if(bits.timeframe === '=') {
-                bits.date = parseInt(DOM.get('#id_years').value);
+                bits.date = parseInt(document.getElementById('id_years').value);
             }
             else if(bits.timeframe) {
                 bits.date = dt ? moment(dt) : null;
@@ -461,12 +438,12 @@
     }
 
     const setFilterFields = bits => {
-        const yearsEl = DOM.get('#id_years');
-        const dateEl = DOM.get('#id_date');
-        DOM.get('#id_filter').value = bits.type || '';
-        DOM.get('#id_timeframe').value = bits.timeframe || '';
-        DOM.get('#id_co').value = bits.co || '';
-        DOM.get('#id_limit').value = bits.limit || '';
+        const yearsEl = document.getElementById('id_years');
+        const dateEl = document.getElementById('id_date');
+        document.getElementById('id_filter').value = bits.type || '';
+        document.getElementById('id_timeframe').value = bits.timeframe || '';
+        document.getElementById('id_co').value = bits.co || '';
+        document.getElementById('id_limit').value = bits.limit || '';
 
         yearsEl.style.display = 'none';
         dateEl.style.display = 'none';
@@ -482,27 +459,19 @@
         }
     };
 
-    const loadLogs = (path) => {
+    const loadLogs = () => {
+        const path = window.location.pathname;
         const m = path.match(/\/([^\/]+)\/?$/);
         if(m) {
-            fetch(`/api/v1/logs/${m[1]}/`, (data) => {
-                controller.initialize(data.entities, data.logs, {'mediaPrefix': ''})
-            });
+            fetch(`/api/v1/logs/${m[1]}/`)
+                .then(response => response.json())
+                .then(data => controller.initialize(data.entities, data.logs, {'mediaPrefix': ''}));
         }
     };
 
     return {
-        fetch: fetch,
         loadLogs: loadLogs,
         parseHash: hash => HashBits.fromHash(hash),
-        timeit: (fn, ...args) => {
-            let start = new Date();
-            let result = fn.call(undefined, args);
-            let end = new Date();
-            console.log(start + ' | ' + end + ' = ' + (end - start));
-            return result;
-        },
-        DOM: DOM,
         controller: controller,
     };
 }(window));

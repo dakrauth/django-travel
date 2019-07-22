@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from . import models as travel
 from . import forms
 from . import utils
-from .api.serializers import logs_for_user
 
 superuser_required = user_passes_test(
     lambda u: u.is_authenticated and u.is_active and u.is_superuser

@@ -41,7 +41,7 @@
                     <option value="+">After</option>
                     <option value="=">For Year</option>
                 </select>
-                <input type="text" id="id_date" class="form-control filter_ctrl input-sm">
+                <input type="date" id="id_date" class="form-control filter_ctrl input-sm">
             </div>
             <div class="form-group" id="id_count"></div>
         </div>
@@ -53,7 +53,7 @@
                 <th></th>
                 <th data-column="type" data-order="desc">Type <span class="order"></span></th>
                 <th data-column="name" data-order="desc">Name <span class="order"></span></th>
-                <th class="current" data-column="recent_visit" data-order="desc">This Visit <span class="order"></span></th>
+                <th class="current" data-column="recent_visit" data-order="desc">Recent Visit <span class="order"></span></th>
                 <th data-column="first_visit" data-order="desc">First Visit <span class="order"></span></th>
                 <th data-column="num_visits" data-order="desc">Logs <span class="order"></span></th>
                 <th data-column="rating" data-order="desc">Rating <span class="order"></span></th>
@@ -61,6 +61,22 @@
         </thead>
         <tbody></tbody>
     </table>
+    <template id="log-row">
+        <tr data-id="" data-name="" data-arrival="" data-first="" data-count="" data-rating="" class="">
+            <td><img class="log-image flag flag-sm" src=""></td>
+            <td class="log-category"></td>
+            <td>
+                <a class="log-name" href=""></a>
+                <span class="log-country"></span>
+                <span class="log-country-flag" class="flag flag-xs"></span>
+                <span class="log-country-flag-emoji"></span>
+            </td>
+            <td class="when log-recent-visit"></td>
+            <td class="when log-first-visit"></td>
+            <td class="log-count"></td>
+            <td class="log-rating"></td>
+        </tr>
+    </template>
     {% else %}
     <p>
         <strong>{{ profile.user.username }}</strong> has chosen not to share any travel information
@@ -71,7 +87,7 @@
     {% if profile.is_public %}
     <script src="/static/pikaday/pikaday.js"></script>
     <script>
-        Travelogue.loadLogs(window.location.pathname);
+        Travelogue.loadLogs();
     </script>
     {% endif %}
 {% endblock travel_end_body %}
