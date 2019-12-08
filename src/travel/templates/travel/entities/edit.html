@@ -1,0 +1,23 @@
+{% extends "travel/base.html" %}
+{% load static %}
+{% block travel_heading %}{{ entity.name }}{% endblock travel_heading %}
+{% block travel_content %}
+    {% if user.is_superuser %}
+    <form class="form-horizontal entity-form" action="" method="post" accept-charset="utf-8">
+        {% load bootstrap3 %}
+        {% bootstrap_form form layout="horizontal" horizontal_label_class='col-md-2' horizontal_field_class='col-md-10' %}
+        {% buttons layout="horizontal" %}
+        <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "edit" %} Save
+        </button>
+        {% endbuttons %}
+    </form>
+    {% endif %}
+    {% if entity.flag %}
+    <hr>
+    <div class="col-md-10 col-md-offset-2">
+        <img style="width: 256px; border: 1px solid #ddd;" src="{{ entity.flag.image_url }}">
+    </div>
+    {% endif %}
+    
+{% endblock travel_content %}

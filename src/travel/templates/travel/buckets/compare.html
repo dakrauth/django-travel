@@ -1,0 +1,33 @@
+{% extends "travel/base.html" %}
+{% block travel_heading %}Bucket List: {{ bucket_list.title }}{% endblock travel_heading %}
+{% block travel_content %}
+    <p>{{ bucket_list.description }}</p>
+    <table class="bucket-result table table-striped travel-action">
+    <thead>
+        <tr class="">
+            <th></th>
+            <th>Entity</th>
+            {% for result in results %}
+            <th class="text-center">{{ result.username }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr data-id="{{ entity.id }}">
+            <td>{% if entity.flag %}
+                <img class="flag flag-sm" src="{{ entity.flag.thumb_url }}" />{% endif %}
+            </td>
+            <td>
+                <a href="{{ entity.get_absolute_url }}">{{ entity.descriptive_name }}</a>
+            </td>
+            {% for result in results  %}
+            <td class="text-center" style="font-size: 1.125em">
+            {% include "travel/_visited.html" with id=entity.id checklist=result.entities %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock travel_content %}

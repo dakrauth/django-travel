@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block travel_title %}Django Travel{% endblock travel_title %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .flag-sm { width: 64px; }
+        .flag-md { width: 256px; }
+    </style>
+    {% block travel_extra_head %}{% endblock travel_extra_head %}
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul class="list-unstyled list-inline">
+                <li><a title="Countries of the world" href="{% url 'travel-by-locale' 'co' %}">Countries</a>
+                <li><a title="States, provinces, territories of the world" href="{% url 'travel-by-locale' 'st' %}">States</a>
+                <li><a title="Cities of the world" href="{% url 'travel-by-locale' 'ct' %}">Cities</a>
+                <li><a title="Continents of the world" href="{% url 'travel-by-locale' 'cn' %}">Continents</a>
+            </ul>
+        </nav>
+        <hr>
+    </div>
+    <div class="container">
+        {% block travel_heading %}{% endblock travel_heading %}
+        {% block travel_content %}{% endblock travel_content %}
+    </div>
+</body>
+</html>

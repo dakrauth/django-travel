@@ -42,15 +42,11 @@ class TestLatLonParsing:
             '12º20′24″N 56º46′48″E',
             '12º20′24″N, 56º46′48″E',
         ]):
-            print(i)
             lat, lon = utils.parse_latlon(item)
-            print(lat, lon)
             delta = abs(lat - expect[0])
-            print(delta)
             assert  delta < threshold
             
             delta = abs(lon - expect[1])
-            print(delta)
             assert delta < threshold
 
     def test_bad_latlon(self):
@@ -65,7 +61,7 @@ class TestLatLonParsing:
 class TestNiceFormats:
 
     def test_nice_filename(self):
-        assert utils.normalize_file_from_url('/a/b/Le%C3%B3n.txt') == 'leon.txt'
+        assert utils.normalize_file_from_url('/a/b/Le%C3%B3n.txt') == 'león.txt'
         assert utils.normalize_file_from_url(
             'http://example.org/commons/Pyr%C3%A9n%C3%A9es.svg'
-        ) == 'pyrenees.svg'
+        ) == 'pyrénées.svg'

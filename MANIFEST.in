@@ -1,2 +1,2 @@
 include README.md
-recursive-include travel/templates *.html
+recursive-include src/travel/ *.html *.js *.svg *.png
