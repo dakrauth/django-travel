@@ -1,12 +1,6 @@
 from django.conf import settings
 from django import template
 
-try:
-    import ipdb as pdb
-except ImportError:
-    import pdb
-
-
 register = template.Library()
 
 class HavingNode(template.Node):
@@ -58,6 +52,11 @@ class SetTraceNode(template.Node):
     '''
     
     def render(self, context):
+        try:
+            import ipdb as pdb
+        except ImportError:
+            import pdb
+
         return pdb.set_trace() or ''
 
 
