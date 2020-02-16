@@ -1,0 +1,15 @@
+{% load i18n %}
+<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
+<select id="country-filter" style="max-width:100%">
+{% for choice in choices %}
+    <option{% if choice.selected %} selected{% endif %}
+    value="{{ choice.query_string|iriencode }}">{{ choice.display }}</option>
+{% endfor %}
+</select>
+<script>
+    (function() {
+        document.getElementById('country-filter').onchange = function() {
+            window.location.search = this.value;
+        }
+    })();
+</script>

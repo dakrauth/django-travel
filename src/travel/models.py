@@ -137,6 +137,9 @@ class TravelClassification(models.Model):
     type = models.ForeignKey(TravelEntityType, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.title
+
 
 class Extern(object):
 
@@ -198,6 +201,7 @@ class TravelEntity(models.Model):
     class Meta:
         ordering = ('name',)
         db_table = 'travel_entity'
+        verbose_name_plural = 'travel entities'
 
     class Related:
         ENTITY_TYPES = {'co': 'entity_set__country', 'st': 'entity_set__state'}
