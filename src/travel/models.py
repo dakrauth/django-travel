@@ -174,7 +174,7 @@ class Extern(object):
 class TravelEntity(models.Model):
     type = models.ForeignKey(TravelEntityType, related_name='entity_set', on_delete=models.PROTECT)
     code = models.CharField(max_length=8, db_index=True)
-    alt_code = models.CharField(max_length=8, db_index=True, default='')
+    alt_code = models.CharField(max_length=8, db_index=True, default='', blank=True)
     name = models.CharField(max_length=175)
     full_name = models.CharField(max_length=175)
     lat = models.DecimalField(max_digits=7, decimal_places=4, null=True, blank=True)
@@ -194,7 +194,8 @@ class TravelEntity(models.Model):
         blank=True, null=True)
 
     tz = models.CharField('timezone', max_length=40, blank=True)
-    #extras = models.TextField(blank=True)
+    updated = models.DateTimeField(auto_now=True)
+    description = models.TextField(default='', blank=True)
 
     objects = TravelEntityManager()
 

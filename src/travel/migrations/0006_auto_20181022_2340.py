@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='travelentity',
             name='alt_code',
-            field=models.CharField(db_index=True, default='', max_length=8),
+            field=models.CharField(db_index=True, default='', max_length=8, blank=True),
         ),
         migrations.AlterField(
             model_name='travelentity',

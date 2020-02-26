@@ -2,21 +2,9 @@ from django.contrib import admin
 from travel import models as travel
 
 
-class CountryListFilter(admin.SimpleListFilter):
-    title = 'country'
-    parameter_name = 'country'
-    template = 'travel/country-filter-template.html'
-
-    def lookups(self, request, model_admin):
-        return travel.TravelEntity.objects.filter(type__abbr='co').values_list('code', 'name')
-
-    def queryset(self, request, queryset):
-        return queryset.filter(country__code=self.value())
-
-
 @admin.register(travel.TravelEntity)
 class TravelEntityAdmin(admin.ModelAdmin):
-    list_filter = ('type', CountryListFilter)
+    list_filter = ('type', )
     list_display = (
         'id',
         'code',

@@ -6,7 +6,11 @@
     {% endif %}
 {% endblock travel_heading %}
 {% block travel_content %}
-    <p>Total: <span class="badge">{{ entities|length }}</span></p>
+    <p>
+        {% block listing_totals %}
+        Total: <span class="badge">{{ entities|length }}</span>
+        {% endblock listing_totals %}
+    </p>
     {% load pagination_tags %}
     {% autopaginate entities 100 %}
     {% paginate %}

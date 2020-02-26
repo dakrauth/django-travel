@@ -2,4 +2,8 @@
 {% block travel_extra_details %}
     <dt>Category</dt>
     <dd>{{ entity.category_detail }}</dd>
+    {% if entity.description %}
+    <dt>Description</dt>
+    <dd>{{ entity.description }}</dd>
+    {% endif %}
 {% endblock travel_extra_details %}
