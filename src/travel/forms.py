@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from django import forms
 from django.conf import settings
+from django.core.validators import EMPTY_VALUES
 from travel import models as travel
 from travel import utils as travel_utils
 import pytz
@@ -62,7 +63,7 @@ class DateUtilField(forms.Field):
         Python datetime.datetime object.
         """
         value = super(DateUtilField, self).clean(value)
-        if value in forms.fields.EMPTY_VALUES:
+        if value in EMPTY_VALUES:
             return None
         elif isinstance(value, datetime):
             return value

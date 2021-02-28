@@ -90,5 +90,7 @@ class TravelLogManager(Manager):
 
     def checklist(self, user):
         return dict(
-            self.filter(user=user).values_list('entity').annotate(count=Count('entity'))
+            self.filter(user=user).order_by('-arrival').values_list('entity').annotate(
+                count=Count('entity')
+            )
         )
