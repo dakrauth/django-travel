@@ -32,36 +32,37 @@
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
             <h2 class="panel-title">
-                <button id="next_button" class="pull-right btn btn-sm btn-default">Skip &raquo;</button>
+                <button id="next-button" class="pull-right btn btn-sm btn-default">Skip &raquo;</button>
                 <span id="co-name"></span>
             </h2>
         </div>
         <div class="panel-body" id="item-wrap">
             <div id="item">
                 <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src=""data-id="" data-correct="">
+                    <img class="img-responsive" src="" data-code="">
                 </div>
                 <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src=""data-id="" data-correct="">
+                    <img class="img-responsive" src="" data-code="">
                 </div>
                 <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src=""data-id="" data-correct="">
+                    <img class="img-responsive" src="" data-code="">
                 </div>
                 <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src=""data-id="" data-correct="">
+                    <img class="img-responsive" src="" data-code="">
                 </div>
             </div>
         </div>
         <div class="panel-footer">
             <div class="clearfix">
-                <strong style="verticle-align: middle">Your Score:</strong> <span class="badge" id="game_score">0 / 0</span>
+                <strong style="verticle-align: middle">Your Score:</strong> <span class="badge" id="game-score">0 / 0</span>
             </div>
         </div>
     </div>
-    {% endblock travel_content %}
+{% endblock travel_content %}
 {% block travel_end_body %}{{ block.super }}
-<script src="{% static 'travel/flag-game.js' %}"></script>
-<script type="text/javascript" charset="utf-8">
-    playFlagGame();
+<script type="module">
+    import { playFlagGame } from "{% static 'travel/flag-game.js' %}";
+    const url = '{% url "flag_game_api" %}';
+    playFlagGame(url);
 </script>
 {% endblock travel_end_body %}

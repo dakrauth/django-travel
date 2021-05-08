@@ -1,103 +1,121 @@
-;const playFlagGame = (function(root) {
+const randomInt = max => Math.floor(Math.random() * max);
 
+const shuffle = array => {
     // http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-    const shuffle = array => {
-        let currentIndex = array.length;
+    let currentIndex = array.length;
 
-        // While there remain elements to shuffle...
-        while(0 !== currentIndex) {
-
-            // Pick a remaining element...
-            const randomIndex = Math.floor(Math.random() * currentIndex--);
-
-            // And swap it with the current element.
-            const temp = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temp;
-        }
-
-      return array;
+    // While there remain elements to shuffle, pick one randomly and swap
+    while(0 !== currentIndex) {
+        const randomIndex = Math.floor(Math.random() * currentIndex--);
+        const temp = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temp;
     }
 
-    const scoreCard = (() => {
-        const score = [0, 0];
-        return is_correct => {
-            ++score[1];
-            is_correct && ++score[0];
-            return score.join(' / ');
+  return array;
+}
+
+class ScoreCard {
+    constructor() {
+        this.correct = 0;
+        this.total = 0;
+    }
+    update(isCorrect) {
+        ++this.total;
+        isCorrect && ++this.correct;
+        return this;
+    }
+    toString() {
+        return `${this.correct} / ${this.total}`;
+    }
+}
+
+class View {
+    constructor() {
+        this.item = document.getElementById('item');
+        this.images = [...this.item.querySelectorAll('img')];
+        this.nextBtn = document.getElementById('next-button')
+    }
+    updateScore(score) {
+        document.getElementById('game-score').textContent = score;
+    }
+    toggleCorrect(isCorrect) {
+        let el = this.item.parentElement;
+        if(isCorrect === undefined) {
+            el.className = el.className.replace(/ ?(in)?correct/, '');
         }
-    })();
-
-    const View = {
-        upateScore(is_correct) {
-            document.getElementById('game_score').textContent = scoreCard(is_correct);
-        },
-        toggleCorrect(is_correct) {
-            let el = document.getElementById('item').parentElement;
-            if(is_correct === undefined) {
-                el.className = el.className.replace(/ ?(in)?correct/, '');
-            }
-            else {
-                el.className += is_correct ? ' correct' : ' incorrect';
-            }
-        },
-        updateImage(img, country, correct_id) {
-            img.src = country.image;
-            img.dataset.id = country.code;
-            img.dataset.correct = correct_id;
+        else {
+            el.className += isCorrect ? ' correct' : ' incorrect';
         }
-    };
+    }
+    updateImage(index, country) {
+        const img = this.images[index]
+        img.src = country.image;
+        img.dataset.code = country.code;
+    }
+}
 
-    const randomInt = max => Math.floor(Math.random() * max);
+const loadData = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+};
 
-    const groupCycler = (countries, groupIds) => {
-        let currentIndex = 0;
-        shuffle(groupIds);
-        const next = () => {
-            if(currentIndex >= groupIds.length) {
-                currentIndex = 0;
-            };
-            return shuffle(groupIds[currentIndex++]);
+class FlagData {
+    constructor(data) {
+        this.countries = data.countries.reduce((accum, value) => {
+            accum[value.code] = value;
+            return accum;
+        }, {});
+        this.groups = data.groups;
+    }
+}
+
+class Controller {
+    constructor(flags, view) {
+        this.currentIndex = 0;
+        this.flags = flags;
+        this.view = view;
+        this.scoreCard = new ScoreCard();
+        shuffle(this.flags.groups);
+    }
+    next() {
+        if(this.currentIndex >= this.flags.groups.length) {
+            this.currentIndex = 0;
         };
-        return () => {
-            const group = next();
-            const co_id = group[randomInt(group.length)];
-            const correct = countries[co_id];
-            const imgs = item.querySelectorAll('#item img');
-            for(const [i, id] of group.entries()) {
-                View.updateImage(imgs[i], countries[id], correct.code)
-            }
-
-            document.getElementById('co-name').textContent = correct.name;
-            View.toggleCorrect();
+        return shuffle(this.flags.groups[this.currentIndex++]);
+    }
+    cycle() {
+        const group = this.next();
+        this.currentCorrect = this.flags.countries[group[randomInt(group.length)]];
+        for(const [i, id] of group.entries()) {
+            this.view.updateImage(i, this.flags.countries[id])
         }
-    };
 
-    return () => {
-
-        fetch('/api/v1/flag-game/')
-            .then(response => response.json())
-            .then(data => {
-                const countries = data.countries.reduce((accum, value) => {
-                    accum[value.code] = value;
-                    return accum;
-                }, {});
-                const cycler = groupCycler(countries, data.groups);
-                for(const el of document.querySelectorAll('#item img')) {
-                    el.addEventListener('click', () => {
-                        const is_correct = (el.dataset.correct == el.dataset.id);
-                        View.toggleCorrect(is_correct);
-                        View.upateScore(is_correct);
-                        setTimeout(() => cycler(), 1000);
-                    });
-                }
-
-                document.getElementById('next_button').addEventListener('click', () => {
-                    View.upateScore(false);
-                    cycler();
-                });
-
-                cycler();
+        document.getElementById('co-name').textContent = this.currentCorrect.name;
+        this.view.toggleCorrect();
+    }
+    play() {
+        for(const el of this.view.images) {
+            el.addEventListener('click', () => {
+                const isCorrect = (el.dataset.code === this.currentCorrect.code);
+                this.view.toggleCorrect(isCorrect);
+                this.view.updateScore(this.scoreCard.update(isCorrect));
+                setTimeout(() => this.cycle(), 1000);
             });
-    };
-}(window));
+        }
+
+        this.view.nextBtn.addEventListener('click', () => {
+            this.view.updateScore(this.scoreCard.update(false));
+            this.cycle();
+        });
+
+        this.cycle();
+    }
+};
+
+export const playFlagGame = async (url) => {
+    let data = await loadData(url);
+    const controller = new Controller(new FlagData(data), new View());
+    controller.play()
+};
