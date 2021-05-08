@@ -74,28 +74,30 @@
     };
 
     return () => {
-        Travelogue.fetch('/api/v1/flag-game/', (data) => {
-            const countries = data.countries.reduce((accum, value) => {
-                accum[value.code] = value;
-                return accum;
-            }, {});
-            const cycler = groupCycler(countries, data.groups);
-            for(const el of document.querySelectorAll('#item img')) {
-                el.addEventListener('click', () => {
-                    const is_correct = (el.dataset.correct == el.dataset.id);
-                    View.toggleCorrect(is_correct);
-                    View.upateScore(is_correct);
-                    setTimeout(() => cycler(), 1000);
-                });
-            }
 
-            document.getElementById('next_button').addEventListener('click', () => {
-                View.upateScore(false);
+        fetch('/api/v1/flag-game/')
+            .then(response => response.json())
+            .then(data => {
+                const countries = data.countries.reduce((accum, value) => {
+                    accum[value.code] = value;
+                    return accum;
+                }, {});
+                const cycler = groupCycler(countries, data.groups);
+                for(const el of document.querySelectorAll('#item img')) {
+                    el.addEventListener('click', () => {
+                        const is_correct = (el.dataset.correct == el.dataset.id);
+                        View.toggleCorrect(is_correct);
+                        View.upateScore(is_correct);
+                        setTimeout(() => cycler(), 1000);
+                    });
+                }
+
+                document.getElementById('next_button').addEventListener('click', () => {
+                    View.upateScore(false);
+                    cycler();
+                });
+
                 cycler();
             });
-
-            cycler();
-
-        });
     };
 }(window));
