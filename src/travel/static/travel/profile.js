@@ -41,8 +41,9 @@ const renderTemplate = function(templateId, data) {
 };
 
 class Summary {
-    constructor() {
+    constructor(grandTotal) {
         this.types = {}
+        this.grandTotal = grandTotal;
         for(const key of Object.keys(TYPE_MAPPING)) {
             this.types[key] = {};
         }
@@ -50,25 +51,6 @@ class Summary {
     add(e) {
         const kind = this.types[e.type_abbr];
         kind[e.id] = 1 + (kind[e.id] || 0);
-    }
-    render() {
-        const el = document.getElementById('summary');
-        while(el.lastChild) {
-          el.removeChild(el.lastChild);
-        }
-
-        const strong = document.createElement('strong');
-        strong.textContent = 'Summary: ';
-        el.appendChild(strong);
-        for(const key of Object.keys(this.types)) {
-            const items = Object.keys(this.types[key]).length;
-            if(items) {
-                const span = document.createElement('span');
-                span.className = 'label label-info';
-                span.textContent = TYPE_MAPPING[key] + ': ' + items
-                el.appendChild(span);
-            }
-        }
     }
 }
 
@@ -178,8 +160,9 @@ class TravelLogs {
     }
     filter(bits) {
         console.log('filter bits', bits);
-        this.summary = new Summary();
+        this.summary = new Summary(this.logs.length);
         for(const log of this.logs) {
+            ++this.summary.total;
             const e = log.entity;
             let good = true;
             if(bits.type) {
@@ -250,15 +233,9 @@ class View {
         }
         return ordering;
     }
-    initOrderingByColumns(controller) {
+    initOrderingByColumns(handler) {
         for(const e of document.querySelectorAll('#history thead th[data-column]')) {
-            e.addEventListener('click', evt => {
-                const ordering = this.getOrdering(e);
-                if(ordering.order === 'asc') {
-                    HashBits.fromFilters().update();
-                }
-                controller.sortLogs(ordering.column, ordering.order);
-            }, false)
+            e.addEventListener('click', handler, false)
         };
     }
     createCountryOptions(countries) {
@@ -278,31 +255,16 @@ class View {
             this.yearEl.appendChild(el);
         }
     }
-    initProfileFilter(controller) {
-        const onFilterChange = () => {
-            const bits = HashBits.fromFilters();
-            console.log(bits);
-            bits.update();
-            controller.filterLogs(bits);
-        };
-        const onHashChange = () => {
-            const bits = HashBits.fromHash();
-            this.setFilterFields(bits);
-            controller.filterLogs(bits);
-        };
-        //new Pikaday({
-        //    field: dateEl,
-        //    format: DATE_FORMAT,
-        //    minDate: new Date(1920,1,1),
-        //    yearRange: [1920, (new Date()).getFullYear()],
-        //    onSelect: dt => { console.log(dt, this); }
-        //});
-
-        window.addEventListener('hashchange', onHashChange, false);
+    initProfileFilter(filterHandler) {
         document.getElementById('id_timeframe').addEventListener('change', (evt) => {
-            if(evt.target.value === '=') {
+            const value = evt.target.value;
+            if(value === '=') {
                 this.dateEl.style.display = 'none';
                 this.yearEl.style.display = 'inline-block';
+            }
+            else if (value === '') {
+                this.dateEl.style.display = 'none';
+                this.yearEl.style.display = 'none';
             }
             else {
                 this.yearEl.style.display = 'none';
@@ -310,13 +272,11 @@ class View {
             }
         }, false);
 
-        this.dateEl.addEventListener('input', onFilterChange, false);
-        this.dateEl.addEventListener('propertychange', onFilterChange, false);
+        this.dateEl.addEventListener('input', filterHandler, false);
+        this.dateEl.addEventListener('propertychange', filterHandler, false);
         for(const e of document.querySelectorAll('.filter_ctrl')) {
-            e.addEventListener('change', onFilterChange, false);
+            e.addEventListener('change', filterHandler, false);
         }
-
-        onHashChange();
     }
     setFilterFields(bits) {
         document.getElementById('id_filter').value = bits.type || '';
@@ -341,7 +301,7 @@ class View {
         let extras = [];
         const e = log.entity;
         const firstArrival = e.logs[e.logs.length-1].arrival;
-        const dateFormat  = 'ddd MMM Do YYYY h:ssa';
+        const dateFormat  = 'MMM Do YYYY ddd h:ssa';
         const stars = rating => '★★★★★'.substr(rating - 1);
 
         e.locality && extras.push(e.locality);
@@ -393,21 +353,50 @@ class View {
         let parent = document.getElementById('history');
         let el = parent.querySelector('tbody');
 
-        document.getElementById('id_count').textContent = (count + ' entr' + (count > 1 ? 'ies' : 'y'));
         el.parentNode.removeChild(el);
         el = document.createElement('tbody');
 
         console.time('createLogRows');
+        let total = 0
         for(const log of travelLogs.logs) {
             if(log.isActive) {
+                ++total;
                 el.appendChild(this.createLogRow(log));
             }
         }
         console.timeEnd('createLogRows');
 
         parent.appendChild(el);
-        travelLogs.summary.render();
+        this.renderSummary(travelLogs.summary, total);
         console.timeEnd('showLogs');
+    }
+    renderSummary(summary, total) {
+        const countEl = document.getElementById('id_count')
+        let label = 'entr' + (summary.grandTotal > 1 ? 'ies' : 'y');
+        if(summary.grandTotal === total) {
+            countEl.textContent = `${total} ${label}`;
+        }
+        else {
+            countEl.textContent = `${total} of ${summary.grandTotal} ${label}`;
+        }
+
+        const el = document.getElementById('summary');
+        while(el.lastChild) {
+          el.removeChild(el.lastChild);
+        }
+
+        const strong = document.createElement('strong');
+        strong.textContent = 'Summary: ';
+        el.appendChild(strong);
+        for(const key of Object.keys(summary.types)) {
+            const items = Object.keys(summary.types[key]).length;
+            if(items) {
+                const span = document.createElement('span');
+                span.className = 'label label-info';
+                span.textContent = TYPE_MAPPING[key] + ': ' + items
+                el.appendChild(span);
+            }
+        }
     }
 }
 
@@ -422,8 +411,8 @@ class LogModels {
     constructor(data) {
         this.countries = {};
         this.yearSet = {};
-        this.summary = new Summary();
         this.logs = data.logs;
+        this.summary = new Summary(this.logs.length);
         this.logEntries = [];
 
         const entityDict = {};
@@ -456,9 +445,30 @@ class Controller  {
         this.models = models;
         this.view = view;
         this.view.createCountryOptions(this.models.countries);
-        this.view.initOrderingByColumns(this);
         this.view.createYearsOption(Object.keys(this.models.yearSet));
-        this.view.initProfileFilter(this);
+
+        this.view.initOrderingByColumns((evt) => {
+            const ordering = this.view.getOrdering(e);
+            if(ordering.order === 'asc') {
+                HashBits.fromFilters().update();
+            }
+            this.sortLogs(ordering.column, ordering.order);
+        });
+
+        this.view.initProfileFilter(() => {
+            const bits = HashBits.fromFilters();
+            console.log(bits);
+            bits.update();
+            this.filterLogs(bits);
+        });
+
+        window.addEventListener('hashchange', (evt) => {
+            const bits = HashBits.fromHash();
+            this.view.setFilterFields(bits);
+            this.filterLogs(bits);
+        }, false);
+        window.dispatchEvent(new Event('hashchange'));
+
     }
     filterLogs(bits) {
         this.models.logs.filter(bits);

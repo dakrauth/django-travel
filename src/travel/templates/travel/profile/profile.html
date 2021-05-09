@@ -1,8 +1,13 @@
 {% extends "travel/base.html" %}
 {% load static %}
-{% block travel_heading %}Travelogue for {{ profile.user.username }}{% endblock travel_heading %}
+{% block travel_heading %}Travelogue Profile{% endblock travel_heading %}
 {% block travel_content %}
     {% if profile.is_public or profile.user == request.user %}
+    <p>
+        Travels logged by {{ profile.user.username }}.
+        <a class="btn btn-xs btn-success" href="{% url 'travel-calendar' profile.user.username %}">
+            <span class="glyphicon glyphicon-calendar"></span> Calendar</a>
+    </p>
     <div class="profile-filter well well-sm">
         <div class="form-inline">
             <div class="form-group">

@@ -1,5 +1,10 @@
 import json
+from datetime import timedelta
+from collections import OrderedDict
+from calendar import Calendar, SUNDAY
+
 from django import http
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
@@ -207,6 +212,41 @@ def log_entry(request, username, pk):
         form = None
 
     return render_travel(request, 'log-entry.html', {'entry': entry, 'form':  form})
+
+
+def calendar(request, username):
+    profile = get_object_or_404(travel.TravelProfile.objects.public(), user__username=username)
+    user = profile.user
+    when = request.GET.get('when')
+    now = timezone.now()
+    dt = now.replace(day=1)
+    if when:
+        year, month = [int(i) for i in when.split('-')]
+        dt = dt.replace(year=year, month=month)
+
+    cal = Calendar()
+    cal.setfirstweekday(SUNDAY)
+    dates = OrderedDict(
+        ((d.month, d.day), [])
+        for d in list(cal.itermonthdates(dt.year, dt.month))
+    )
+
+    for (name, abbr, arrival, emoji) in user.travellog_set.filter(
+        arrival__month=dt.month,
+        user=user
+    ).values_list('entity__name', 'entity__type__abbr', 'arrival', 'entity__flag__emoji'):
+        dates[(arrival.month, arrival.day)].append([name, abbr, arrival, emoji])
+
+    dates = list(dates.items())
+
+    return render(request, 'travel/profile/calendar.html', {
+        'profile': profile,
+        'dates': [dates[i:i+7] for i in range(0, len(dates), 7)],
+        'now': now,
+        'when': dt,
+        'prev_month': dt - timedelta(days=1),
+        'next_month': dt + timedelta(days=31)
+    })
 
 #-------------------------------------------------------------------------------
 # Admin utils below

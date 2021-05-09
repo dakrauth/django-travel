@@ -24,6 +24,7 @@ add_patterns = [
 profile_patterns = [
     re_path(r'^$', views.all_profiles, name='travel-profiles'),
     re_path(r'^([^/]+)/$', views.profile, name='travel-profile'),
+    re_path(r'^([^/]+)/calendar/$', views.calendar, name='travel-calendar'),
     re_path(r'^([^/]+)/log/(\d+)/$', views.log_entry, name='travel-log-entry'),
 ]
 

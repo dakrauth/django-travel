@@ -1,0 +1,71 @@
+{% extends "travel/base.html" %}
+{% block travel_content %}
+    <style>
+        table.cal > tbody > tr> td { width: 14%; padding: 0; }
+        table.cal > tbody > tr> td > p { background: #eee; text-align: center; }
+        table.cal > tbody > tr> td > p.today { color: white; background-color: #333; }
+        table.cal > tbody > tr> td > ul { margin: 4px; list-style: none; padding: 0; }
+        table.cal > thead th { text-align: center; background-color: #aaa; color: white; }
+        .sample-log, table.cal > tbody > tr> td > ul > li {
+            color: white;
+            border-radius: 8px;
+            padding: 2px 3px;
+            margin-bottom: 4px;
+        }
+
+        .sample-log { width: 8em; display: inline-block; }
+        .sample-log.co, table.cal > tbody > tr> td > ul > li.co { background:#673ab7; }
+        .sample-log.wh, table.cal > tbody > tr> td > ul > li.wh { background:#5496dd; }
+        .sample-log.ap, table.cal > tbody > tr> td > ul > li.ap { background:#ff454b; }
+        .sample-log.st, table.cal > tbody > tr> td > ul > li.st { background:#ffac4d; }
+        .sample-log.ci, table.cal > tbody > tr> td > ul > li.ct { background:#94e354; }
+        .info-header { text-align: center; }
+        .info-header > ul { margin: 1px; }
+
+    </style>
+    <h1>Profile Calendar</h1>
+    <p>For user profile <a href="{{ profile.public_url }}">{{ profile }}</a></p>
+    <div class="info-header">
+        <h2>{{ when|date:"F Y" }}</h2>
+        <ul class="pagination pagination-sm">
+            <li><a href="?when={{ prev_month.year }}-{{ prev_month.month}}">« {{ prev_month|date:"F" }}</a></li>
+            <li><a href="?when={{ next_month.year }}-{{ next_month.month}}">{{ next_month|date:"F" }} »</a></li>
+        </ul>
+        <p>
+            <span class="sample-log co">Country</span>
+            <span class="sample-log wh">World Heritage</span>
+            <span class="sample-log ap">Airport</span>
+            <span class="sample-log st">State</span>
+            <span class="sample-log ci">City</span>
+        </p>
+    </div>
+    <table class="cal table table-bordered">
+        <thead>
+        <tr>
+            <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for week in dates %}
+        <tr>
+            {% for day,items in week %}
+                <td>
+                    <p {% if now.day == day.1 %}class="today"{% endif %}>{{ day.1 }}</p>
+                    {% if items %}
+                    <ul>
+                        {% for name, abbr, arrival, emoji in items %}
+                        <li class="{{ abbr }}">
+                            <strong class="year">{{ arrival.year }}</strong>
+                            {% if emoji %}{{ emoji }}{% endif %}
+                            <span>{{ name }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock travel_content %}
