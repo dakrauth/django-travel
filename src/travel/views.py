@@ -219,7 +219,7 @@ def calendar(request, username):
     user = profile.user
     when = request.GET.get('when')
     now = timezone.now()
-    dt = now.replace(day=1)
+    dt = now.replace(day=15)
     if when:
         year, month = [int(i) for i in when.split('-')]
         dt = dt.replace(year=year, month=month)
@@ -235,18 +235,20 @@ def calendar(request, username):
         arrival__month=dt.month,
         user=user
     ).values_list('entity__name', 'entity__type__abbr', 'arrival', 'entity__flag__emoji'):
-        dates[(arrival.month, arrival.day)].append([name, abbr, arrival, emoji])
+        key = (arrival.month, arrival.day)
+        if key in dates:
+            dates[key].append([name, abbr, arrival, emoji])
 
     dates = list(dates.items())
-
-    return render(request, 'travel/profile/calendar.html', {
+    context = {
         'profile': profile,
         'dates': [dates[i:i+7] for i in range(0, len(dates), 7)],
         'now': now,
         'when': dt,
-        'prev_month': dt - timedelta(days=1),
+        'prev_month': dt.replace(day=1) - timedelta(days=1),
         'next_month': dt + timedelta(days=31)
-    })
+    }
+    return render(request, 'travel/profile/calendar.html', context)
 
 #-------------------------------------------------------------------------------
 # Admin utils below

@@ -12,7 +12,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <label for="id_filter">Filter by</label>
-                <select id="id_filter" class="filter_ctrl form-control input-sm">
+                <select data-filter="type" id="id_filter" class="filter_ctrl form-control input-sm">
                     <option value="">-- All types --</option>
                     <option value="cn">Continents</option>
                     <option value="co">Countries</option>
@@ -26,13 +26,13 @@
             </div>
             <div class="form-group" id="show_countries">
                 <label for="id_co">in</label>
-                <select id="id_co" class="filter_ctrl form-control input-sm">
+                <select data-filter="co" id="id_co" class="filter_ctrl form-control input-sm">
                     <option value="">-- All countries --</option>
                 </select>
             </div>
             <div class="form-group" id="limit_logs">
                 <label for="id_limit">limited to</label>
-                <select id="id_limit" class="filter_ctrl form-control input-sm">
+                <select data-filter="limit" id="id_limit" class="filter_ctrl form-control input-sm">
                     <option value="">-- All entries --</option>
                     <option value="first">First visit</option>
                     <option value="recent">Recent visit</option>
@@ -40,15 +40,15 @@
             </div>
             <div class="form-group">
                 <label for="id_timeframe">and</label>
-                <select id="id_timeframe" class="filter_ctrl form-control input-sm">
+                <select data-filter="timeframe" id="id_timeframe" class="filter_ctrl form-control input-sm">
                     <option value="">-- All Dates --</option>
                     <option value="-">Before</option>
                     <option value="+">After</option>
                     <option value="=">For Year</option>
                 </select>
                 <div style="display: inline-block">
-                    <input id="id_date" style="display: none" class="form-control filter_ctrl input-sm" type="date">
-                    <select id="id_year" style="display: none" class="filter_ctrl form-control input-sm"></select>
+                    <input data-filter="date" id="id_date" style="display: none" class="form-control filter_ctrl input-sm" type="date">
+                    <select data-filter="year" id="id_year" style="display: none" class="filter_ctrl form-control input-sm"></select>
                 </div>
             </div>
             <div class="form-group" id="id_count"></div>

@@ -64,8 +64,8 @@ class HashBits {
 
         if(hash) {
             for(const bit of hash.split('/')) {
-                const kvp = bit.split(':');
-                bits[kvp[0]] = (kvp.length === 2) ? kvp[1] : true;
+                const [k, v] = bit.split(':');
+                bits[k] = v;
             }
 
             if(bits.date) {
@@ -79,27 +79,25 @@ class HashBits {
     }
     static fromFilters() {
         const bits = new HashBits();
-        const dt = document.getElementById('id_date').value;
         const el = document.querySelector('#history thead .current');
-        bits.type = document.getElementById('id_filter').value;
-        bits.co   = document.getElementById('id_co').value;
-        bits.timeframe = document.getElementById('id_timeframe').value;
-        bits.limit = document.getElementById('id_limit').value;
+        document.querySelectorAll('.profile-filter [data-filter]').forEach(
+            el => bits[el.dataset.filter] = el.value
+        );
 
         if(bits.timeframe === '=') {
-            bits.date = parseInt(document.getElementById('id_year').value);
+            bits.date = parseInt(bits.year);
         }
         else if(bits.timeframe) {
-            bits.date = dt ? moment(dt) : null;
+            bits.date = bits.date ? moment(bits.date) : null;
         }
-        if(el && el.dataset.order == 'asc') {
-            bits.asc = el.dataset.column;
+        if(el && el.dataset.order) {
+            bits[el.dataset.order] = el.dataset.column;
         }
         return bits;
     }
     toString() {
         let a = [];
-        for(const bit of ['type', 'co', 'asc', 'limit']) {
+        for(const bit of ['type', 'co', 'asc', 'desc', 'limit']) {
             if(this[bit]) {
                 a.push(bit + ':' + this[bit]);
             }
@@ -448,7 +446,7 @@ class Controller  {
         this.view.createYearsOption(Object.keys(this.models.yearSet));
 
         this.view.initOrderingByColumns((evt) => {
-            const ordering = this.view.getOrdering(e);
+            const ordering = this.view.getOrdering(evt.target);
             if(ordering.order === 'asc') {
                 HashBits.fromFilters().update();
             }
