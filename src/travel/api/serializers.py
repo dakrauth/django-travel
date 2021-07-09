@@ -1,5 +1,4 @@
 from itertools import chain
-from django.conf import settings
 from rest_framework import serializers
 
 from django.contrib.auth.models import User
@@ -39,8 +38,6 @@ class TravelEntitySerializer(serializers.ModelSerializer):
             'url'
         )
 
-    #def get_url(self, obj):
-    #    return obj.get_absolute_url()
 
 class TravelUserLogSerializer(serializers.ModelSerializer):
     logs = serializers.SerializerMethodField()

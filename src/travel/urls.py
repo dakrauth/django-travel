@@ -1,5 +1,5 @@
 from django.urls import re_path, include
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView
 from . import views
 from .api.urls import urlpatterns as api_urls
 
@@ -12,7 +12,11 @@ search_patterns = [
 item_patterns = [
     re_path(r'^$', views.by_locale, name='travel-by-locale'),
     re_path(r'^(?P<code>\w+)(?:-(?P<aux>\w+))?/$', views.entity, name='travel-entity'),
-    re_path(r'^(?P<code>\w+)(?:-(?P<aux>\w+))?/(?P<rel>\w+)/$', views.entity_relationships, name='travel-entity-relationships'),
+    re_path(
+        r'^(?P<code>\w+)(?:-(?P<aux>\w+))?/(?P<rel>\w+)/$',
+        views.entity_relationships,
+        name='travel-entity-relationships'
+    ),
 ]
 
 add_patterns = [

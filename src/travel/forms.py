@@ -1,6 +1,5 @@
 from datetime import datetime, date
 from django import forms
-from django.conf import settings
 from django.core.validators import EMPTY_VALUES
 from travel import models as travel
 from travel import utils as travel_utils
@@ -17,7 +16,7 @@ def _tz_choices():
         else:
             a, b = bits
             nested.setdefault(a, []).append((t, t))
-    
+
     choices.sort()
     for key in sorted(nested.keys()):
         values = sorted(nested[key])
@@ -37,7 +36,7 @@ class SearchField(forms.CharField):
 
 class SearchForm(forms.Form):
     TYPE_OPTIONS = (
-        ('',   'All Locales'),
+        ('', 'All Locales'),
         ('co', 'Country'),
         ('st', 'State'),
         ('ap', 'Airport'),
@@ -72,7 +71,7 @@ class DateUtilField(forms.Field):
 
         try:
             return travel_utils.dt_parser(value)
-        except:
+        except Exception:
             raise forms.ValidationError(self.error_messages['invalid'])
 
 
@@ -93,7 +92,7 @@ class TravelLogForm(forms.ModelForm):
         instance = kws.get('instance', None)
         if instance and instance.arrival:
             instance.arrival = instance.local_arrival.replace(tzinfo=None)
-            
+
         super(TravelLogForm, self).__init__(*args, **kws)
         self.entity = entity
         if instance and instance.notes:
@@ -109,7 +108,7 @@ class TravelLogForm(forms.ModelForm):
         entry.entity = self.entity
         if user:
             entry.user = user
-            
+
         entry.save()
         entry.update_notes(data.get('note', ''))
         return entry
@@ -127,7 +126,7 @@ class LatLonField(forms.CharField):
 
 
 class BaseTravelEntityForm(forms.ModelForm):
-    tz = forms.ChoiceField(label='Timezone', required=False, choices=TZ_CHOICES,  initial='UTC')
+    tz = forms.ChoiceField(label='Timezone', required=False, choices=TZ_CHOICES, initial='UTC')
     lat_lon = LatLonField(label='Lat/Lon', required=False)
     flag_url = forms.CharField(label='Flag URL', required=False)
 
@@ -194,4 +193,3 @@ class NewCountryForm(NewTravelEntityForm):
 
     class Meta(NewTravelEntityForm.Meta):
         fields = ('continent',) + NewTravelEntityForm.Meta.fields
-

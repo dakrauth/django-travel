@@ -1,16 +1,16 @@
-from django.conf import settings
 from django import template
 
 register = template.Library()
 
+
 class HavingNode(template.Node):
-    
+
     def __init__(self, having_var, context_var, nodelist, nodelist_else):
         self.having_var = having_var
         self.context_var = context_var
         self.nodelist = nodelist
         self.nodelist_else = nodelist_else
-    
+
     def render(self, context):
         value = self.having_var.resolve(context)
         if value:
@@ -19,7 +19,7 @@ class HavingNode(template.Node):
 
         if self.nodelist_else:
             return self.nodelist_else.render(context)
-            
+
         return ''
 
 
@@ -42,7 +42,7 @@ def do_having(parser, token):
         parser.delete_first_token()
     else:
         nodelist_else = None
-        
+
     return HavingNode(having_var, context_var, nodelist, nodelist_else)
 
 
@@ -50,7 +50,7 @@ class SetTraceNode(template.Node):
     '''
     Adapted from http://www.djangosnippets.org/snippets/1550/
     '''
-    
+
     def render(self, context):
         try:
             import ipdb as pdb
@@ -65,7 +65,7 @@ def do_set_trace(parser, token):
     '''
     Tag that inspects template context.
 
-    Usage: 
+    Usage:
     {% set_trace %}
     '''
     return SetTraceNode()

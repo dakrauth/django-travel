@@ -33,10 +33,8 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.paginator import Paginator, InvalidPage
 from django.template.base import TokenType
-from django.template.loader import select_template
 from django.utils.text import unescape_string_literal
 from django.template import (
-    Context,
     Library,
     Node,
     TemplateSyntaxError,
@@ -116,12 +114,12 @@ class AutoPaginateNode(Node):
             paginate_by = self.paginate_by
         else:
             paginate_by = self.paginate_by.resolve(context)
-        
+
         if isinstance(self.orphans, int):
             orphans = self.orphans
         else:
             orphans = self.orphans.resolve(context)
-        
+
         paginator = Paginator(value, paginate_by, orphans)
         try:
             request = context['request']
@@ -140,12 +138,12 @@ class AutoPaginateNode(Node):
             context[key] = []
             context['invalid_page'] = True
             return ''
-        
+
         if self.context_var is not None:
             context[self.context_var] = page_obj.object_list
         else:
             context[key] = page_obj.object_list
-        
+
         context['paginator'] = paginator
         context['page_obj'] = page_obj
         context['page_suffix'] = page_suffix
@@ -162,7 +160,7 @@ class PaginateNode(Node):
         new_context = paginate(context)
         if self.template:
             template_list.insert(0, self.template)
-        
+
         return loader.render_to_string(template_list, new_context)
 
 
@@ -203,13 +201,13 @@ def paginate(context, window=None, margin=None):
         """
     window = window or config['default_window']
     margin = margin or config['default_margin']
-    
+
     if window < 0:
         raise ValueError('Parameter "window" cannot be less than zero')
-    
+
     if margin < 0:
         raise ValueError('Parameter "margin" cannot be less than zero')
-    
+
     try:
         paginator = context['paginator']
         page_obj = context['page_obj']
@@ -294,9 +292,9 @@ def do_autopaginate(parser, token):
     # Check whether there are any other autopaginations are later in this template
     def expression(obj):
         return (
-            obj.token_type == TokenType.BLOCK and
-            len(obj.split_contents()) > 0 and
-            obj.split_contents()[0] == "autopaginate"
+            obj.token_type == TokenType.BLOCK
+            and len(obj.split_contents()) > 0
+            and obj.split_contents()[0] == "autopaginate"
         )
 
     multi_paginations = len([tok for tok in parser.tokens if expression(tok)]) > 0
@@ -336,7 +334,7 @@ def do_autopaginate(parser, token):
             "{% autopaginate QUERYSET [PAGINATE_BY] [ORPHANS] "
             "[as CONTEXT_VAR_NAME] %}"
         )
-    
+
     return AutoPaginateNode(query_var, multi_paginations, paginate_by, orphans, context_var)
 
 

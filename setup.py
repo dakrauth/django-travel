@@ -22,10 +22,10 @@ setup(
     zip_safe=False,
     install_requires=[
         'choice-enum>=1.0.0',
-        'Django>=2.2.8,<3.2',
+        'Django>=2.2.24,<4.0',
         'django-bootstrap3>=12.0.0',
-        'python-dateutil>=2.8.1',
-        'pytz>=2019.3',
+        'python-dateutil>=2.8.2',
+        'pytz>=2021.3',
         'djangorestframework>=3.10.3',
     ],
     extras_require={
@@ -37,8 +37,6 @@ setup(
         'Environment :: Web Environment',
         'Framework :: Django',
         'Framework :: Django :: 2.2',
-        'Framework :: Django :: 3.0',
-        'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
@@ -46,6 +44,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Utilities',
         'Topic :: Education',
     ]

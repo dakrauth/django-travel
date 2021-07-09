@@ -1,5 +1,3 @@
-# -*- coding:utf8 -*-
-import io
 import re
 import json
 import datetime
@@ -77,10 +75,11 @@ class LatLonParser:
             lon = self.make_decimal(lon_d, lon_m, lon_s, lon_dir == 'w')
             if abs(lon) > 180:
                 raise self.error('Lon must be in range of [-180, 180]')
-            
+
             return [lat, lon]
-        
+
         raise self.error(s)
+
 
 parse_latlon = LatLonParser().parse
 
@@ -89,14 +88,13 @@ class TravelJsonEncoder(json.JSONEncoder):
     """
     JSONEncoder subclass that knows how to encode date/time and decimal types.
     """
-    
-    DATE_FORMAT     = "%Y-%m-%d"
-    TIME_FORMAT     = "%H:%M:%S"
+    DATE_FORMAT = "%Y-%m-%d"
+    TIME_FORMAT = "%H:%M:%S"
     DATETIME_FORMAT = '{}T{}Z'.format(DATE_FORMAT, TIME_FORMAT)
 
     def _special(self, ctype, value):
         return {'content_type': ctype, 'value': value}
- 
+
     def default(self, o):
         if isinstance(o, datetime.datetime):
             return self._special('datetime', o.strftime(self.DATETIME_FORMAT))
@@ -106,15 +104,15 @@ class TravelJsonEncoder(json.JSONEncoder):
             return self._special('time', o.strftime(self.TIME_FORMAT))
         elif isinstance(o, Decimal):
             return self._special('decimal', str(o))
-    
+
         return super(TravelJsonEncoder, self).default(o)
 
 
 DATETIME_PARSERS = dict(
-    datetime = lambda o: datetime.datetime.strptime(o, TravelJsonEncoder.DATETIME_FORMAT),
-    date     = lambda o: datetime.date(*[int(i) for i in o.split('-')]),
-    time     = lambda o: datetime.time(*[int(i) for i in o.split(':')]),
-    decimal  = Decimal
+    datetime=lambda o: datetime.datetime.strptime(o, TravelJsonEncoder.DATETIME_FORMAT),
+    date=lambda o: datetime.date(*[int(i) for i in o.split('-')]),
+    time=lambda o: datetime.time(*[int(i) for i in o.split(':')]),
+    decimal=Decimal
 )
 
 
@@ -132,4 +130,3 @@ def json_dumps(obj, cls=TravelJsonEncoder, **kws):
 
 def json_loads(s, object_hook=object_hook, **kws):
     return json.loads(s, object_hook=object_hook, **kws)
-

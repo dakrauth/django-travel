@@ -1,4 +1,3 @@
-import json
 from datetime import timedelta
 from collections import OrderedDict
 from calendar import Calendar, SUNDAY
@@ -12,11 +11,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 from . import models as travel
 from . import forms
-from . import utils
 
 superuser_required = user_passes_test(
     lambda u: u.is_authenticated and u.is_active and u.is_superuser
 )
+
 
 def render_travel(
     request,
@@ -182,7 +181,7 @@ def entity(request, ref, code, aux=None):
 
 def entity_relationships(request, ref, code, rel, aux=None):
     entities = travel.TravelEntity.objects.find(ref, code, aux)
-    count  = entities.count()
+    count = entities.count()
 
     if count == 0:
         raise http.Http404('No entity matches the given query.')
@@ -190,7 +189,7 @@ def entity_relationships(request, ref, code, rel, aux=None):
         return render_travel(request, 'search/search.html', {'results': entities})
 
     entity = entities[0]
-    etype  = get_object_or_404(travel.TravelEntityType, abbr=rel)
+    etype = get_object_or_404(travel.TravelEntityType, abbr=rel)
     return render_travel(request, 'entities/listing/{}.html'.format(rel), {
         'type': etype,
         'entities': entity.related_by_type(etype),
@@ -211,7 +210,7 @@ def log_entry(request, username, pk):
     else:
         form = None
 
-    return render_travel(request, 'log-entry.html', {'entry': entry, 'form':  form})
+    return render_travel(request, 'log-entry.html', {'entry': entry, 'form': form})
 
 
 def calendar(request, username):
@@ -242,7 +241,7 @@ def calendar(request, username):
     dates = list(dates.items())
     context = {
         'profile': profile,
-        'dates': [dates[i:i+7] for i in range(0, len(dates), 7)],
+        'dates': [dates[i:i + 7] for i in range(0, len(dates), 7)],
         'now': now,
         'when': dt,
         'prev_month': dt.replace(day=1) - timedelta(days=1),
@@ -250,9 +249,10 @@ def calendar(request, username):
     }
     return render(request, 'travel/profile/calendar.html', context)
 
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Admin utils below
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
 
 def _entity_edit(request, entity, template='entities/edit.html'):
     if request.method == 'POST':
@@ -318,5 +318,3 @@ def add_entity_by_co(request, code, abbr, template='entities/add/add.html'):
         form = forms.NewTravelEntityForm()
 
     return render_travel(request, template, {'entity_type': entity_type, 'form': form})
-
-

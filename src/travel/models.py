@@ -1,4 +1,3 @@
-import re
 import os
 from collections import Counter
 
@@ -13,7 +12,7 @@ from django.utils.functional import cached_property
 import pytz
 from choice_enum import ChoiceEnumeration
 import travel.utils as travel_utils
-from .managers import *
+from . import managers
 
 GOOGLE_MAPS = 'http://maps.google.com/maps?q={}'
 GOOGLE_MAPS_LATLON = 'http://maps.google.com/maps?q={},+{}&iwloc=A&z=10'
@@ -24,7 +23,7 @@ STAR = mark_safe('&#9733;')
 
 
 def svg_upload(instance, filename):
-    return  '{}/{}-{}'.format(BASE_FLAG_DIR, instance.id, filename)
+    return '{}/{}-{}'.format(BASE_FLAG_DIR, instance.id, filename)
 
 
 class TravelFlag(models.Model):
@@ -43,7 +42,6 @@ class TravelFlag(models.Model):
 
         return self.source
 
-
     @cached_property
     def thumb_url(self):
         return self.image_url
@@ -57,7 +55,7 @@ class TravelBucketList(models.Model):
     entities = models.ManyToManyField('TravelEntity')
     last_update = models.DateTimeField(auto_now=True)
 
-    objects = TravelBucketListManager()
+    objects = managers.TravelBucketListManager()
 
     class Meta:
         db_table = 'travel_bucket_list'
@@ -82,7 +80,7 @@ class TravelBucketList(models.Model):
             (entity, logged_entities.get(entity.id, 0))
             for entity in all_entities
         ]
-        done = sum([1 if b else 0 for a,b in entities])
+        done = sum(1 if b else 0 for a, b in entities)
         return done, entities
 
 
@@ -96,7 +94,7 @@ class TravelProfile(models.Model):
     user = models.OneToOneField(User, related_name='travel_profile', on_delete=models.CASCADE)
     access = models.CharField(max_length=3, choices=Access.CHOICES, default=Access.DEFAULT)
 
-    objects = TravelProfileManager()
+    objects = managers.TravelProfileManager()
 
     class Meta:
         db_table = 'travel_profile'
@@ -118,6 +116,7 @@ class TravelProfile(models.Model):
 def profile_factory(sender, instance, created=False, **kws):
     if created:
         TravelProfile.objects.get_or_create(user=instance)
+
 
 models.signals.post_save.connect(profile_factory, sender=User)
 
@@ -197,7 +196,7 @@ class TravelEntity(models.Model):
     updated = models.DateTimeField(auto_now=True)
     description = models.TextField(default='', blank=True)
 
-    objects = TravelEntityManager()
+    objects = managers.TravelEntityManager()
 
     class Meta:
         ordering = ('name',)
@@ -260,7 +259,7 @@ class TravelEntity(models.Model):
     def get_entityinfo(self):
         try:
             return self.entityinfo
-        except:
+        except TravelEntityInfo.DoesNotExist:
             return None
 
     @cached_property
@@ -273,7 +272,7 @@ class TravelEntity(models.Model):
     @cached_property
     def timezone(self):
         return (
-               self.tz
+            self.tz
             or (self.state and self.state.timezone)
             or (self.country and self.country.timezone)
             or 'UTC'
@@ -294,7 +293,7 @@ class TravelEntity(models.Model):
         qs = None
         if abbr == 'cn':
             qs = TravelEntityType.objects.distinct().filter(
-                models.Q(entity_set__continent=self) |
+                models.Q(entity_set__continent=self) |  # noqa
                 models.Q(entity_set__country__continent=self)
             )
         else:
@@ -313,7 +312,10 @@ class TravelEntity(models.Model):
             'abbr': abbr,
             'text': self.Related.DETAILS[abbr],
             'count': cnt,
-            'url': reverse('travel-entity-relationships', args=[self.type.abbr, self.code_url_bit, abbr]),
+            'url': reverse(
+                'travel-entity-relationships',
+                args=[self.type.abbr, self.code_url_bit, abbr]
+            )
         } for abbr, cnt in self.relationships]
 
     @property
@@ -384,7 +386,7 @@ class TravelLog(models.Model):
     notes = models.TextField(blank=True)
     entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
 
-    objects = TravelLogManager()
+    objects = managers.TravelLogManager()
 
     class Meta:
         get_latest_by = 'arrival'
@@ -503,13 +505,13 @@ class TravelEntityInfo(models.Model):
 
     @cached_property
     def get_languages(self):
-        lang = ', '.join([l.name for l in self.languages.all()])
+        lang = ', '.join([lang.name for lang in self.languages.all()])
         return lang or 'Unknown'
 
     @cached_property
     def electrical_info(self):
         if self.electrical:
-            v,h,p = self.electrical.split('/')
+            v, h, p = self.electrical.split('/')
             return {'volts': v, 'hertz': h, 'plugs': p.split(',')}
         return {}
 
@@ -530,4 +532,3 @@ class TravelEntityInfo(models.Model):
     def square_miles(self):
         if self.area is not None:
             return int(self.area * 0.386102)
-
