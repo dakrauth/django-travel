@@ -34,6 +34,7 @@ class TravelFlag(models.Model):
 
     class Meta:
         db_table = 'travel_flag'
+        verbose_name_plural = 'flags'
 
     @cached_property
     def image_url(self):
@@ -59,6 +60,8 @@ class TravelBucketList(models.Model):
 
     class Meta:
         db_table = 'travel_bucket_list'
+        verbose_name_plural = 'bucket lists'
+
 
     def get_absolute_url(self):
         return reverse('travel-bucket', args=[self.id])
@@ -98,6 +101,7 @@ class TravelProfile(models.Model):
 
     class Meta:
         db_table = 'travel_profile'
+        verbose_name_plural = 'profile'
 
     def public_url(self):
         return reverse('travel-profile', args=[self.user.username])
@@ -127,6 +131,7 @@ class TravelEntityType(models.Model):
 
     class Meta:
         db_table = 'travel_entitytype'
+        verbose_name_plural = 'entity types'
 
     def __str__(self):
         return self.title
@@ -135,6 +140,9 @@ class TravelEntityType(models.Model):
 class TravelClassification(models.Model):
     type = models.ForeignKey(TravelEntityType, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
+
+    class Meta:
+        verbose_name_plural = 'classifications'
 
     def __str__(self):
         return self.title
@@ -201,7 +209,7 @@ class TravelEntity(models.Model):
     class Meta:
         ordering = ('name',)
         db_table = 'travel_entity'
-        verbose_name_plural = 'travel entities'
+        verbose_name_plural = 'entities'
 
     class Related:
         ENTITY_TYPES = {'co': 'entity_set__country', 'st': 'entity_set__state'}
@@ -369,6 +377,9 @@ class TravelAlias(models.Model):
     entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
     alias = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name_plural = 'aliases'
+
 
 class TravelLog(models.Model):
 
@@ -391,6 +402,7 @@ class TravelLog(models.Model):
     class Meta:
         get_latest_by = 'arrival'
         ordering = ('-arrival',)
+        verbose_name_plural = 'logs'
 
     def __str__(self):
         return '{} | {}'.format(self.entity, self.user)
@@ -439,6 +451,10 @@ class TravelLanguage(models.Model):
     iso639_3 = models.CharField(blank=True, max_length=3)
     name = models.CharField(max_length=60)
 
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = 'languages'
+
     def __str__(self):
         return self.name
 
@@ -460,6 +476,8 @@ class TravelCurrency(models.Model):
 
     class Meta:
         db_table = 'travel_currency'
+        verbose_name_plural = 'currencies'
+        ordering = ['iso']
 
     def __str__(self):
         return self.name
@@ -478,6 +496,9 @@ class TravelRegion(models.Model):
     name = models.CharField(max_length=50)
     un_code = models.CharField(max_length=5, db_index=True)
     parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'regions'
 
 
 class TravelEntityInfo(models.Model):
@@ -498,7 +519,9 @@ class TravelEntityInfo(models.Model):
     region = models.ForeignKey(TravelRegion, blank=True, null=True, on_delete=models.SET_NULL)
 
     class Meta:
+        ordering = ['entity']
         db_table = 'travel_entityinfo'
+        verbose_name_plural = 'entity info'
 
     def __str__(self):
         return '<{}: {}>'.format('TravelEntityInfo', self.entity.name)

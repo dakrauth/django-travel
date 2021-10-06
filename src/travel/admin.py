@@ -44,3 +44,44 @@ class TravelBucketListAdmin(admin.ModelAdmin):
 @admin.register(travel.TravelLog)
 class TravelLogAdmin(admin.ModelAdmin):
     list_display = ('id', 'arrival', 'rating', 'user', 'entity')
+
+
+@admin.register(travel.TravelClassification)
+class TravelClassificationAdmin(admin.ModelAdmin):
+    list_display = ['type', 'title']
+    list_filter = ['type']
+
+
+@admin.register(travel.TravelAlias)
+class TravelAliasAdmin(admin.ModelAdmin):
+    list_display = ['category', 'entity', 'alias']
+    list_filter = ['category']
+
+
+@admin.register(travel.TravelLanguage)
+class TravelLanguageAdmin(admin.ModelAdmin):
+    list_display = ['name', 'iso639_1', 'iso639_2', 'iso639_3',]
+
+
+@admin.register(travel.TravelCurrency)
+class TravelCurrencyAdmin(admin.ModelAdmin):
+    list_display = ['iso', 'name', 'sign', 'fraction', 'fraction_name', 'alt_sign',]
+
+
+@admin.register(travel.TravelRegion)
+class TravelRegionAdmin(admin.ModelAdmin):
+    list_display = ['name', 'un_code', 'parent',]
+
+
+@admin.register(travel.TravelEntityInfo)
+class TravelEntityInfoAdmin(admin.ModelAdmin):
+    list_display = [
+        'entity',
+        'iso3',
+        'denom',
+        'denoms',
+        'tld',
+        'region',
+    ]
+
+
