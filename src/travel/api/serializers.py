@@ -38,14 +38,13 @@ class TravelEntitySerializer(serializers.ModelSerializer):
             'url'
         )
 
-
 class TravelUserLogSerializer(serializers.ModelSerializer):
     logs = serializers.SerializerMethodField()
     entities = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ['logs', 'entities']
+        fields = ['username', 'logs', 'entities']
 
     def get_logs(self, obj):
         return TravelLogSerializer(
