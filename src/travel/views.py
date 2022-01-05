@@ -111,7 +111,7 @@ def search(request):
     if search_form.is_valid():
         q = search_form.cleaned_data['search']
         by_type = search_form.cleaned_data['type']
-        data.update(search=q, results=travel.TravelEntity.objects.search(q, by_type))
+        data.update(search=q, by_type=by_type, results=travel.TravelEntity.objects.search(q, by_type))
 
     return render_travel(request, 'search/search.html', data)
 
@@ -133,9 +133,7 @@ def search_advanced(request):
 
 def by_locale(request, ref):
     etype = get_object_or_404(travel.TravelEntityType, abbr=ref)
-    entities = list(etype.entity_set.select_related(
-        'flag', 'capital', 'state', 'country', 'continent'
-    ))
+    entities = travel.TravelEntity.objects.type_related(etype)
     template = 'entities/listing/{}.html'.format(ref)
     return render_travel(request, template, {'type': etype, 'entities': entities})
 
@@ -166,7 +164,7 @@ def _default_entity_handler(request, entity):
 
 def _handle_entity(request, ref, code, aux, handler):
     entity = travel.TravelEntity.objects.find(ref, code, aux)
-    n = len(entity)
+    n = entity.count()
     if n == 0:
         raise http.Http404
     elif n > 1:
@@ -180,6 +178,7 @@ def entity(request, ref, code, aux=None):
 
 
 def entity_relationships(request, ref, code, rel, aux=None):
+    etype = get_object_or_404(travel.TravelEntityType, abbr=rel)
     entities = travel.TravelEntity.objects.find(ref, code, aux)
     count = entities.count()
 
@@ -189,10 +188,11 @@ def entity_relationships(request, ref, code, rel, aux=None):
         return render_travel(request, 'search/search.html', {'results': entities})
 
     entity = entities[0]
-    etype = get_object_or_404(travel.TravelEntityType, abbr=rel)
+    related_entities = entity.related_by_type(etype)
+
     return render_travel(request, 'entities/listing/{}.html'.format(rel), {
         'type': etype,
-        'entities': entity.related_by_type(etype),
+        'entities': related_entities,
         'parent': entity
     })
 

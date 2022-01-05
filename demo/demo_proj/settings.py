@@ -1,4 +1,5 @@
 import os
+from django import VERSION
 
 ALLOWED_HOSTS = []
 AUTH_PASSWORD_VALIDATORS = []
@@ -12,7 +13,8 @@ SITE_ID = 1
 STATIC_URL = '/static/'
 TIME_ZONE = 'UTC'
 USE_I18N = True
-USE_L10N = True
+if VERSION < (4,):
+    USE_L10N = True
 USE_TZ = True
 WSGI_APPLICATION = 'demo_proj.wsgi.application'
 
