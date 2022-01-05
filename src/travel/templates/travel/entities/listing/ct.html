@@ -1,6 +1,6 @@
 {% extends "travel/entities/listing/base.html" %}
 {% block travel_list_header %}
-    <th></th>
+    <th>Flag</th>
     <th>Name</th>
     <th>State</th>
     <th>County</th>
@@ -9,10 +9,10 @@
 {% block travel_listing %}
     {% for entity in entities %}
     <tr>
-        <td>{% if not entity.flag.is_locked %}<img class="flag flag-sm" src="{{ entity.flag.thumb_url }}">{% endif %}</td>
+        <td>{% if entity.flag %}<img class="flag flag-md" src="{{ entity.flag.thumb_url }}">{% endif %}</td>
         <td><a href="{{ entity.get_absolute_url }}">{{ entity.name }}</a></td>
         <td>{{ entity.state.name }}</td>
-        <td>{{ entity.country }}</td>
+        <td>{{ entity.country }} {{ entity.country.flag.emoji }}</td>
         <td>{% include "travel/_visited.html" with id=entity.id %}</td>
     </tr>
     {% endfor %}

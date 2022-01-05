@@ -8,13 +8,13 @@
 {% block travel_content %}
     <p>
         {% block listing_totals %}
-        Total: <span class="badge">{{ entities|length }}</span>
+        <span class="counter-badge"><span>Total</span><span>{{ entities.count }}</span></span>
         {% endblock listing_totals %}
     </p>
     {% load pagination_tags %}
     {% autopaginate entities 100 %}
     {% paginate %}
-    <table class="table table-hover table-striped table-condensed entity-table">
+    <table class="table table-hover table-striped table-sm entity-table">
         <thead>
             <tr>
             {% block travel_list_header %}{% endblock travel_list_header %}

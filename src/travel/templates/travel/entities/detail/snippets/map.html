@@ -1,5 +1,7 @@
-{% if entity.lat and entity.lon %}
-{{ entity.lat }}&deg; Lat, {{ entity.lon }}&deg; Lon
-<a class="latlon mapit" href="{{ entity.google_maps_url }}">Map
-    <small class="glyphicon glyphicon-new-window"></small></a>
-{% endif %}
+{% if label %}{{ label }} |{% endif %}
+{% with entity.type.abbr as abbr %}<a class="mapit" href="{{ entity.google_maps_url }}"
+    data-type="{{ abbr }}"
+    data-area="{% if abbr == 'co' %}{{ entity.entityinfo.area }}{% endif %}"
+    data-region="{% if abbr == 'co' %}{{ entity.code }}{% else %}{{ entity.country.code }}{% endif %}"
+    data-coords="{{ entity.lat_lon_str }}">Map</a>
+{% endwith %}

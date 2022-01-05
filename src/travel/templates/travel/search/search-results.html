@@ -10,24 +10,20 @@
 <table class="table table-hover table-condensed table-striped">
 <tbody>{% for entity in results %}
     <tr>
-        <td style="width:36px;height:36px">{% if entity.flag %}
-            <img class="flag flag-xs" src="{{ entity.flag.thumb_url }}" />{% endif %}
+        <td>{% if entity.flag %}
+            <img class="flag flag-sm" src="{{ entity.flag.thumb_url }}" />{% endif %}
         </td>
         <td>
             <a href="{{ entity.get_absolute_url }}">{{ entity.full_name }}</a>
         </td>
         <td>{{ entity.category_detail }}</td>
         <td>{{ entity.code }}</td>
-        {% if entity.country %}
         <td>
+            {% if entity.country %}
             <a href="{{ entity.country.get_absolute_url }}">
-                {{ entity.country }}</a>
+                {{ entity.country }}</a> {{ entity.country.flag.emoji }}
+            {% endif %}
         </td>
-        <td>
-            <img class="flag flag-xs" src="{{ entity.country.flag.thumb_url }}">
-        </td>
-        {% else %}<td colspan="2"></td>
-        {% endif %}
         {% if request.user.is_authenticated %}
         <td>{% include "travel/_visited.html" with id=entity.id %}</td>
         {% endif %}

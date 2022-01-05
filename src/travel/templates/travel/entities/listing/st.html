@@ -11,7 +11,7 @@
     {% for entity in entities %}
     <tr>
         <td>{% if entity.flag %}
-            <img class="flag flag-sm" src="{{ entity.flag.thumb_url }}" />
+            <img class="flag flag-md" src="{{ entity.flag.thumb_url }}" />
         {% endif %}</td>
         <td>
             <a href="{{ entity.get_absolute_url }}">
@@ -24,8 +24,7 @@
         </td>
         <td>
             <a href="{{ entity.country.get_absolute_url }}">
-                <img class="flag flag-sm" src="{{ entity.country.flag.thumb_url }}" />
-                {{ entity.country.name }}</a>
+                {{ entity.country.name }}</a> {{ entity.country.flag.emoji }}
         </td>
         <td>{% include "travel/_visited.html" with id=entity.id %}</td>
     </tr>

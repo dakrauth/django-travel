@@ -1,4 +1,5 @@
 from django import template
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -44,6 +45,21 @@ def do_having(parser, token):
         nodelist_else = None
 
     return HavingNode(having_var, context_var, nodelist, nodelist_else)
+
+
+ICON_MAPPINGS = {
+    'edit': 'pencil-square',
+    'new-window': 'window-plus',
+    'globe': 'globe2',
+    'user': 'person-fill',
+    'check-circle': 'check-circle-fill',
+}
+
+
+@register.simple_tag
+def travel_icon(name):
+    name = ICON_MAPPINGS.get(name, name)
+    return mark_safe(f'<i class="bi bi-{name}"></i>')
 
 
 class SetTraceNode(template.Node):

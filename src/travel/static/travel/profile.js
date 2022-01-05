@@ -17,9 +17,9 @@
 const MISSING_FLAG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>'
 const DATE_FORMAT  = 'YYYY-MM-DD';
 const TYPE_MAPPING = {
-    'cn': 'Continent', 'co': 'Country', 'wh': 'World Heritage',
-    'st': 'State',     'ap': 'Airport',  'np': 'National Park',
-    'lm': 'Landmark',  'ct': 'City'
+    'cn': 'Continents', 'co': 'Countries', 'wh': 'World Heritage',
+    'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
+    'lm': 'Landmarks',  'ct': 'Cities'
 };
 
 const renderTemplate = function(templateId, data) {
@@ -272,7 +272,7 @@ class View {
 
         this.dateEl.addEventListener('input', filterHandler, false);
         this.dateEl.addEventListener('propertychange', filterHandler, false);
-        for(const e of document.querySelectorAll('.filter_ctrl')) {
+        for(const e of document.querySelectorAll('.filter-ctrl')) {
             e.addEventListener('change', filterHandler, false);
         }
     }
@@ -383,15 +383,17 @@ class View {
           el.removeChild(el.lastChild);
         }
 
-        const strong = document.createElement('strong');
-        strong.textContent = 'Summary: ';
-        el.appendChild(strong);
         for(const key of Object.keys(summary.types)) {
             const items = Object.keys(summary.types[key]).length;
             if(items) {
                 const span = document.createElement('span');
-                span.className = 'label label-info';
-                span.textContent = TYPE_MAPPING[key] + ': ' + items
+                span.className = 'badge bg-light me-1 mb-1 border';
+                span.innerHTML = TYPE_MAPPING[key];
+
+                const counter = document.createElement('span');
+                counter.className = 'badge rounded-pill bg-danger ms-1';
+                counter.textContent = items;
+                span.appendChild(counter);
                 el.appendChild(span);
             }
         }

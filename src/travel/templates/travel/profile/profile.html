@@ -6,13 +6,13 @@
     <p>
         Travels logged by {{ profile.user.username }}.
         <a class="btn btn-xs btn-success" href="{% url 'travel-calendar' profile.user.username %}">
-            <span class="glyphicon glyphicon-calendar"></span> Calendar</a>
+            Calendar</a>
     </p>
-    <div class="profile-filter well well-sm">
-        <div class="form-inline">
-            <div class="form-group">
-                <label for="id_filter">Filter by</label>
-                <select data-filter="type" id="id_filter" class="filter_ctrl form-control input-sm">
+    <div class="profile-filter card card-sm">
+        <div class="card-body">
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text">Filter by</span>
+                <select data-filter="type" id="id_filter" class="filter-ctrl form-control input-sm">
                     <option value="">-- All types --</option>
                     <option value="cn">Continents</option>
                     <option value="co">Countries</option>
@@ -23,37 +23,38 @@
                     <option value="lm">Landmarks</option>
                     <option value="wh">World Heritage</option>
                 </select>
-            </div>
-            <div class="form-group" id="show_countries">
-                <label for="id_co">in</label>
-                <select data-filter="co" id="id_co" class="filter_ctrl form-control input-sm">
+
+                <span class="input-group-text">in</span>
+                <select data-filter="co" id="id_co" class="filter-ctrl form-control input-sm">
                     <option value="">-- All countries --</option>
                 </select>
-            </div>
-            <div class="form-group" id="limit_logs">
-                <label for="id_limit">limited to</label>
-                <select data-filter="limit" id="id_limit" class="filter_ctrl form-control input-sm">
+
+                <span class="input-group-text">limited to</span>
+                <select data-filter="limit" id="id_limit" class="filter-ctrl form-control input-sm">
                     <option value="">-- All entries --</option>
                     <option value="first">First visit</option>
                     <option value="recent">Recent visit</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="id_timeframe">and</label>
-                <select data-filter="timeframe" id="id_timeframe" class="filter_ctrl form-control input-sm">
+
+                <span class="input-group-text">and</span>
+                <select data-filter="timeframe" id="id_timeframe" class="filter-ctrl form-control input-sm">
                     <option value="">-- All Dates --</option>
                     <option value="-">Before</option>
                     <option value="+">After</option>
                     <option value="=">For Year</option>
                 </select>
-                <div style="display: inline-block">
-                    <input data-filter="date" id="id_date" style="display: none" class="form-control filter_ctrl input-sm" type="date">
-                    <select data-filter="year" id="id_year" style="display: none" class="filter_ctrl form-control input-sm"></select>
-                </div>
+
+                <input data-filter="date" id="id_date" style="display: none" class="form-control filter-ctrl input-sm" type="date">
+                <select data-filter="year" id="id_year" style="display: none" class="filter-ctrl form-control input-sm"></select>
             </div>
-            <div class="form-group" id="id_count"></div>
+            <p class="mb-0"><span id="id_count"></span></p>
         </div>
-        <div id="summary"></div>
+        <div class="card-footer">
+            <div class="d-flex">
+                <div class="me-1"><strong>Summary</strong></div>
+                <div class="flex-grow-1" id="summary"></div>
+            </div>
+        </div>
     </div>
     <table id="history" class="table table-hover table-condensed table-striped">
         <thead>
@@ -71,7 +72,7 @@
     </table>
     <template id="log-row">
         <tr data-id="" data-name="" data-arrival="" data-first="" data-count="" data-rating="" class="">
-            <td><img class="log-image flag flag-sm" src=""></td>
+            <td><img class="log-image flag flag-md" src=""></td>
             <td class="log-category"></td>
             <td>
                 <a class="log-name" href=""></a>

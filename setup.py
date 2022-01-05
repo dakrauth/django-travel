@@ -23,7 +23,7 @@ setup(
     install_requires=[
         'choice-enum>=1.0.0',
         'Django>=2.2.24,<4.0',
-        'django-bootstrap3>=12.0.0',
+        'django-bootstrap5>=1.0.8',
         'python-dateutil>=2.8.2',
         'pytz>=2021.3',
         'djangorestframework>=3.10.3',

@@ -1,1 +1,2 @@
-{% if id in checklist %}<i class="glyphicon glyphicon-ok-circle visited-icon"></i>{% endif %}
+{% load travel_tags %}
+{% if id in checklist %}{% travel_icon "check-circle" %}{% endif %}

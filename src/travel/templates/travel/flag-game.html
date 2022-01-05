@@ -23,39 +23,33 @@
         #item > div { max-height: 120px;  }
         #item > div img { max-height: 112px; }
     }
-    .panel .panel-title { font-size: 18px; line-height: 32px; color: #333;}
-    .panel h2 span { margin-right: 56px; }
 </style>
 {% endblock extra_head %}
 {% block travel_heading %}The Flag Game{% endblock travel_heading %}
 {% block travel_content %}
-    <div class="panel panel-default">
-        <div class="panel-heading clearfix">
-            <h2 class="panel-title">
-                <button id="next-button" class="pull-right btn btn-sm btn-default">Skip &raquo;</button>
-                <span id="co-name"></span>
-            </h2>
-        </div>
-        <div class="panel-body" id="item-wrap">
-            <div id="item">
-                <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src="" data-code="">
+    <div class="card">
+        <h5 class="card-header bg-light">
+            <span id="co-name"></span>
+            <button id="next-button" class="btn btn-sm btn-warning float-end">Skip &raquo;</button>
+        </h5>
+        <div class="card-body" id="item-wrap">
+            <div id="item" class="row">
+                <div class="col">
+                    <img class="img-fluid" alt="Flag 1" src="" data-code="">
                 </div>
-                <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src="" data-code="">
+                <div class="col">
+                    <img class="img-fluid" alt="Flag 2" src="" data-code="">
                 </div>
-                <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src="" data-code="">
+                <div class="col">
+                    <img class="img-fluid" alt="Flag 3" src="" data-code="">
                 </div>
-                <div class="col-xs-6 col-md-3">
-                    <img class="img-responsive" src="" data-code="">
+                <div class="col">
+                    <img class="img-fluid" alt="Flag 4" src="" data-code="">
                 </div>
             </div>
         </div>
-        <div class="panel-footer">
-            <div class="clearfix">
-                <strong style="verticle-align: middle">Your Score:</strong> <span class="badge" id="game-score">0 / 0</span>
-            </div>
+        <div class="card-footer text-center bg-light">
+            <strong style="verticle-align: middle">Your Score:</strong> <span class="badge rounded-pill bg-success" id="game-score">0 / 0</span>
         </div>
     </div>
 {% endblock travel_content %}

@@ -70,7 +70,7 @@ class TravelBucketList(models.Model):
         return self.title
 
     def user_results(self, user):
-        all_entities = self.entities.select_related()
+        all_entities = self.entities.select_related('flag', 'type', 'state', 'country')
         if not user.is_authenticated:
             return 0, [(e, 0) for e in all_entities]
 
@@ -264,9 +264,18 @@ class TravelEntity(models.Model):
     def extern(self):
         return Extern.get(self)
 
+    @cached_property
     def get_entityinfo(self):
         try:
-            return self.entityinfo
+            #return TravelEntityInfo.objects.get(entity=self)
+            return TravelEntityInfo.objects.select_related(
+                'currency',
+                'region',
+                'entity'
+            ).prefetch_related(
+                'languages',
+                'neighbors',
+            ).get(entity=self)
         except TravelEntityInfo.DoesNotExist:
             return None
 
@@ -309,12 +318,10 @@ class TravelEntity(models.Model):
             if key:
                 qs = TravelEntityType.objects.distinct().filter(**{key: self})
 
-        if qs:
-            return qs.annotate(cnt=models.Count('abbr')).values_list('abbr', 'cnt')
+        return qs.annotate(cnt=models.Count('abbr')).values_list('abbr', 'cnt')
 
-        return ()
 
-    @property
+    @cached_property
     def related_entities(self):
         return [{
             'abbr': abbr,
@@ -339,7 +346,9 @@ class TravelEntity(models.Model):
         key = self.Related.BY_TYPE_PARAMS[self.type.abbr]
         if isinstance(key, dict):
             key = key.get(type.abbr, key['default'])
-        return TravelEntity.objects.filter(**{key: self, 'type': type})
+
+        qs = TravelEntity.objects.filter(**{key: self, 'type': type})
+        return TravelEntity.objects.type_related(type, qs)
 
     def update_flag(self, flag_url):
         flag = self.flag if self.flag and not self.flag.is_locked else TravelFlag()
@@ -352,6 +361,14 @@ class TravelEntity(models.Model):
     @property
     def lower(self):
         return self.code.lower()
+
+    @cached_property
+    def lat_lon_str(self):
+        return f'{self.lat},{self.lon}' if self.lat else ''
+
+    @cached_property
+    def lat_lon_display(self):
+        return f'{self.lat}° Lat, {self.lon}° Lon' if self.lat else ''
 
     @property
     def google_maps_url(self):

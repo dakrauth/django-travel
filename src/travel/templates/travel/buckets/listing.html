@@ -1,4 +1,4 @@
-{% extends "travel/base.html" %}
+{% extends "travel/base.html" %}{% load travel_tags %}
 {% block travel_title %}Bucket  Lists{% endblock travel_title %}
 {% block travel_heading %}Bucket Lists{% endblock travel_heading %}
 {% block travel_content %}
@@ -13,7 +13,7 @@
     </thead>
     <tbody>{% for bucket_list in bucket_lists  %}
         <tr>
-            <td><span class="glyphicon glyphicon-{{ bucket_list.is_public|yesno:"globe,user" }}"></span></td>
+            <td>{% if bucket_list.is_public %}{% travel_icon "globe" %}{% else %}{% travel_icon "user" %}{% endif %}</td>
             <td><a href="{{ bucket_list.get_absolute_url }}">{{ bucket_list }}</a></td>
             <td>
                 {{ bucket_list.description }}{% if bucket_list.is_private %}<sup>*</sup>{% endif %}
