@@ -318,7 +318,9 @@ class TravelEntity(models.Model):
             if key:
                 qs = TravelEntityType.objects.distinct().filter(**{key: self})
 
-        return qs.annotate(cnt=models.Count('abbr')).values_list('abbr', 'cnt')
+        return () if qs is None else qs.annotate(
+            cnt=models.Count('abbr')
+        ).values_list('abbr', 'cnt')
 
 
     @cached_property
