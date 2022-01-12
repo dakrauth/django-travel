@@ -1,18 +1,29 @@
 //------------------------------------------------------------------------------
-// Sample entity object
+// Sample objects
 //------------------------------------------------------------------------------
-// entity = {
-//     "flag_svg": "img/wh-32.png",
-//     "code": "3",
-//     "name": "Aachen Cathedral",
-//     "locality": "State of North Rhine-Westphalia (Nordrhein-Westfalen)",
-//     "country_flag_svg": "img/flags/co/de/de-32.png",
-//     "country_code": "DE",
-//     "country_name": "Germany",
-//     "type_abbr": "wh",
-//     "id": 11942
+// Entity
+// {
+//   "code": "A",
+//   "country_code": "FR",
+//   "country_flag_emoji": "🇲🇫",
+//   "country_flag_svg": "/media/travel/img/flags/co/fr/flag.svg",
+//   "country_name": "France",
+//   "flag_svg": "/media/travel/img/flags/st/fr/a/flag.svg",
+//   "id": 256,
+//   "locality": "",
+//   "name": "Alsace",
+//   "type_abbr": "st",
+//   "url": "/i/st/FR-A/"
 // }
-//}
+// Log
+// {
+//   "arrival": "2021-09-18T19:00:00-04:00",
+//   "entity": 10560,
+//   "id": 691,
+//   "notes": "",
+//   "rating": 3,
+//   "user": 1
+// }
 //------------------------------------------------------------------------------
 const MISSING_FLAG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>'
 const DATE_FORMAT  = 'YYYY-MM-DD';
@@ -21,6 +32,8 @@ const TYPE_MAPPING = {
     'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
     'lm': 'Landmarks',  'ct': 'Cities'
 };
+
+const DateTime = luxon.DateTime;
 
 const renderTemplate = function(templateId, data) {
     const template = document.getElementById(templateId);
@@ -72,7 +85,7 @@ class HashBits {
                 bits.timeframe = bits.date[0];
                 bits.date = (bits.timeframe === '=')
                           ? parseInt(bits.date.substr(1))
-                          : moment(bits.date.substr(1));
+                          : DateTime.fromISO(bits.date.substr(1));
             }
         }
         return bits;
@@ -88,7 +101,7 @@ class HashBits {
             bits.date = parseInt(bits.year);
         }
         else if(bits.timeframe) {
-            bits.date = bits.date ? moment(bits.date) : null;
+            bits.date = bits.date ? DateTime.fromISO(bits.date) : null;
         }
         if(el && el.dataset.order) {
             bits[el.dataset.order] = el.dataset.column;
@@ -189,13 +202,13 @@ class TravelLogs {
             if(good && bits.timeframe && bits.date) {
                 switch(bits.timeframe) {
                     case '+':
-                        good = log.arrival.isAfter(bits.date);
+                        good = log.arrival > bits.date;
                         break;
                     case '-':
-                        good = log.arrival.isBefore(bits.date);
+                        good = log.arrival < bits.date;
                         break;
                     case '=':
-                        good = (log.arrival.year() === bits.date);
+                        good = (log.arrival.year === bits.date);
                         break;
                     default:
                         good = false;
@@ -290,7 +303,7 @@ class View {
         }
         else {
             if(bits.timeframe && bits.date) {
-                this.dateEl.value = bits.date.format(DATE_FORMAT);
+                this.dateEl.value = bits.date.toFormat(DATE_FORMAT);
                 this.dateEl.style.display = 'inline-block';
             }
         }
@@ -299,7 +312,7 @@ class View {
         let extras = [];
         const e = log.entity;
         const firstArrival = e.logs[e.logs.length-1].arrival;
-        const dateFormat  = 'MMM Do YYYY ddd h:ssa';
+        const dateFormat  = 'DD EEE t';
         const stars = rating => '★★★★★'.substr(rating - 1);
 
         e.locality && extras.push(e.locality);
@@ -310,9 +323,9 @@ class View {
             'log-country': extras.join(', '),
             'log-count': e.logs.length.toString(),
             'log-rating': stars(log.rating),
-            'log-recent-visit': log.arrival.format(dateFormat),
+            'log-recent-visit': log.arrival.toFormat(dateFormat),
             'log-country-flag-emoji': e.country_flag_emoji,
-            'log-first-visit': firstArrival.format(dateFormat)
+            'log-first-visit': firstArrival.toFormat(dateFormat)
         });
 
         const countryFlag = node.querySelector('.log-country-flag');
@@ -429,9 +442,9 @@ class LogModels {
             if(!log.entity) { console.warn('Unknown log entity', log); }
 
             log.entity.logs.push(log);
-            log.arrival = moment(log.arrival);
+            log.arrival = DateTime.fromISO(log.arrival);
             log.isActive = true;
-            this.yearSet[log.arrival.year()] = true;
+            this.yearSet[log.arrival.year] = true;
             this.summary.add(log.entity);
         }
 
