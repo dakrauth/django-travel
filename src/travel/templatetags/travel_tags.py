@@ -60,28 +60,3 @@ ICON_MAPPINGS = {
 def travel_icon(name):
     name = ICON_MAPPINGS.get(name, name)
     return mark_safe(f'<i class="bi bi-{name}"></i>')
-
-
-class SetTraceNode(template.Node):
-    '''
-    Adapted from http://www.djangosnippets.org/snippets/1550/
-    '''
-
-    def render(self, context):
-        try:
-            import ipdb as pdb
-        except ImportError:
-            import pdb
-
-        return pdb.set_trace() or ''
-
-
-@register.tag('set_trace')
-def do_set_trace(parser, token):
-    '''
-    Tag that inspects template context.
-
-    Usage:
-    {% set_trace %}
-    '''
-    return SetTraceNode()

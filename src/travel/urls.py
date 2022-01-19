@@ -1,66 +1,60 @@
-from django.urls import re_path, include
-from django.views.generic import TemplateView
+from django.urls import path, include
+from vanilla  import TemplateView
+
 from . import views
 from .api.urls import urlpatterns as api_urls
 
 
-search_patterns = [
-    re_path(r'^$', views.search, name='travel-search'),
-    re_path(r'^advanced/$', views.search_advanced, name='travel-search-advanced'),
-]
-
 item_patterns = [
-    re_path(r'^$', views.by_locale, name='travel-by-locale'),
-    re_path(r'^(?P<code>\w+)(?:-(?P<aux>\w+))?/$', views.entity, name='travel-entity'),
-    re_path(
-        r'^(?P<code>\w+)(?:-(?P<aux>\w+))?/(?P<rel>\w+)/$',
-        views.entity_relationships,
+    path('', views.LocaleView.as_view(), name='travel-by-locale'),
+    path('<str:code>/', views.EntityView.as_view(), name='travel-entity'),
+    path(
+        '<str:code>/<str:rel>/',
+        views.EntityRelationshipsView.as_view(),
         name='travel-entity-relationships'
     ),
 ]
 
-add_patterns = [
-    re_path(r'^$', views.start_add_entity, name='travel-entity-start-add'),
-    re_path(r'^co/$', views.add_entity_co, name='travel-entity-add-co'),
-    re_path(r'^co/(\w+)/(\w+)/$', views.add_entity_by_co, name='travel-entity-add-by-co'),
-]
-
 profile_patterns = [
-    re_path(r'^$', views.all_profiles, name='travel-profiles'),
-    re_path(r'^([^/]+)/$', views.profile, name='travel-profile'),
-    re_path(r'^([^/]+)/calendar/$', views.calendar, name='travel-calendar'),
-    re_path(r'^([^/]+)/log/(\d+)/$', views.log_entry, name='travel-log-entry'),
+    path('', views.AllProfilesView.as_view(), name='travel-profiles'),
+    path('<str:username>/', views.ProfileView.as_view(), name='travel-profile'),
+    path(
+        '<str:username>/calendar/',
+        views.CalendarView.as_view(),
+        name='travel-calendar'
+    ),
+    path(
+        '<str:username>/log/<int:pk>/',
+        views.LogEntryView.as_view(),
+        name='travel-log-entry'
+    ),
 ]
 
 bucket_list_patterns = [
-    re_path(r'^$', views.bucket_lists, name='travel-buckets'),
-    re_path(r'^(\d+)/$', views.bucket_list, name='travel-bucket'),
-    re_path(r'^(\d+)/([^/]+)/$', views.bucket_list_for_user, name='travel-bucket-for_user'),
-    re_path(r'^(\d+)/(.+)/$', views.bucket_list_comparison, name='travel-bucket-comparison'),
+    path('', views.BucketListsView.as_view(), name='travel-buckets'),
+    path('<int:pk>/', views.BucketListView.as_view(), name='travel-bucket'),
+    path('<int:pk>/<str:username>/', views.BucketListView.as_view(), name='travel-bucket'),
+    path(
+        '<int:pk>/<path:usernames>/',
+        views.BucketListComparisonView.as_view(),
+        name='travel-bucket-comparison'
+    ),
 ]
 
-language_patterns = [
-    re_path(r'^$', views.languages, name='travel-languages'),
-    re_path(r'^(\d+)/$', views.language, name='travel-language'),
-]
 
 urlpatterns = [
-    re_path(r'^api/v1/', include(api_urls)),
-    re_path(r'^search/', include(search_patterns)),
-    re_path(r'^i/(?P<ref>\w+)/', include(item_patterns)),
-    re_path(r'^add/', include(add_patterns)),
-    re_path(r'^profiles/', include(profile_patterns)),
-    re_path(r'^buckets/', include(bucket_list_patterns)),
-    re_path(r'^languages/', include(language_patterns)),
-    re_path(r'^flags/$', views.flag_game, name='travel-flag-quiz'),
-    re_path(
-        r'^plugs/$',
+    path('api/v1/', include(api_urls)),
+    path('search', views.SearchView.as_view(), name='travel-search'),
+    path('search/advanced/', views.AdvancedSearchView.as_view(), name='travel-search-advanced'),
+    path('i/<str:ref>/', include(item_patterns)),
+    path('profiles/', include(profile_patterns)),
+    path('buckets/', include(bucket_list_patterns)),
+    path('languages/', views.LanguagesView.as_view(), name='travel-languages'),
+    path('languages/<int:pk>/', views.LanguageView.as_view(), name='travel-language'),
+    path('flags/', views.FlagGameView.as_view(), name='travel-flag-quiz'),
+    path(
+        'plugs/',
         TemplateView.as_view(template_name='travel/plugs.html'),
         name='travel-plugs'
-    ),
-    re_path(
-        r'^edit/i/(\w+)/(\w+)(?:-(\w+))?/$',
-        views.entity_edit,
-        name='travel-entity-edit'
     ),
 ]

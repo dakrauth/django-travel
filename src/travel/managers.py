@@ -111,33 +111,28 @@ class TravelEntityManager(Manager):
         return qs.select_related(*self.search_select_related)
 
     def countries(self):
-        return self.filter(type__abbr='co').select_related(*self.base_select_related)
+        return self.filter(type__abbr='co').select_related(
+            *self.select_related_by_type['co']
+        )
 
     def country(self, code):
-        return self.select_related(*self.base_select_related).get(code=code, type__abbr='co')
+        return self.select_related(*self.select_related_by_type['co']).get(
+            code=code,
+            type__abbr='co'
+        )
 
     def country_dict(self):
         return dict([(e.code, e) for e in self.countries()])
 
     def find(self, abbr, code, aux):
         if aux:
-            qs = self.filter(
-                type__abbr=abbr,
-                country__code=code,
-                code=aux
-            ).select_related(*self.base_select_related)
+            qs = self.filter(type__abbr=abbr, country__code=code, code=aux)
         else:
-            qs = self.filter(
-                type__abbr=abbr,
-                code=code
-            ).select_related(
-                'continent',
-                'continent__type',
-                'capital',
-                'capital__type'
-            )
+            qs = self.filter(type__abbr=abbr, code=code)
 
-        return qs.select_related('type', 'flag')
+        return qs.select_related(
+            *self.select_related_by_type.get(abbr, self.base_select_related)
+        )
 
     def type_related(self, ref, qs=None):
         ref_abbr = ref if isinstance(ref, str) else ref.abbr

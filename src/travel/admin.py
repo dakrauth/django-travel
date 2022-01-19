@@ -6,19 +6,21 @@ from travel import models as travel
 class TravelEntityAdmin(admin.ModelAdmin):
     list_filter = ('type', )
     list_display = (
+        'name',
         'id',
         'code',
         'type',
         'classification',
-        'name',
         'capital',
         'state',
         'country',
-        'continent',
     )
-    raw_id_fields = ['state', 'capital', 'country', 'continent', 'flag']
+    raw_id_fields = ['state', 'capital', 'country', 'flag', 'continent']
     search_fields = ['name', 'full_name', 'code']
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related('type', 'classification', 'capital', 'state', 'country')
 
 @admin.register(travel.TravelEntityType)
 class TravelEntityTypeAdmin(admin.ModelAdmin):

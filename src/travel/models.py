@@ -255,7 +255,7 @@ class TravelEntity(models.Model):
         return reverse('travel-entity', args=self._permalink_args)
 
     def get_edit_url(self):
-        return reverse('travel-entity-edit', args=self._permalink_args)
+        return reverse('admin:travel_travelentity_change', args=(self.id,))
 
     def wikipedia_search_url(self):
         return Extern.wikipedia_url(self)
@@ -479,7 +479,10 @@ class TravelLanguage(models.Model):
 
     @cached_property
     def related_entities(self):
-        return TravelEntity.objects.filter(entityinfo__languages=self)
+        return TravelEntity.objects.filter(entityinfo__languages=self).select_related(
+            'flag',
+            'type',
+        )
 
     def get_absolute_url(self):
         return reverse('travel-language', args=[self.id])
@@ -544,6 +547,9 @@ class TravelEntityInfo(models.Model):
 
     def __str__(self):
         return '<{}: {}>'.format('TravelEntityInfo', self.entity.name)
+
+    def related_neighbors(self):
+        return self.neighbors.select_related('type')
 
     @cached_property
     def get_languages(self):

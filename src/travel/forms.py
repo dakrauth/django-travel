@@ -1,9 +1,11 @@
 from datetime import datetime, date
+
 from django import forms
 from django.core.validators import EMPTY_VALUES
-from travel import models as travel
-from travel import utils as travel_utils
 import pytz
+
+from . import models as travel
+from . import utils as travel_utils
 
 
 def _tz_choices():
@@ -76,7 +78,7 @@ class DateUtilField(forms.Field):
 
 
 class TravelLogForm(forms.ModelForm):
-    arrival = DateUtilField(required=False)
+    arrival = DateUtilField()
     rating = forms.ChoiceField(
         choices=travel.TravelLog.RATING_CHOICES,
         initial=3,

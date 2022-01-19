@@ -1,10 +1,21 @@
 import re
 import json
+import calendar
 import datetime
+from collections import OrderedDict
 from decimal import Decimal, localcontext
 from urllib.parse import quote_plus, unquote
 
 from dateutil.parser import parser, parserinfo
+
+
+def calendar_dict(dt):
+    cal = calendar.Calendar()
+    cal.setfirstweekday(calendar.SUNDAY)
+    return OrderedDict(
+        ((d.month, d.day), [])
+        for d in list(cal.itermonthdates(dt.year, dt.month))
+    )
 
 
 class DateParserInfo(parserinfo):

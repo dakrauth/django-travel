@@ -18,7 +18,7 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     include_package_data=True,
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     zip_safe=False,
     install_requires=[
         'choice-enum>=1.0.0',
@@ -27,6 +27,7 @@ setup(
         'python-dateutil>=2.8.2',
         'pytz>=2021.3',
         'djangorestframework>=3.12.4',
+        'django-vanilla-views==3.0.0',
     ],
     extras_require={
         'test': ['pytest-django', 'pytest', 'pytest-cov'],
@@ -42,9 +43,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Utilities',
         'Topic :: Education',
     ]

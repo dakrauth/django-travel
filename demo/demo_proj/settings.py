@@ -1,10 +1,11 @@
 import os
+import sys
 from django import VERSION
 
 ALLOWED_HOSTS = []
 AUTH_PASSWORD_VALIDATORS = []
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEBUG = True
+DEBUG = not any('pytest' in arg for arg in sys.argv)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LANGUAGE_CODE = 'en-us'
 ROOT_URLCONF = 'demo_proj.urls'

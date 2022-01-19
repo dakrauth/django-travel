@@ -1,320 +1,306 @@
 from datetime import timedelta
-from collections import OrderedDict
-from calendar import Calendar, SUNDAY
 
 from django import http
+from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.utils.functional import cached_property
 from django.shortcuts import get_object_or_404, render
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
+import vanilla
 
 from . import models as travel
 from . import forms
-
-superuser_required = user_passes_test(
-    lambda u: u.is_authenticated and u.is_active and u.is_superuser
-)
+from . import utils
 
 
-def render_travel(
-    request,
-    base_templates,
-    context=None,
-    content_type=None,
-    status=None
-):
-    if isinstance(base_templates, str):
-        base_templates = [base_templates]
-
-    custom = ['travel/custom/' + base for base in base_templates]
-    templates = custom + ['travel/' + base for base in base_templates]
-    return render(request, templates, context, content_type, status)
+def split_code(code):
+    return code.split('-', 1) if '-' in code else (code, None)
 
 
-def flag_game(request):
-    return render_travel(request, ['flag-game.html'])
+class TravelMixin:
 
-
-def all_profiles(request):
-    return render_travel(request, 'profile/all.html', {
-        'profiles': travel.TravelProfile.objects.public()
-    })
-
-
-def profile(request, username):
-    return render_travel(request, 'profile/profile.html', {
-        'profile': get_object_or_404(travel.TravelProfile, user__username=username),
-        'api_user_log_url': reverse('user_log_api', args=[username])
-    })
-
-
-def languages(request):
-    return render_travel(request, 'languages.html', {
-        'languages': travel.TravelLanguage.objects.all()
-    })
-
-
-def language(request, pk):
-    return render_travel(request, 'languages.html', {
-        'language': get_object_or_404(travel.TravelLanguage, pk=pk)
-    })
-
-
-def bucket_lists(request):
-    return render_travel(request, 'buckets/listing.html', {
-        'bucket_lists': travel.TravelBucketList.objects.for_user(request.user)
-    })
-
-
-def bucket_list_comparison(request, pk, usernames):
-    bucket_list = get_object_or_404(travel.TravelBucketList, pk=pk)
-    entities = bucket_list.entities.select_related()
-    results = [{
-        'username': username,
-        'entities': set(travel.TravelLog.objects.filter(
-            user__username=username,
-            entity__in=entities
-        ).values_list('entity__id', flat=True))
-    } for username in usernames.split('/')]
-
-    return render_travel(request, 'buckets/compare.html', {
-        'bucket_list': bucket_list,
-        'entities': entities,
-        'results': results
-    })
-
-
-def _bucket_list_for_user(request, bucket_list, user):
-    done, entities = bucket_list.user_results(user)
-    return render_travel(request, 'buckets/detail.html', {
-        'bucket_list': bucket_list,
-        'entities': entities,
-        'stats': {'total': len(entities), 'done': done}
-    })
-
-
-def bucket_list(request, pk):
-    bucket_list = get_object_or_404(travel.TravelBucketList, pk=pk)
-    return _bucket_list_for_user(request, bucket_list, request.user)
-
-
-def bucket_list_for_user(request, pk, username):
-    user = get_object_or_404(User, username=username)
-    bucket_list = get_object_or_404(travel.TravelBucketList, pk=pk)
-    return _bucket_list_for_user(request, bucket_list, user)
-
-
-def search(request):
-    search_form = forms.SearchForm(request.GET)
-    data = {'search_form': search_form}
-    if search_form.is_valid():
-        q = search_form.cleaned_data['search']
-        by_type = search_form.cleaned_data['type']
-        data.update(search=q, by_type=by_type, results=travel.TravelEntity.objects.search(q, by_type))
-
-    return render_travel(request, 'search/search.html', data)
-
-
-@login_required
-def search_advanced(request):
-    # 'travel-search-advanced'
-    data = {'results': None, 'search': ''}
-    search = request.GET.get('search', '').strip()
-    if search:
-        lines = [line.strip() for line in search.splitlines()]
-        data.update(
-            search='\n'.join(lines),
-            results=travel.TravelEntity.objects.advanced_search(lines)
+    def get_template_names(self):
+        template_names = (
+            [self.template_name]
+            if isinstance(self.template_name, str)
+            else self.template_name
         )
 
-    return render_travel(request, 'search/advanced.html', data)
+        custom = [f'travel/custom/{base}' for base in template_names]
+        return custom + [f'travel/{base}' for base in template_names]
 
 
-def by_locale(request, ref):
-    etype = get_object_or_404(travel.TravelEntityType, abbr=ref)
-    entities = travel.TravelEntity.objects.type_related(etype)
-    template = 'entities/listing/{}.html'.format(ref)
-    return render_travel(request, template, {'type': etype, 'entities': entities})
+class CalendarView(TravelMixin, vanilla.TemplateView):
+    template_name = 'profile/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        profile = get_object_or_404(
+            travel.TravelProfile.objects.public().select_related('user'),
+            user__username=self.kwargs['username']
+        )
+        user = profile.user
+        when = self.request.GET.get('when')
+        now = timezone.now()
+        dt = now.replace(day=15)
+        if when:
+            year, month = [int(i) for i in when.split('-')]
+            dt = dt.replace(year=year, month=month)
+
+        dates = utils.calendar_dict(dt)
+        for (name, abbr, arrival, emoji) in user.travellog_set.filter(
+            arrival__month=dt.month
+        ).values_list('entity__name', 'entity__type__abbr', 'arrival', 'entity__flag__emoji'):
+            key = (arrival.month, arrival.day)
+            if key in dates:
+                dates[key].append([name, abbr, arrival, emoji])
+
+        dates = list(dates.items())
+        return super().get_context_data(
+            profile=profile,
+            dates=[dates[i:i + 7] for i in range(0, len(dates), 7)],
+            now=now,
+            when=dt,
+            prev_month=dt.replace(day=1) - timedelta(days=1),
+            next_month=dt + timedelta(days=31)
+        )
 
 
-def _default_entity_handler(request, entity):
-    form, history = None, []
-    if request.user.is_authenticated:
-        history = request.user.travellog_set.filter(entity=entity)
-        if request.method == 'POST':
-            form = forms.TravelLogForm(entity, request.POST)
-            if form.is_valid():
-                form.save(request.user)
-                return http.HttpResponseRedirect(request.path)
-        else:
-            form = forms.TravelLogForm(entity)
-
-    templates = [
-        'entities/detail/{}.html'.format(entity.type.abbr),
-        'entities/detail/base.html'
-    ]
-
-    return render_travel(request, templates, {
-        'entity': entity,
-        'form': form,
-        'history': history
-    })
+class FlagGameView(TravelMixin, vanilla.TemplateView):
+    template_name = 'flag-game.html'
 
 
-def _handle_entity(request, ref, code, aux, handler):
-    entity = travel.TravelEntity.objects.find(ref, code, aux)
-    n = entity.count()
-    if n == 0:
-        raise http.Http404
-    elif n > 1:
-        return render_travel(request, 'search/search.html', {'results': entity})
-    else:
-        return handler(request, entity[0])
+class AllProfilesView(TravelMixin, vanilla.ListView):
+    template_name = 'profile/all.html'
+    model = travel.TravelProfile
+    context_object_name = 'profiles'
 
 
-def entity(request, ref, code, aux=None):
-    return _handle_entity(request, ref, code, aux, _default_entity_handler)
+class ProfileView(TravelMixin, vanilla.DetailView):
+    template_name = 'profile/profile.html'
+    context_object_name = 'profile'
+    lookup_field = 'user__username'
+    lookup_url_kwarg = 'username'
+
+    def get_queryset(self):
+        return travel.TravelProfile.objects.select_related('user')
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            api_user_log_url=reverse('user_log_api', args=[self.kwargs['username']])
+        )
 
 
-def entity_relationships(request, ref, code, rel, aux=None):
-    etype = get_object_or_404(travel.TravelEntityType, abbr=rel)
-    entities = travel.TravelEntity.objects.find(ref, code, aux)
-    count = entities.count()
+class LocaleView(TravelMixin, vanilla.ListView):
+    template_name = 'entities/listing/{}.html'
+    context_object_name = 'entities'
 
-    if count == 0:
-        raise http.Http404('No entity matches the given query.')
-    elif count > 1:
-        return render_travel(request, 'search/search.html', {'results': entities})
+    @cached_property
+    def entity_type(self):
+        return get_object_or_404(travel.TravelEntityType, abbr=self.kwargs['ref'])
 
-    entity = entities[0]
-    related_entities = entity.related_by_type(etype)
+    def get_template_names(self):
+        self.template_name = self.template_name.format(self.entity_type.abbr)
+        return super().get_template_names()
+    
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(type=self.entity_type, **kwargs)
 
-    return render_travel(request, 'entities/listing/{}.html'.format(rel), {
-        'type': etype,
-        'entities': related_entities,
-        'parent': entity
-    })
-
-
-def log_entry(request, username, pk):
-    entry = get_object_or_404(travel.TravelLog, user__username=username, pk=pk)
-    if request.user == entry.user:
-        if request.method == 'POST':
-            form = forms.TravelLogForm(entry.entity, request.POST, instance=entry)
-            if form.is_valid():
-                form.save(user=request.user)
-                return http.HttpResponseRedirect(request.path)
-        else:
-            form = forms.TravelLogForm(entry.entity, instance=entry)
-    else:
-        form = None
-
-    return render_travel(request, 'log-entry.html', {'entry': entry, 'form': form})
+    def get_queryset(self):
+        return travel.TravelEntity.objects.type_related(self.entity_type)
 
 
-def calendar(request, username):
-    profile = get_object_or_404(travel.TravelProfile.objects.public(), user__username=username)
-    user = profile.user
-    when = request.GET.get('when')
-    now = timezone.now()
-    dt = now.replace(day=15)
-    if when:
-        year, month = [int(i) for i in when.split('-')]
-        dt = dt.replace(year=year, month=month)
-
-    cal = Calendar()
-    cal.setfirstweekday(SUNDAY)
-    dates = OrderedDict(
-        ((d.month, d.day), [])
-        for d in list(cal.itermonthdates(dt.year, dt.month))
-    )
-
-    for (name, abbr, arrival, emoji) in user.travellog_set.filter(
-        arrival__month=dt.month,
-        user=user
-    ).values_list('entity__name', 'entity__type__abbr', 'arrival', 'entity__flag__emoji'):
-        key = (arrival.month, arrival.day)
-        if key in dates:
-            dates[key].append([name, abbr, arrival, emoji])
-
-    dates = list(dates.items())
-    context = {
-        'profile': profile,
-        'dates': [dates[i:i + 7] for i in range(0, len(dates), 7)],
-        'now': now,
-        'when': dt,
-        'prev_month': dt.replace(day=1) - timedelta(days=1),
-        'next_month': dt + timedelta(days=31)
-    }
-    return render(request, 'travel/profile/calendar.html', context)
-
-# ------------------------------------------------------------------------------
-# Admin utils below
-# ------------------------------------------------------------------------------
+class LanguagesView(TravelMixin, vanilla.ListView):
+    template_name = 'languages.html'
+    model = travel.TravelLanguage
+    context_object_name = 'languages'
 
 
-def _entity_edit(request, entity, template='entities/edit.html'):
-    if request.method == 'POST':
-        form = forms.EditTravelEntityForm(request.POST, instance=entity)
-        if form.is_valid():
-            form.save()
-            return http.HttpResponseRedirect(entity.get_absolute_url())
-    else:
-        form = forms.EditTravelEntityForm(instance=entity)
-
-    return render_travel(request, template, {'entity': entity, 'form': form})
+class LanguageView(TravelMixin, vanilla.DetailView):
+    template_name = 'languages.html'
+    model = travel.TravelLanguage
+    context_object_name = 'language'
 
 
-@superuser_required
-def entity_edit(request, ref, code, aux=None):
-    return _handle_entity(request, ref, code, aux, _entity_edit)
+class BucketListsView(TravelMixin, vanilla.ListView):
+    template_name = 'buckets/listing.html'
+    context_object_name = 'bucket_lists'
+
+    def get_queryset(self):
+        return travel.TravelBucketList.objects.for_user(self.request.user)
 
 
-@superuser_required
-def start_add_entity(request, template='entities/add/start.html'):
-    abbr = request.GET.get('type')
-    if abbr:
-        if abbr == 'co':
-            return http.HttpResponseRedirect(reverse('travel-entity-add-co'))
+class BucketListView(TravelMixin, vanilla.DetailView):
+    template_name = 'buckets/detail.html'
+    model = travel.TravelBucketList
+    context_object_name = 'bucket_list'
 
-        co = request.GET.get('country')
-        if co:
-            return http.HttpResponseRedirect(
-                reverse('travel-entity-add-by-co', args=(co, abbr))
+    @cached_property
+    def user(self):
+        if 'username' in self.kwargs:
+            return get_object_or_404(User, username=self.kwargs['username'])
+
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        done, entities = self.object.user_results(self.user)
+        return super().get_context_data(
+            entities=entities,
+            stats={'total': len(entities), 'done': done},
+            **kwargs
+        )
+
+
+class BucketListComparisonView(TravelMixin, vanilla.DetailView):
+    template_name = 'buckets/compare.html'
+    model = travel.TravelBucketList
+    context_object_name = 'bucket_list'
+
+    def get_context_data(self, **kwargs):
+        usernames = self.kwargs['usernames'].split('/')
+        entities = self.object.entities.select_related()
+        results = [{
+            'username': username,
+            'entities': set(travel.TravelLog.objects.filter(
+                user__username=username,
+                entity__in=entities
+            ).values_list('entity__id', flat=True))
+        } for username in usernames]
+
+        return super().get_context_data(entities=entities, results=results, **kwargs)
+
+
+class LogEntryView(TravelMixin, vanilla.UpdateView):
+    template_name = 'log-entry.html'
+    model = travel.TravelLog
+    context_object_name = 'entry'
+    
+    def get_queryset(self):
+        return self.model.objects.filter(user__username=self.kwargs['username'])
+
+    def form_valid(self, form):
+        form.save(user=self.request.user)
+        return http.HttpResponseRedirect(self.object.entity.get_absolute_url())
+
+    def get_form(self, data=None, files=None, **kwargs):
+        if self.request.user != self.object.user:
+            raise http.Http404
+
+        return forms.TravelLogForm(
+            self.object.entity,
+            data=data,
+            files=files,
+            instance=self.object
+        )
+
+
+class SearchView(TravelMixin, vanilla.TemplateView):
+    template_name = 'search/search.html'
+
+    def get_context_data(self, **kwargs):
+        search_form = forms.SearchForm(self.request.GET)
+        data = {'search_form': search_form}
+        if search_form.is_valid():
+            q = search_form.cleaned_data['search']
+            by_type = search_form.cleaned_data['type']
+            data.update(
+                search=q,
+                by_type=by_type,
+                results=travel.TravelEntity.objects.search(q, by_type)
             )
 
-    return render_travel(request, template, {
-        'types': travel.TravelEntityType.objects.exclude(abbr__in=['cn', 'co']),
-        'countries': travel.TravelEntity.objects.countries()
-    })
+        return super().get_context_data(**{**data, **kwargs})
 
 
-@superuser_required
-def add_entity_co(request, template='entities/add/add.html'):
-    entity_type = get_object_or_404(travel.TravelEntityType, abbr='co')
-    if request.method == 'POST':
-        form = forms.NewCountryForm(request.POST)
+class AdvancedSearchView(TravelMixin, LoginRequiredMixin, vanilla.TemplateView):
+    template_name = 'search/advanced.html'
+
+    def get_context_data(self, **kwargs):
+        results = None
+        search = self.request.GET.get('search', '').strip()
+        if search:
+            lines = [line.strip() for line in search.splitlines()]
+            results = travel.TravelEntity.objects.advanced_search(lines)
+
+        return super().get_context_data(results=results, search=search, **kwargs)
+
+
+
+class EntityRelationshipsView(TravelMixin, vanilla.TemplateView):
+    template_name = 'entities/listing/{}.html'
+
+    @cached_property
+    def relative_type(self):
+        return get_object_or_404(travel.TravelEntityType, abbr=self.kwargs['rel'])
+
+    @cached_property
+    def entity_type(self):
+        return get_object_or_404(travel.TravelEntityType, abbr=self.kwargs['ref'])
+
+    def get_template_names(self):
+        self.template_name = self.template_name.format(self.relative_type.abbr)
+        return super().get_template_names()
+
+    def get_context_data(self, **kwargs):
+        code, aux = split_code(self.kwargs['code'])
+        entity = get_object_or_404(travel.TravelEntity.objects.find(
+            self.entity_type.abbr,
+            code,
+            aux
+        ))
+
+        rel = self.relative_type
+        return super().get_context_data(
+            type=rel,
+            entities=entity.related_by_type(rel),
+            parent=entity,
+            **kwargs
+        )
+
+
+class EntityView(TravelMixin, vanilla.DetailView):
+    form_class = forms.TravelLogForm
+
+    def get_form(self, data=None, files=None, **kwargs):
+        cls = self.get_form_class()
+        return cls(data=data, files=files, **kwargs)
+
+    def get_object(self):
+        ref = self.kwargs['ref']
+        code, aux = split_code(self.kwargs['code'])
+        return get_object_or_404(travel.TravelEntity.objects.find(ref, code, aux))
+
+    def get_template_names(self):
+        ref = self.kwargs['ref']
+        self.template_name = [f'entities/detail/{ref}.html', 'entities/detail/base.html']
+        return super().get_template_names()
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return http.HttpResponseNotAllowed(['get'])
+
+        self.object = self.get_object()
+        form = self.get_form(entity=self.object, data=self.request.POST)
         if form.is_valid():
-            entity = form.save(entity_type)
-            return http.HttpResponseRedirect(entity.get_absolute_url())
-    else:
-        form = forms.NewCountryForm()
+            form.save(self.request.user)
+            return http.HttpResponseRedirect(self.request.path)
 
-    return render_travel(request, template, {'form': form, 'entity_type': entity_type})
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form(entity=self.object)
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
-@superuser_required
-def add_entity_by_co(request, code, abbr, template='entities/add/add.html'):
-    entity_type = get_object_or_404(travel.TravelEntityType, abbr=abbr)
-    country = travel.TravelEntity.objects.get(code=code, type__abbr='co')
+    def get_context_data(self, **kwargs):
+        entity = self.object
+        user = self.request.user
+        history = user.travellog_set.filter(entity=entity) if user.is_authenticated else []
 
-    if request.method == 'POST':
-        form = forms.NewTravelEntityForm(request.POST)
-        if form.is_valid():
-            entity = form.save(entity_type, country=country)
-            return http.HttpResponseRedirect(entity.get_absolute_url())
-    else:
-        form = forms.NewTravelEntityForm()
-
-    return render_travel(request, template, {'entity_type': entity_type, 'form': form})
+        return super().get_context_data(
+            entity=entity,
+            history=history,
+            **kwargs
+        )

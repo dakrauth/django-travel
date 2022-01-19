@@ -28,7 +28,7 @@
     </dd>
     <dt>Phone, TLD</dt>
     <dd>{{ info.phone }}, {{ info.tld }}</dd>
-    {% having info.neighbors.all as neighbors %}
+    {% having info.related_neighbors as neighbors %}
     <dt>Neighbors</dt>
     <dd>{% for neighbor in neighbors %}
         <a href="{{ neighbor.get_absolute_url }}">{{ neighbor }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</dd>
