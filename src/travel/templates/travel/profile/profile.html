@@ -5,7 +5,7 @@
     {% if profile.is_public or profile.user == request.user %}
     <p>
         Travels logged by {{ profile.user.username }}.
-        <a class="btn btn-xs btn-success" href="{% url 'travel-calendar' profile.user.username %}">
+        <a class="btn btn-xs btn-success" href="{% url 'travel:calendar' profile.user.username %}">
             Calendar</a>
     </p>
     <div class="profile-filter card card-sm">
@@ -96,7 +96,7 @@
     {% if profile.is_public %}
     <script type="module">
         import { loadLogs } from "{% static 'travel/profile.js' %}";
-        const url = '{% url "user_log_api" profile.user.username %}';
+        const url = '{% url "travel:user_log_api" profile.user.username %}';
         const controller = loadLogs(url);
     </script>
 

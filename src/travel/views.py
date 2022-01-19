@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.utils.functional import cached_property
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 import vanilla
 
@@ -87,7 +87,7 @@ class ProfileView(TravelMixin, vanilla.DetailView):
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(
-            api_user_log_url=reverse('user_log_api', args=[self.kwargs['username']])
+            api_user_log_url=reverse('travel:user_log_api', args=[self.kwargs['username']])
         )
 
 
@@ -102,7 +102,7 @@ class LocaleView(TravelMixin, vanilla.ListView):
     def get_template_names(self):
         self.template_name = self.template_name.format(self.entity_type.abbr)
         return super().get_template_names()
-    
+
     def get_context_data(self, **kwargs):
         return super().get_context_data(type=self.entity_type, **kwargs)
 
@@ -174,7 +174,7 @@ class LogEntryView(TravelMixin, vanilla.UpdateView):
     template_name = 'log-entry.html'
     model = travel.TravelLog
     context_object_name = 'entry'
-    
+
     def get_queryset(self):
         return self.model.objects.filter(user__username=self.kwargs['username'])
 
@@ -223,7 +223,6 @@ class AdvancedSearchView(TravelMixin, LoginRequiredMixin, vanilla.TemplateView):
             results = travel.TravelEntity.objects.advanced_search(lines)
 
         return super().get_context_data(results=results, search=search, **kwargs)
-
 
 
 class EntityRelationshipsView(TravelMixin, vanilla.TemplateView):

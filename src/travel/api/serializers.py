@@ -38,6 +38,7 @@ class TravelEntitySerializer(serializers.ModelSerializer):
             'url'
         )
 
+
 class TravelUserLogSerializer(serializers.ModelSerializer):
     logs = serializers.SerializerMethodField()
     entities = serializers.SerializerMethodField()

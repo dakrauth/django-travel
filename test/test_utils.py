@@ -5,6 +5,7 @@ import pytest
 
 from travel import utils
 
+
 class TestJSONEncoding:
 
     def test_json_encoding(self):
@@ -20,7 +21,7 @@ class TestJSONEncoding:
         result = utils.json_loads(out)
         assert data == result
 
-    
+
 class TestLatLonParsing:
 
     def test_lat_lon(self):
@@ -44,8 +45,8 @@ class TestLatLonParsing:
         ]):
             lat, lon = utils.parse_latlon(item)
             delta = abs(lat - expect[0])
-            assert  delta < threshold
-            
+            assert delta < threshold
+
             delta = abs(lon - expect[1])
             assert delta < threshold
 

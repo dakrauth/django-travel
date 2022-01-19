@@ -62,9 +62,8 @@ class TravelBucketList(models.Model):
         db_table = 'travel_bucket_list'
         verbose_name_plural = 'bucket lists'
 
-
     def get_absolute_url(self):
-        return reverse('travel-bucket', args=[self.id])
+        return reverse('travel:bucket', args=[self.id])
 
     def __str__(self):
         return self.title
@@ -104,7 +103,7 @@ class TravelProfile(models.Model):
         verbose_name_plural = 'profile'
 
     def public_url(self):
-        return reverse('travel-profile', args=[self.user.username])
+        return reverse('travel:profile', args=[self.user.username])
 
     def __str__(self):
         return str(self.user)
@@ -252,7 +251,7 @@ class TravelEntity(models.Model):
         return [self.type.abbr, self.code_url_bit]
 
     def get_absolute_url(self):
-        return reverse('travel-entity', args=self._permalink_args)
+        return reverse('travel:entity', args=self._permalink_args)
 
     def get_edit_url(self):
         return reverse('admin:travel_travelentity_change', args=(self.id,))
@@ -267,7 +266,6 @@ class TravelEntity(models.Model):
     @cached_property
     def get_entityinfo(self):
         try:
-            #return TravelEntityInfo.objects.get(entity=self)
             return TravelEntityInfo.objects.select_related(
                 'currency',
                 'region',
@@ -322,7 +320,6 @@ class TravelEntity(models.Model):
             cnt=models.Count('abbr')
         ).values_list('abbr', 'cnt')
 
-
     @cached_property
     def related_entities(self):
         return [{
@@ -330,7 +327,7 @@ class TravelEntity(models.Model):
             'text': self.Related.DETAILS[abbr],
             'count': cnt,
             'url': reverse(
-                'travel-entity-relationships',
+                'travel:entity-relationships',
                 args=[self.type.abbr, self.code_url_bit, abbr]
             )
         } for abbr, cnt in self.relationships]
@@ -431,7 +428,7 @@ class TravelLog(models.Model):
         return self.arrival.astimezone(self.entity.tzinfo)
 
     def get_absolute_url(self):
-        return reverse('travel-log-entry', args=[self.user.username, self.id])
+        return reverse('travel:log-entry', args=[self.user.username, self.id])
 
     def save(self, *args, **kws):
         if not self.arrival:
@@ -485,7 +482,7 @@ class TravelLanguage(models.Model):
         )
 
     def get_absolute_url(self):
-        return reverse('travel-language', args=[self.id])
+        return reverse('travel:language', args=[self.id])
 
 
 class TravelCurrency(models.Model):

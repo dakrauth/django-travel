@@ -22,6 +22,7 @@ class TravelEntityAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.select_related('type', 'classification', 'capital', 'state', 'country')
 
+
 @admin.register(travel.TravelEntityType)
 class TravelEntityTypeAdmin(admin.ModelAdmin):
     list_display = ('abbr', 'title')
@@ -62,17 +63,17 @@ class TravelAliasAdmin(admin.ModelAdmin):
 
 @admin.register(travel.TravelLanguage)
 class TravelLanguageAdmin(admin.ModelAdmin):
-    list_display = ['name', 'iso639_1', 'iso639_2', 'iso639_3',]
+    list_display = ['name', 'iso639_1', 'iso639_2', 'iso639_3']
 
 
 @admin.register(travel.TravelCurrency)
 class TravelCurrencyAdmin(admin.ModelAdmin):
-    list_display = ['iso', 'name', 'sign', 'fraction', 'fraction_name', 'alt_sign',]
+    list_display = ['iso', 'name', 'sign', 'fraction', 'fraction_name', 'alt_sign']
 
 
 @admin.register(travel.TravelRegion)
 class TravelRegionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'un_code', 'parent',]
+    list_display = ['name', 'un_code', 'parent']
 
 
 @admin.register(travel.TravelEntityInfo)
@@ -85,5 +86,3 @@ class TravelEntityInfoAdmin(admin.ModelAdmin):
         'tld',
         'region',
     ]
-
-

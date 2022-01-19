@@ -56,7 +56,7 @@
 {% block travel_end_body %}{{ block.super }}
 <script type="module">
     import { playFlagGame } from "{% static 'travel/flag-game.js' %}";
-    const url = '{% url "flag_game_api" %}';
+    const url = '{% url "travel:flag_game_api" %}';
     playFlagGame(url);
 </script>
 {% endblock travel_end_body %}

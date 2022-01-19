@@ -37,6 +37,7 @@ def continent(continent_type):
         full_name=name,
     )
 
+
 @pytest.fixture
 def country(continent, country_type):
     name = 'Country'
@@ -58,4 +59,3 @@ def bucketlist(country):
     )
     bl.entities.add(country)
     return bl
-
