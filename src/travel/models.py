@@ -10,7 +10,6 @@ from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
 
 import pytz
-from choice_enum import ChoiceEnumeration
 import travel.utils as travel_utils
 from . import managers
 
@@ -88,13 +87,13 @@ class TravelBucketList(models.Model):
 
 class TravelProfile(models.Model):
 
-    class Access(ChoiceEnumeration):
-        PUBLIC = ChoiceEnumeration.Option('PUB', 'Public')
-        PRIVATE = ChoiceEnumeration.Option('PRI', 'Private')
-        PROTECTED = ChoiceEnumeration.Option('PRO', 'Protected', default=True)
+    class Access(models.TextChoices):
+        PUBLIC = 'PUB', 'Public'
+        PRIVATE = 'PRI', 'Private'
+        PROTECTED = 'PRO', 'Protected'
 
     user = models.OneToOneField(User, related_name='travel_profile', on_delete=models.CASCADE)
-    access = models.CharField(max_length=3, choices=Access.CHOICES, default=Access.DEFAULT)
+    access = models.CharField(max_length=3, choices=Access.choices, default=Access.PROTECTED)
 
     objects = managers.TravelProfileManager()
 

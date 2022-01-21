@@ -21,7 +21,6 @@ setup(
     python_requires='>=3.8',
     zip_safe=False,
     install_requires=[
-        'choice-enum>=1.0.0',
         'Django>=2.2.24,<4.1',
         'django-bootstrap-v5>=1.0.8',
         'python-dateutil>=2.8.2',
