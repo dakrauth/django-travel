@@ -2,21 +2,26 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block travel_title %}Django Travel{% endblock travel_title %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/sandstone/bootstrap.min.css" crossorigin="anonymous">
     <style>
-        .flag-sm { width: 64px; }
-        .flag-md { width: 256px; }
+        .flag-sm { width: 24px; }
+        .flag-md { width: 48px; }
+        .counter-badge { display: inline-block; }
+        .counter-badge > span:first-child { font-weight: bold; margin-right:  4px; }
+        .images > .travel-image > img.flag-md { width: 100%; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     {% block travel_extra_head %}{% endblock travel_extra_head %}
 </head>
 <body>
     <div class="container">
         <nav>
-            <ul class="list-unstyled list-inline">
-                <li><a title="Countries of the world" href="{% url 'travel:by-locale' 'co' %}">Countries</a>
-                <li><a title="States, provinces, territories of the world" href="{% url 'travel:by-locale' 'st' %}">States</a>
-                <li><a title="Cities of the world" href="{% url 'travel:by-locale' 'ct' %}">Cities</a>
-                <li><a title="Continents of the world" href="{% url 'travel:by-locale' 'cn' %}">Continents</a>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a title="Countries of the world" href="{% url 'travel:by-locale' 'co' %}">Countries</a> &bull;
+                <li class="list-inline-item"><a title="States, provinces, territories of the world" href="{% url 'travel:by-locale' 'st' %}">States</a> &bull;
+                <li class="list-inline-item"><a title="Cities of the world" href="{% url 'travel:by-locale' 'ct' %}">Cities</a> &bull;
+                <li class="list-inline-item"><a title="Cities of the world" href="{% url 'travel:by-locale' 'ap' %}">Airports</a> &bull;
+                <li class="list-inline-item"><a title="Continents of the world" href="{% url 'travel:by-locale' 'cn' %}">Continents</a>
             </ul>
         </nav>
         <hr>

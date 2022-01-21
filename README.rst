@@ -15,3 +15,11 @@ Git the latest `code <https://github.com/dakrauth/travel>`_
 
     git clone https://github.com/dakrauth/travel
 
+
+Demo
+----
+
+.. code:: bash
+
+    docker build -t travel .
+    docker run -p 8000:80 -it travel:latest

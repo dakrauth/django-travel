@@ -6,6 +6,7 @@ ALLOWED_HOSTS = []
 AUTH_PASSWORD_VALIDATORS = []
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEBUG = not any('pytest' in arg for arg in sys.argv)
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LANGUAGE_CODE = 'en-us'
 ROOT_URLCONF = 'demo_proj.urls'

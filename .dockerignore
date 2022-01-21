@@ -1,0 +1,12 @@
+.DS_Store
+.git
+.github
+.tox
+.pytest_cache
+.coverage
+.dockerignore
+.gitignore
+dist
+build
+venv
+htmlcov
