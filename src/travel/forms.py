@@ -2,7 +2,8 @@ from datetime import datetime, date
 
 from django import forms
 from django.core.validators import EMPTY_VALUES
-import pytz
+
+from dateutil.zoneinfo import get_zonefile_instance
 
 from . import models as travel
 from . import utils as travel_utils
@@ -11,7 +12,8 @@ from . import utils as travel_utils
 def _tz_choices():
     choices = []
     nested = {}
-    for t in pytz.all_timezones:
+    zi = get_zonefile_instance()
+    for t in zi.zones:
         bits = t.split('/', 1)
         if len(bits) == 1:
             choices.append((t, t))
@@ -101,8 +103,12 @@ class TravelLogForm(forms.ModelForm):
             self.fields['note'].initial = instance.notes.text
 
     def clean_arrival(self):
-        when = self.cleaned_data['arrival']
-        return self.entity.tzinfo.localize(when) if when else datetime.utcnow()
+        arrival = travel_utils.normalize_datetime_zone(
+            self.cleaned_data['arrival'],
+            self.entity.tzinfo
+        )
+        print(arrival.isoformat())
+        return arrival
 
     def save(self, user=None):
         data = self.cleaned_data

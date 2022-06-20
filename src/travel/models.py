@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.functional import cached_property
 
-import pytz
+from dateutil.tz import gettz
 import travel.utils as travel_utils
 from . import managers
 
@@ -294,7 +294,7 @@ class TravelEntity(models.Model):
 
     @property
     def tzinfo(self):
-        return pytz.timezone(self.timezone)
+        return gettz(self.timezone)
 
     def get_continent(self):
         if self.continent:

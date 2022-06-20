@@ -15,6 +15,14 @@ const travelTzDelta = function(delta) {
     return delta_str;
 };
 
+export const renderTimestamps = function() {
+    document.querySelectorAll('[data-timestamp]').forEach(function(el) {
+        const ts = el.dataset.timestamp;
+        const dt = luxon.DateTime.fromISO(ts)
+        el.textContent = dt.toLocaleString(luxon.DateTime.DATETIME_FULL)
+    });
+};
+
 export const updateTravelTimestamps = function() {
     document.querySelectorAll('.tz-clock').forEach(function(el) {
         const tz = el.getAttribute('data-timezone');

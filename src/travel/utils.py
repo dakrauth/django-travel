@@ -7,6 +7,14 @@ from decimal import Decimal, localcontext
 from urllib.parse import quote_plus, unquote
 
 from dateutil.parser import parser, parserinfo
+from dateutil.tz import UTC
+
+
+def normalize_datetime_zone(when, tz):
+    if when:
+        return when.replace(tzinfo=tz).astimezone(UTC)
+
+    return datetime.datetime.utcnow().replace(tzinfo=UTC)
 
 
 def calendar_dict(dt):

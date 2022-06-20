@@ -100,7 +100,7 @@
             </thead>
             <tbody> {% for entry in history %}
                 <tr>
-                    <td>{{ entry.arrival|date:"D, M j, Y" }} &mdash; {{ entry.arrival|date:"P" }} {{ entry.arrival.tzinfo.zone }}</td>
+                    <td data-timestamp="{{ entry.arrival.isoformat }}">{{ entry.arrival|date:"D, M j, Y" }} &mdash; {{ entry.arrival|date:"P" }} {{ entry.arrival.tzinfo.zone }}</td>
                     <td>{{ entry.get_rating_display }}</td>
                     <td>
                         <a title="Edit this log entry" href="{{ entry.get_absolute_url }}">
