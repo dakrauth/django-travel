@@ -387,8 +387,21 @@ class ExternalReference(models.Model):
     entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
 
 
+class TravelAliasCategory(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=255, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Alias Categories'
+
+
 class TravelAlias(models.Model):
-    category = models.CharField(max_length=50)
+    category = models.ForeignKey(
+        TravelAliasCategory,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
     entity = models.ForeignKey(TravelEntity, on_delete=models.CASCADE)
     alias = models.CharField(max_length=255)
 
@@ -491,6 +504,8 @@ class TravelCurrency(models.Model):
     fraction_name = models.CharField(blank=True, max_length=15)
     sign = models.CharField(blank=True, max_length=4)
     alt_sign = models.CharField(blank=True, max_length=4)
+    updated = models.DateTimeField(blank=True, null=True)
+    value = models.DecimalField(max_digits=20, decimal_places=10, blank=True, null=True)
 
     class Meta:
         db_table = 'travel_currency'
@@ -517,6 +532,21 @@ class TravelRegion(models.Model):
 
     class Meta:
         verbose_name_plural = 'regions'
+
+
+class Electrical(models.Model):
+    entity = models.OneToOneField(TravelEntity, related_name='electrical_info', on_delete=models.CASCADE)
+    voltage = models.PositiveSmallIntegerField(blank=True, null=True)
+    frequency = models.PositiveSmallIntegerField(blank=True, null=True)
+    plugs = models.CharField(max_length=8)
+
+    @cached_property
+    def details(self):
+        return {
+            'volts': f'{self.voltage}V' if self.voltage else '',
+            'hertz': f'{self.frequency} Hz' if self.frequency else '',
+            'plugs': self.plugs.split('')
+        }
 
 
 class TravelEntityInfo(models.Model):
