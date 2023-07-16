@@ -12,6 +12,10 @@ class AliasInline(admin.TabularInline):
     model = travel.TravelAlias
 
 
+class ExternalReferenceInline(admin.TabularInline):
+    model = travel.ExternalReference
+
+
 @admin.register(travel.TravelEntity)
 class TravelEntityAdmin(admin.ModelAdmin):
     list_filter = ('type', )
@@ -109,3 +113,8 @@ class TravelEntityInfoAdmin(admin.ModelAdmin):
         if db_field.name == "neighbors":
             kwargs["queryset"] = travel.TravelEntity.objects.filter(type__abbr='co')
         return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+
+@admin.register(travel.ExternalSource)
+class ExternalSourceAdmin(admin.ModelAdmin):
+    list_display = ['name', 'url']

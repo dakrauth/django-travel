@@ -103,8 +103,7 @@
                     <td data-timestamp="{{ entry.arrival.isoformat }}">{{ entry.arrival|date:"D, M j, Y" }} &mdash; {{ entry.arrival|date:"P" }} {{ entry.arrival.tzinfo.zone }}</td>
                     <td>{{ entry.get_rating_display }}</td>
                     <td>
-                        <a title="Edit this log entry" href="{{ entry.get_absolute_url }}">
-                            {% travel_icon "edit" %}</a>
+                        <a title="Edit this log entry" href="{{ entry.get_absolute_url }}">{% travel_icon "edit" %}</a>
                     </td>
                 </tr>
                 {% if entry.notes %}
@@ -120,7 +119,6 @@
         </div>
         {% endhaving %}
         {% endif %}
-
     </div>
     <div class="col-4 images">
     {% block travel_images %}
@@ -132,10 +130,13 @@
 {% endblock travel_content %}
 {% block travel_end_body %}{{ block.super }}
 <script type="module">
-    import { updateTravelTimestamps } from "{% static 'travel/common.js' %}";
+    import { updateTravelTimestamps, currencyCoverter } from "{% static 'travel/common.js' %}";
     import { makeEntityMap } from "{% static 'travel/maps.js' %}";
 
     makeEntityMap('.mapit');
     updateTravelTimestamps();
+    currencyCoverter();
+</script>
+
 </script>
 {% endblock travel_end_body %}

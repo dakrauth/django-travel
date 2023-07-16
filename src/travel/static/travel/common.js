@@ -34,3 +34,14 @@ export const updateTravelTimestamps = function() {
     });
     setTimeout(updateTravelTimestamps, 1000)
 };
+
+export const currencyCoverter = function() {
+    document.querySelectorAll(".usd-convert").forEach(e=>{
+        const parent = e.parentElement;
+        e.addEventListener("input", (evt)=>{
+            const usdValue = parseFloat(parent.querySelector(".usd-1-value").textContent);
+            const result = parseFloat(evt.target.value) / usdValue;
+            parent.querySelector(".usd-converted").textContent = result.toFixed(2);
+        });
+    });
+};

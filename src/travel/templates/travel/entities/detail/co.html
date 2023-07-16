@@ -14,10 +14,15 @@
     <dt>Population</dt>
     <dd>{% if info.population %}{{ info.population|intcomma }}{% else %}<em>Unknown</em>{% endif %}</dd>
     <dt>Currency</dt>
-    <dd>{% if info.currency %}{% with info.currency as cur %}
+    <dd>{% having info.currency as cur %}
         {{ cur.iso }} ({{ cur }}) &bull;
-        {{ cur.sign }}1 = {{ cur.fraction }} {{ cur.fraction_name }}{% endwith %}{% else %}Unknown
-    {% endif %}</dd>
+        {{ cur.sign }}1 = {{ cur.fraction }} {{ cur.fraction_name }}
+        {% if cur.value %}<br>
+            $1 = <span class="usd-1-value">{{ cur.value }}</span> ({{ cur.updated }})<br>
+            {{ cur.sign }}<input type="number" class="usd-convert" placeholder="{{ cur }}">
+            = $<span class="usd-converted"></span>
+        {% endif %}{% else %}Unknown{% endhaving %}
+    </dd>
     {% if info.denom %}
     <dt>Demonym</dt>
     <dd>{{ info.denom }} <i>(sing.)</i>; {{ info.denoms }} <i>(pl.)</i></dd>{% endif %}
