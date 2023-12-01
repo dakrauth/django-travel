@@ -117,7 +117,7 @@ class HashBits {
         }
         if(this.timeframe === '-' || this.timeframe === '+') {
             if(this.date) {
-                a.push('date:' + this.timeframe + this.date.format(DATE_FORMAT));
+                a.push('date:' + this.timeframe + this.date.toISODate());
             }
         }
         else if(this.timeframe === '=') {
@@ -303,7 +303,7 @@ class View {
         }
         else {
             if(bits.timeframe && bits.date) {
-                this.dateEl.value = bits.date.toFormat(DATE_FORMAT);
+                this.dateEl.value = bits.date.toISODate();
                 this.dateEl.style.display = 'inline-block';
             }
         }
