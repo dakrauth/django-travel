@@ -1,6 +1,7 @@
 {% load bootstrap5 tz %}
 {% timezone entity.tzinfo %}
 <form class="form-horizontal" action="" method="post" accept-charset="utf-8">
+    {% csrf_token %}
     {% bootstrap_form form layout="horizontal" horizontal_label_class='col-md-2' horizontal_field_class='col-md-8' %}
     {% buttons layout="horizontal" %}
     <button type="submit" class="btn btn-primary">Save</button>
