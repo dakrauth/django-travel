@@ -93,19 +93,9 @@ class TravelCurrencyAdmin(admin.ModelAdmin):
     ]
 
 
-@admin.register(travel.TravelRegion)
-class TravelRegionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'un_code', 'parent']
-
-
 @admin.register(travel.TravelEntityInfo)
 class TravelEntityInfoAdmin(admin.ModelAdmin):
-    list_display = [
-        'iso3',
-        'denom',
-        'tld',
-        'region',
-    ]
+    list_display = ['iso3', 'denom', 'tld']
     filter_horizontal = ['languages', 'neighbors']
     raw_id_fields = ['entity',]
 

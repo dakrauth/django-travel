@@ -72,7 +72,7 @@ class TravelEntityManager(Manager):
     common_select_related = base_select_related + state_select_related
 
     select_related_by_type = {
-        'co': base_select_related + capital_select_related + ['continent'],
+        'co': base_select_related + capital_select_related + ['continent', 'entityinfo'],
         'st': base_select_related + capital_select_related + ['country__capital'],
         'ct': common_select_related,
         'ap': common_select_related,
@@ -116,10 +116,7 @@ class TravelEntityManager(Manager):
         )
 
     def country(self, code):
-        return self.select_related(*self.select_related_by_type['co']).get(
-            code=code,
-            type__abbr='co'
-        )
+        return self.countries().get(code=code)
 
     def country_dict(self):
         return dict([(e.code, e) for e in self.countries()])

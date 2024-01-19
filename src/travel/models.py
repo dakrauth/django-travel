@@ -265,11 +265,7 @@ class TravelEntity(models.Model):
     @cached_property
     def get_entityinfo(self):
         try:
-            return TravelEntityInfo.objects.select_related(
-                'currency',
-                'region',
-                'entity'
-            ).prefetch_related(
+            return TravelEntityInfo.objects.select_related('currency', 'entity').prefetch_related(
                 'languages',
                 'neighbors',
             ).get(entity=self)
@@ -525,15 +521,6 @@ class EntityImage(object):
         self.url = settings.MEDIA_URL + '/'.join(['travel/img', location, fn])
 
 
-class TravelRegion(models.Model):
-    name = models.CharField(max_length=50)
-    un_code = models.CharField(max_length=5, db_index=True)
-    parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = 'regions'
-
-
 class Electrical(models.Model):
     entity = models.OneToOneField(TravelEntity, related_name='electrical_info', on_delete=models.CASCADE)
     voltage = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -564,7 +551,9 @@ class TravelEntityInfo(models.Model):
     area = models.IntegerField(blank=True, null=True, default=None)
     languages = models.ManyToManyField(TravelLanguage, blank=True)
     neighbors = models.ManyToManyField(TravelEntity, blank=True)
-    region = models.ForeignKey(TravelRegion, blank=True, null=True, on_delete=models.SET_NULL)
+    region = models.CharField(max_length=10, blank=True)
+    subregion = models.CharField(max_length=32, blank=True)
+    intregion = models.CharField(max_length=16, blank=True)
 
     class Meta:
         ordering = ['entity']
@@ -576,6 +565,17 @@ class TravelEntityInfo(models.Model):
 
     def related_neighbors(self):
         return self.neighbors.select_related('type')
+
+    @cached_property
+    def regions(self):
+        regions = [self.region]
+        if self.subregion:
+            regions.append(self.subregion)
+
+        if self.intregion:
+            regions.append(self.intregion)
+
+        return " / ".join(regions)
 
     @cached_property
     def get_languages(self):

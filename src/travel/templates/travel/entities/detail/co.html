@@ -9,6 +9,8 @@
 {% endblock travel_images %}
 {% block travel_extra_details %}
     {% having entity.get_entityinfo as info %}
+    <dt>Regions</dt>
+    <dd>{{ info.regions }}</dd>
     <dt>Area</dt>
     <dd>{% if info.area %}{{ info.area|intcomma }} km<sup>2</sup>{% else %}<em>Unknown</em>{% endif %}</dd>
     <dt>Population</dt>
