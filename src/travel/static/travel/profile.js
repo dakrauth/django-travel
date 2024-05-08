@@ -28,9 +28,9 @@
 const MISSING_FLAG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>'
 const DATE_FORMAT  = 'YYYY-MM-DD';
 const TYPE_MAPPING = {
-    'cn': 'Continents', 'co': 'Countries', 'wh': 'World Heritage',
-    'st': 'States',     'ap': 'Airports',  'np': 'National Parks',
-    'lm': 'Landmarks',  'ct': 'Cities'
+    'cn': 'Continent', 'co': 'Country', 'wh': 'World Heritage',
+    'st': 'State',     'ap': 'Airport',  'np': 'National Park',
+    'lm': 'Landmark',  'ct': 'City'
 };
 
 const DateTime = luxon.DateTime;
@@ -46,7 +46,7 @@ const renderTemplate = function(templateId, data) {
                 el.remove();
             }
             else {
-                el.textContent = value.toString();
+                el.append(value.toString());
             }
         }
     }
