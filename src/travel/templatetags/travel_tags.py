@@ -21,10 +21,10 @@ class HavingNode(template.Node):
         if self.nodelist_else:
             return self.nodelist_else.render(context)
 
-        return ''
+        return ""
 
 
-@register.tag('having')
+@register.tag("having")
 def do_having(parser, token):
     having_err_msg = "'having' statements should use the format 'having x as y': '{}'"
     bits = token.split_contents()
@@ -33,13 +33,18 @@ def do_having(parser, token):
 
     tag_name, having_var, _as, context_var = bits
     having_var = parser.compile_filter(having_var)
-    if _as != 'as':
+    if _as != "as":
         raise template.TemplateSyntaxError(having_err_msg.format(token.contents))
 
-    nodelist = parser.parse(('else', 'endhaving',))
+    nodelist = parser.parse(
+        (
+            "else",
+            "endhaving",
+        )
+    )
     token = parser.next_token()
-    if token.contents == 'else':
-        nodelist_else = parser.parse(('endhaving',))
+    if token.contents == "else":
+        nodelist_else = parser.parse(("endhaving",))
         parser.delete_first_token()
     else:
         nodelist_else = None
@@ -48,11 +53,11 @@ def do_having(parser, token):
 
 
 ICON_MAPPINGS = {
-    'edit': 'pencil-square',
-    'new-window': 'window-plus',
-    'globe': 'globe2',
-    'user': 'person-fill',
-    'check-circle': 'check-circle-fill',
+    "edit": "pencil-square",
+    "new-window": "window-plus",
+    "globe": "globe2",
+    "user": "person-fill",
+    "check-circle": "check-circle-fill",
 }
 
 

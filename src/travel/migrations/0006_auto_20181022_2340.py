@@ -6,26 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('travel', '0005_auto_20181014_1923'),
+        ("travel", "0005_auto_20181014_1923"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='travelentity',
-            name='category',
+            model_name="travelentity",
+            name="category",
         ),
         migrations.RemoveField(
-            model_name='travelentity',
-            name='geonameid',
+            model_name="travelentity",
+            name="geonameid",
         ),
         migrations.AddField(
-            model_name='travelentity',
-            name='alt_code',
-            field=models.CharField(db_index=True, default='', max_length=8, blank=True),
+            model_name="travelentity",
+            name="alt_code",
+            field=models.CharField(db_index=True, default="", max_length=8, blank=True),
         ),
         migrations.AlterField(
-            model_name='travelentity',
-            name='code',
+            model_name="travelentity",
+            name="code",
             field=models.CharField(db_index=True, max_length=8),
         ),
     ]

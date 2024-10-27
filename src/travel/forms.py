@@ -14,7 +14,7 @@ def _tz_choices():
     nested = {}
     zi = get_zonefile_instance()
     for t in zi.zones:
-        bits = t.split('/', 1)
+        bits = t.split("/", 1)
         if len(bits) == 1:
             choices.append((t, t))
         else:
@@ -35,29 +35,29 @@ TZ_CHOICES = _tz_choices()
 class SearchField(forms.CharField):
 
     def widget_attrs(self, widget):
-        return {'placeholder': 'Search'}
+        return {"placeholder": "Search"}
 
 
 class SearchForm(forms.Form):
     TYPE_OPTIONS = (
-        ('', 'All Locales'),
-        ('co', 'Country'),
-        ('st', 'State'),
-        ('ap', 'Airport'),
-        ('ct', 'City'),
-        ('np', 'National Park'),
-        ('lm', 'Landmark'),
-        ('cn', 'Continent'),
-        ('wh', 'World Heritage Site'),
+        ("", "All Locales"),
+        ("co", "Country"),
+        ("st", "State"),
+        ("ap", "Airport"),
+        ("ct", "City"),
+        ("np", "National Park"),
+        ("lm", "Landmark"),
+        ("cn", "Continent"),
+        ("wh", "World Heritage Site"),
     )
 
-    search = SearchField(label='Search', required=False)
+    search = SearchField(label="Search", required=False)
     type = forms.ChoiceField(choices=TYPE_OPTIONS, required=False)
 
 
 class DateUtilField(forms.Field):
     default_error_messages = {
-        'invalid': u'Enter a valid date/time. Try using YYYY/MM/DD HH:MM:SS',
+        "invalid": "Enter a valid date/time. Try using YYYY/MM/DD HH:MM:SS",
     }
 
     def clean(self, value):
@@ -76,36 +76,33 @@ class DateUtilField(forms.Field):
         try:
             return travel_utils.dt_parser(value)
         except Exception:
-            raise forms.ValidationError(self.error_messages['invalid'])
+            raise forms.ValidationError(self.error_messages["invalid"])
 
 
 class TravelLogForm(forms.ModelForm):
     arrival = DateUtilField()
     rating = forms.ChoiceField(
-        choices=travel.TravelLog.RATING_CHOICES,
-        initial=3,
-        required=False
+        choices=travel.TravelLog.RATING_CHOICES, initial=3, required=False
     )
     note = forms.CharField(required=False, widget=forms.Textarea)
 
     class Meta:
         model = travel.TravelLog
-        fields = ('arrival', 'rating', 'note')
+        fields = ("arrival", "rating", "note")
 
     def __init__(self, entity, *args, **kws):
-        instance = kws.get('instance', None)
+        instance = kws.get("instance", None)
         if instance and instance.arrival:
             instance.arrival = instance.local_arrival.replace(tzinfo=None)
 
         super(TravelLogForm, self).__init__(*args, **kws)
         self.entity = entity
         if instance and instance.notes:
-            self.fields['note'].initial = instance.notes.text
+            self.fields["note"].initial = instance.notes.text
 
     def clean_arrival(self):
         arrival = travel_utils.normalize_datetime_zone(
-            self.cleaned_data['arrival'],
-            self.entity.tzinfo
+            self.cleaned_data["arrival"], self.entity.tzinfo
         )
         print(arrival.isoformat())
         return arrival
@@ -118,7 +115,7 @@ class TravelLogForm(forms.ModelForm):
             entry.user = user
 
         entry.save()
-        entry.update_notes(data.get('note', ''))
+        entry.update_notes(data.get("note", ""))
         return entry
 
 
@@ -130,42 +127,44 @@ class LatLonField(forms.CharField):
             try:
                 return travel_utils.parse_latlon(value)
             except ValueError:
-                raise forms.ValidationError('Unable to parse lat/lon')
+                raise forms.ValidationError("Unable to parse lat/lon")
 
 
 class BaseTravelEntityForm(forms.ModelForm):
-    tz = forms.ChoiceField(label='Timezone', required=False, choices=TZ_CHOICES, initial='UTC')
-    lat_lon = LatLonField(label='Lat/Lon', required=False)
-    flag_url = forms.CharField(label='Flag URL', required=False)
+    tz = forms.ChoiceField(
+        label="Timezone", required=False, choices=TZ_CHOICES, initial="UTC"
+    )
+    lat_lon = LatLonField(label="Lat/Lon", required=False)
+    flag_url = forms.CharField(label="Flag URL", required=False)
 
     class Meta:
         model = travel.TravelEntity
         fields = (
-            'name',
-            'full_name',
-            'code',
-            'locality',
-            'lat_lon',
-            'tz',
-            'flag_url',
+            "name",
+            "full_name",
+            "code",
+            "locality",
+            "lat_lon",
+            "tz",
+            "flag_url",
         )
 
     def __init__(self, *args, **kws):
         super(BaseTravelEntityForm, self).__init__(*args, **kws)
-        self.fields['full_name'].required = False
-        instance = kws.get('instance', None)
+        self.fields["full_name"].required = False
+        instance = kws.get("instance", None)
         if instance:
             if instance.type:
-                if instance.type.abbr in ('co', 'cn') and 'country' in self.fields:
-                    del self.fields['country']
+                if instance.type.abbr in ("co", "cn") and "country" in self.fields:
+                    del self.fields["country"]
             if instance.flag:
                 if instance.flag.is_locked:
-                    del self.fields['flag_url']
+                    del self.fields["flag_url"]
                 elif instance.flag.source:
-                    self.fields['flag_url'].initial = instance.flag.source
+                    self.fields["flag_url"].initial = instance.flag.source
 
     def save_flag(self, instance):
-        flag_url = self.cleaned_data.get('flag_url', None)
+        flag_url = self.cleaned_data.get("flag_url", None)
         if flag_url:
             instance.update_flag(flag_url)
 
@@ -176,7 +175,7 @@ class BaseTravelEntityForm(forms.ModelForm):
         for key, value in extra_fields.items():
             setattr(instance, key, value)
 
-        lat_lon = self.cleaned_data.get('lat_lon')
+        lat_lon = self.cleaned_data.get("lat_lon")
         if lat_lon:
             instance.lat, instance.lon = lat_lon
 
@@ -189,7 +188,7 @@ class EditTravelEntityForm(BaseTravelEntityForm):
     country = forms.ModelChoiceField(queryset=travel.TravelEntity.objects.countries())
 
     class Meta(BaseTravelEntityForm.Meta):
-        fields = ('country',) + BaseTravelEntityForm.Meta.fields
+        fields = ("country",) + BaseTravelEntityForm.Meta.fields
 
 
 class NewTravelEntityForm(BaseTravelEntityForm):
@@ -197,7 +196,9 @@ class NewTravelEntityForm(BaseTravelEntityForm):
 
 
 class NewCountryForm(NewTravelEntityForm):
-    continent = forms.ModelChoiceField(queryset=travel.TravelEntity.objects.filter(type__abbr='cn'))
+    continent = forms.ModelChoiceField(
+        queryset=travel.TravelEntity.objects.filter(type__abbr="cn")
+    )
 
     class Meta(NewTravelEntityForm.Meta):
-        fields = ('continent',) + NewTravelEntityForm.Meta.fields
+        fields = ("continent",) + NewTravelEntityForm.Meta.fields

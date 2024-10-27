@@ -35,10 +35,10 @@ class Command(BaseCommand):
             _data.load_entityinfo,
             _data.load_bucketlists,
         ]:
-            self.stdout.write(f'Loading {fn.__name__}...')
+            self.stdout.write(f"Loading {fn.__name__}...")
             started = time.time()
             fn()
             done = time.time() - started
-            self.stdout.write(f'Done in {done} second(s).')
+            self.stdout.write(f"Done in {done} second(s).")
 
         self.stdout.write("Seeding done.")

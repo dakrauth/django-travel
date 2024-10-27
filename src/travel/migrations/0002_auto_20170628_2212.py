@@ -8,31 +8,44 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('travel', '0001_initial'),
+        ("travel", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='travelflag',
-            name='base_dir',
+            model_name="travelflag",
+            name="base_dir",
         ),
         migrations.RemoveField(
-            model_name='travelflag',
-            name='ref',
+            model_name="travelflag",
+            name="ref",
         ),
         migrations.AlterField(
-            model_name='travelentity',
-            name='tz',
-            field=models.CharField(blank=True, max_length=40, verbose_name='timezone'),
+            model_name="travelentity",
+            name="tz",
+            field=models.CharField(blank=True, max_length=40, verbose_name="timezone"),
         ),
         migrations.AlterField(
-            model_name='travellog',
-            name='rating',
-            field=models.PositiveSmallIntegerField(choices=[(1, '&#9733;&#9733;&#9733;&#9733;&#9733;'), (2, '&#9733;&#9733;&#9733;&#9733;'), (3, '&#9733;&#9733;&#9733;'), (4, '&#9733;&#9733;'), (5, '&#9733;')], default=3),
+            model_name="travellog",
+            name="rating",
+            field=models.PositiveSmallIntegerField(
+                choices=[
+                    (1, "&#9733;&#9733;&#9733;&#9733;&#9733;"),
+                    (2, "&#9733;&#9733;&#9733;&#9733;"),
+                    (3, "&#9733;&#9733;&#9733;"),
+                    (4, "&#9733;&#9733;"),
+                    (5, "&#9733;"),
+                ],
+                default=3,
+            ),
         ),
         migrations.AlterField(
-            model_name='travelprofile',
-            name='access',
-            field=models.CharField(choices=[('PUB', 'Public'), ('PRI', 'Private'), ('PRO', 'Protected')], default='PRO', max_length=3),
+            model_name="travelprofile",
+            name="access",
+            field=models.CharField(
+                choices=[("PUB", "Public"), ("PRI", "Private"), ("PRO", "Protected")],
+                default="PRO",
+                max_length=3,
+            ),
         ),
     ]

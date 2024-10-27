@@ -9,7 +9,7 @@ def _checklist(user):
 
 def search(request):
     return {
-        'site': Site.objects.get_current(),
-        'search_form': forms.SearchForm(),
-        'checklist': _checklist(request.user)
+        "site": Site.objects.get_current(),
+        "search_form": forms.SearchForm(),
+        "checklist": _checklist(request.user),
     }

@@ -8,26 +8,32 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('travel', '0002_auto_20170628_2212'),
+        ("travel", "0002_auto_20170628_2212"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='travelflag',
-            name='large',
+            model_name="travelflag",
+            name="large",
         ),
         migrations.RemoveField(
-            model_name='travelflag',
-            name='thumb',
+            model_name="travelflag",
+            name="thumb",
         ),
         migrations.AddField(
-            model_name='travelflag',
-            name='emoji',
+            model_name="travelflag",
+            name="emoji",
             field=models.CharField(blank=True, max_length=8),
         ),
         migrations.AlterField(
-            model_name='travelbucketlist',
-            name='owner',
-            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="travelbucketlist",
+            name="owner",
+            field=models.ForeignKey(
+                blank=True,
+                default=None,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

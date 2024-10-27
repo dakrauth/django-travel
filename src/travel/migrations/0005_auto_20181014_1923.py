@@ -7,65 +7,143 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('travel', '0004_auto_20180306_1507'),
+        ("travel", "0004_auto_20180306_1507"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ExternalReference',
+            name="ExternalReference",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('ref', models.CharField(max_length=255)),
-                ('entity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='travel.TravelEntity')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("ref", models.CharField(max_length=255)),
+                (
+                    "entity",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="travel.TravelEntity",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ExternalSource',
+            name="ExternalSource",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('url', models.URLField(blank=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, unique=True)),
+                ("url", models.URLField(blank=True)),
             ],
         ),
         migrations.CreateModel(
-            name='TravelAlias',
+            name="TravelAlias",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('category', models.CharField(max_length=50)),
-                ('alias', models.CharField(max_length=255)),
-                ('entity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='travel.TravelEntity')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("category", models.CharField(max_length=50)),
+                ("alias", models.CharField(max_length=255)),
+                (
+                    "entity",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="travel.TravelEntity",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='TravelClassification',
+            name="TravelClassification",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=30)),
-                ('type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='travel.TravelEntityType')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=30)),
+                (
+                    "type",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="travel.TravelEntityType",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='TravelRegion',
+            name="TravelRegion",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('un_code', models.CharField(db_index=True, max_length=5)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='travel.TravelRegion')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("un_code", models.CharField(db_index=True, max_length=5)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="travel.TravelRegion",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='externalreference',
-            name='source',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='travel.ExternalSource'),
+            model_name="externalreference",
+            name="source",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="travel.ExternalSource"
+            ),
         ),
         migrations.AddField(
-            model_name='travelentity',
-            name='classification',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='travel.TravelClassification'),
+            model_name="travelentity",
+            name="classification",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="travel.TravelClassification",
+            ),
         ),
         migrations.AddField(
-            model_name='travelentityinfo',
-            name='region',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='travel.TravelRegion'),
+            model_name="travelentityinfo",
+            name="region",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="travel.TravelRegion",
+            ),
         ),
     ]

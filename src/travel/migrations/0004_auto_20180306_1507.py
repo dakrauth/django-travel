@@ -4,10 +4,7 @@ from django.db import migrations
 
 MAGIC_A = 127462
 
-CODES = {
-    chr(ord('A') + i): chr(MAGIC_A + i)
-    for i in range(26)
-}
+CODES = {chr(ord("A") + i): chr(MAGIC_A + i) for i in range(26)}
 
 
 def flag_emoji(iso):
@@ -16,13 +13,13 @@ def flag_emoji(iso):
 
 
 def populate_emojis(apps, schema_editor):
-    EntityType = apps.get_model('travel', 'TravelEntityType')
-    Entity = apps.get_model('travel', 'TravelEntity')
+    EntityType = apps.get_model("travel", "TravelEntityType")
+    Entity = apps.get_model("travel", "TravelEntity")
 
-    co_type = EntityType.objects.filter(abbr='co')
+    co_type = EntityType.objects.filter(abbr="co")
     if co_type:
         co_type = co_type[0]
-        for e in Entity.objects.filter(type=co_type).select_related('flag'):
+        for e in Entity.objects.filter(type=co_type).select_related("flag"):
             if e.flag:
                 e.flag.emoji = flag_emoji(e.code)
                 e.flag.save()
@@ -31,7 +28,7 @@ def populate_emojis(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('travel', '0003_auto_20180216_1854'),
+        ("travel", "0003_auto_20180216_1854"),
     ]
 
     operations = [migrations.RunPython(populate_emojis)]

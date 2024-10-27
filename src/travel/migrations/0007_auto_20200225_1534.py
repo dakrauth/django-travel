@@ -6,22 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('travel', '0006_auto_20181022_2340'),
+        ("travel", "0006_auto_20181022_2340"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='travelentity',
-            options={'ordering': ('name',), 'verbose_name_plural': 'travel entities'},
+            name="travelentity",
+            options={"ordering": ("name",), "verbose_name_plural": "travel entities"},
         ),
         migrations.AddField(
-            model_name='travelentity',
-            name='description',
-            field=models.TextField(blank=True, default=''),
+            model_name="travelentity",
+            name="description",
+            field=models.TextField(blank=True, default=""),
         ),
         migrations.AddField(
-            model_name='travelentity',
-            name='updated',
+            model_name="travelentity",
+            name="updated",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

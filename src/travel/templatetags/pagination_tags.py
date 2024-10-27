@@ -43,27 +43,27 @@ from django.template import (
 )
 
 DEFAULTS = {
-    'default_pagination': 20,
-    'default_window': 4,
-    'default_margin': 4,
-    'default_orphans': 0,
-    'invalid_page_raises_404': False,
-    'display_page_links': True,
-    'previous_link_decorator': "&lsaquo;&lsaquo; ",
-    'next_link_decorator': " &rsaquo;&rsaquo;",
-    'display_disabled_previous_link': False,
-    'display_disabled_next_link': False,
-    'disable_link_for_first_page': True,
+    "default_pagination": 20,
+    "default_window": 4,
+    "default_margin": 4,
+    "default_orphans": 0,
+    "invalid_page_raises_404": False,
+    "display_page_links": True,
+    "previous_link_decorator": "&lsaquo;&lsaquo; ",
+    "next_link_decorator": " &rsaquo;&rsaquo;",
+    "display_disabled_previous_link": False,
+    "display_disabled_next_link": False,
+    "disable_link_for_first_page": True,
 }
 
-config = dict(DEFAULTS, **getattr(settings, 'PAGINATION', {}))
+config = dict(DEFAULTS, **getattr(settings, "PAGINATION", {}))
 
 register = Library()
 
 
 def get_page(request, suffix):
     try:
-        return int(request.GET['page%s' % suffix])
+        return int(request.GET["page%s" % suffix])
     except (KeyError, ValueError, TypeError):
         return 1
 
@@ -85,28 +85,31 @@ class AutoPaginateNode(Node):
         tag.  If you choose not to use *{% paginate %}*, make sure to display the
         list of available pages, or else the application may seem to be buggy.
     """
+
     def __init__(
         self,
         queryset_var,
         multiple_paginations,
         paginate_by=None,
         orphans=None,
-        context_var=None
+        context_var=None,
     ):
-        paginate_by = paginate_by or config['default_pagination']
-        orphans = orphans or config['default_orphans']
+        paginate_by = paginate_by or config["default_pagination"]
+        orphans = orphans or config["default_orphans"]
 
         self.queryset_var = Variable(queryset_var)
-        self.paginate_by = paginate_by if isinstance(paginate_by, int) else Variable(paginate_by)
+        self.paginate_by = (
+            paginate_by if isinstance(paginate_by, int) else Variable(paginate_by)
+        )
         self.orphans = orphans if isinstance(orphans, int) else Variable(orphans)
         self.context_var = context_var
         self.multiple_paginations = multiple_paginations
 
     def render(self, context):
         if self.multiple_paginations or getattr(context, "paginator", None):
-            page_suffix = '_%s' % self.queryset_var
+            page_suffix = "_%s" % self.queryset_var
         else:
-            page_suffix = ''
+            page_suffix = ""
 
         key = self.queryset_var.var
         value = self.queryset_var.resolve(context)
@@ -122,7 +125,7 @@ class AutoPaginateNode(Node):
 
         paginator = Paginator(value, paginate_by, orphans)
         try:
-            request = context['request']
+            request = context["request"]
         except KeyError:
             raise ImproperlyConfigured(
                 "You need to enable 'django.core.context_processors.request'."
@@ -130,24 +133,24 @@ class AutoPaginateNode(Node):
         try:
             page_obj = paginator.page(get_page(request, page_suffix))
         except InvalidPage:
-            if config['invalid_page_raises_404']:
+            if config["invalid_page_raises_404"]:
                 raise Http404(
-                    'Invalid page requested. If DEBUG were False, an HTTP 404 '
-                    'page would have been shown instead.'
+                    "Invalid page requested. If DEBUG were False, an HTTP 404 "
+                    "page would have been shown instead."
                 )
             context[key] = []
-            context['invalid_page'] = True
-            return ''
+            context["invalid_page"] = True
+            return ""
 
         if self.context_var is not None:
             context[self.context_var] = page_obj.object_list
         else:
             context[key] = page_obj.object_list
 
-        context['paginator'] = paginator
-        context['page_obj'] = page_obj
-        context['page_suffix'] = page_suffix
-        return ''
+        context["paginator"] = paginator
+        context["page_obj"] = page_obj
+        context["page_suffix"] = page_suffix
+        return ""
 
 
 class PaginateNode(Node):
@@ -156,7 +159,7 @@ class PaginateNode(Node):
         self.template = template
 
     def render(self, context):
-        template_list = ['pagination/pagination.html']
+        template_list = ["pagination/pagination.html"]
         new_context = paginate(context)
         if self.template:
             template_list.insert(0, self.template)
@@ -198,9 +201,9 @@ def paginate(context, window=None, margin=None):
         window=2, margin=0, current=1     [1] 2 3 4 5 ...
         window=2, margin=0, current=5     ... 3 4 [5] 6 7 ...
         window=2, margin=0, current=11     ... 7 8 9 10 [11]
-        """
-    window = window or config['default_window']
-    margin = margin or config['default_margin']
+    """
+    window = window or config["default_window"]
+    margin = margin or config["default_margin"]
 
     if window < 0:
         raise ValueError('Parameter "window" cannot be less than zero')
@@ -209,15 +212,15 @@ def paginate(context, window=None, margin=None):
         raise ValueError('Parameter "margin" cannot be less than zero')
 
     try:
-        paginator = context['paginator']
-        page_obj = context['page_obj']
-        page_suffix = context.get('page_suffix', '')
+        paginator = context["paginator"]
+        page_obj = context["page_obj"]
+        page_suffix = context.get("page_suffix", "")
         page_range = paginator.page_range
         # Calculate the record range in the current page for display.
-        records = {'first': 1 + (page_obj.number - 1) * paginator.per_page}
-        records['last'] = records['first'] + paginator.per_page - 1
-        if records['last'] + paginator.orphans >= paginator.count:
-            records['last'] = paginator.count
+        records = {"first": 1 + (page_obj.number - 1) * paginator.per_page}
+        records["last"] = records["first"] + paginator.per_page - 1
+        if records["last"] + paginator.orphans >= paginator.count:
+            records["last"] = paginator.count
 
         # figure window
         window_start = page_obj.number - window - 1
@@ -256,31 +259,34 @@ def paginate(context, window=None, margin=None):
             if pages[-1] != paginator.num_pages:
                 pages.append(None)
 
-        new_context = dict(config, **{
-            'MEDIA_URL': settings.MEDIA_URL,
-            'STATIC_URL': getattr(settings, "STATIC_URL", None),
-            'is_paginated': paginator.count > paginator.per_page,
-            'page_obj': page_obj,
-            'page_suffix': page_suffix,
-            'pages': pages,
-            'paginator': paginator,
-            'records': records,
-        })
+        new_context = dict(
+            config,
+            **{
+                "MEDIA_URL": settings.MEDIA_URL,
+                "STATIC_URL": getattr(settings, "STATIC_URL", None),
+                "is_paginated": paginator.count > paginator.per_page,
+                "page_obj": page_obj,
+                "page_suffix": page_suffix,
+                "pages": pages,
+                "paginator": paginator,
+                "records": records,
+            }
+        )
 
-        if 'request' in context:
-            getvars = context['request'].GET.copy()
-            if 'page%s' % page_suffix in getvars:
-                del getvars['page%s' % page_suffix]
+        if "request" in context:
+            getvars = context["request"].GET.copy()
+            if "page%s" % page_suffix in getvars:
+                del getvars["page%s" % page_suffix]
             if len(getvars.keys()) > 0:
-                new_context['getvars'] = "&{}".format(getvars.urlencode())
+                new_context["getvars"] = "&{}".format(getvars.urlencode())
             else:
-                new_context['getvars'] = ''
+                new_context["getvars"] = ""
         return new_context
     except (KeyError, AttributeError):
         return {}
 
 
-@register.tag('autopaginate')
+@register.tag("autopaginate")
 def do_autopaginate(parser, token):
     """
     Splits the arguments to the autopaginate tag and formats them correctly.
@@ -289,6 +295,7 @@ def do_autopaginate(parser, token):
 
         autopaginate QUERYSET [PAGINATE_BY] [ORPHANS] [as NAME]
     """
+
     # Check whether there are any other autopaginations are later in this template
     def expression(obj):
         return (
@@ -335,10 +342,12 @@ def do_autopaginate(parser, token):
             "[as CONTEXT_VAR_NAME] %}"
         )
 
-    return AutoPaginateNode(query_var, multi_paginations, paginate_by, orphans, context_var)
+    return AutoPaginateNode(
+        query_var, multi_paginations, paginate_by, orphans, context_var
+    )
 
 
-@register.tag('paginate')
+@register.tag("paginate")
 def do_paginate(parser, token):
     """
     Emits the pagination control for the most recent autopaginate list
@@ -354,7 +363,7 @@ def do_paginate(parser, token):
     argc = len(argv)
     if argc == 1:
         template = None
-    elif argc == 3 and argv[1] == 'using':
+    elif argc == 3 and argv[1] == "using":
         template = unescape_string_literal(argv[2])
     else:
         raise TemplateSyntaxError(

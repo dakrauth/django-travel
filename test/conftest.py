@@ -1,38 +1,34 @@
 import pytest
 from django.contrib.auth.models import User
-from travel.models import (
-    TravelEntityType,
-    TravelEntity,
-    TravelBucketList
-)
+from travel.models import TravelEntityType, TravelEntity, TravelBucketList
 
 
 @pytest.fixture
 def user():
-    return User.objects.create_user(username='user')
+    return User.objects.create_user(username="user")
 
 
 @pytest.fixture
 def user2():
-    return User.objects.create_user(username='user2')
+    return User.objects.create_user(username="user2")
 
 
 @pytest.fixture
 def continent_type():
-    return TravelEntityType.objects.create(abbr='cn', title='Continent')
+    return TravelEntityType.objects.create(abbr="cn", title="Continent")
 
 
 @pytest.fixture
 def country_type():
-    return TravelEntityType.objects.create(abbr='co', title='Country')
+    return TravelEntityType.objects.create(abbr="co", title="Country")
 
 
 @pytest.fixture
 def continent(continent_type):
-    name = 'Continent'
+    name = "Continent"
     return TravelEntity.objects.create(
         type=continent_type,
-        code='CN',
+        code="CN",
         name=name,
         full_name=name,
     )
@@ -40,10 +36,10 @@ def continent(continent_type):
 
 @pytest.fixture
 def country(continent, country_type):
-    name = 'Country'
+    name = "Country"
     return TravelEntity.objects.create(
         type=country_type,
-        code='CO',
+        code="CO",
         name=name,
         continent=continent,
         full_name=name,
@@ -54,7 +50,7 @@ def country(continent, country_type):
 def bucketlist(country):
     bl = TravelBucketList.objects.create(
         owner=None,
-        title='Test Bucket List',
+        title="Test Bucket List",
         is_public=True,
     )
     bl.entities.add(country)

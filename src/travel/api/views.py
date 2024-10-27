@@ -14,7 +14,7 @@ class FlagGameView(APIView):
 class UserLogListView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.TravelUserLogSerializer
-    lookup_field = 'username'
+    lookup_field = "username"
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
