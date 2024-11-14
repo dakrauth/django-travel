@@ -21,7 +21,7 @@ setup(
     python_requires=">=3.8",
     zip_safe=False,
     install_requires=[
-        "Django>=4.2,<5.0",
+        "Django>=4.2,<5.2",
         "django-bootstrap-v5>=1.0.8",
         "python-dateutil>=2.8.2",
         "djangorestframework>=3.12.4",
@@ -36,7 +36,7 @@ setup(
         "Environment :: Web Environment",
         "Framework :: Django",
         "Framework :: Django :: 4.2",
-        "Framework :: Django :: 4.2",
+        "Framework :: Django :: 5.1",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
