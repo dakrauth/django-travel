@@ -23,3 +23,7 @@ Demo
 
     docker build -t travel .
     docker run -p 8000:80 -it travel:latest
+
+Navigate to htt://localhost:8000
+
+Two users are created: `admin` and `user`, both with `password` as their password.

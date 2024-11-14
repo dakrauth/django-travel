@@ -2,13 +2,14 @@ import os
 import sys
 from django import VERSION
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 AUTH_PASSWORD_VALIDATORS = []
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DEBUG = not any("pytest" in arg for arg in sys.argv)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 LANGUAGE_CODE = "en-us"
+LOGIN_REDIRECT_URL = LOGOUT_REDIRECT_URL = "/"
 ROOT_URLCONF = "demo_proj.urls"
 SECRET_KEY = "!%^#zpaq92v$s#fb^8$i(u+_(ba$^t2$3u*uwhv*tgf1z19zzj"
 SITE_ID = 1
@@ -36,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django.contrib.sites",
-    "bootstrap5",
+    "django_bootstrap5",
     "travel",
     "demo_proj",
 ]

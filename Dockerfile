@@ -1,4 +1,4 @@
-FROM python:3.8.10-alpine
+FROM python:3.12.7-alpine
 RUN apk --update add build-base bash jpeg-dev zlib-dev python3-dev
 
 WORKDIR /app/demo
@@ -7,15 +7,14 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN pip install -U \
-    pip \
+    pip==24.0 \
     pillow \
-    choice-enum==1.0.0 \
-    Django==3.2.10 \
-    django-bootstrap-v5==1.0.8 \
+    Django==5.1.3 \
+    django-bootstrap5 \
     python-dateutil \
     pytz \
-    djangorestframework==3.12.4 \
-    django-vanilla-views==3.0.0
+    djangorestframework \
+    django-vanilla-views
 
 COPY . /app
 RUN pip install -e /app

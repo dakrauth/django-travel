@@ -17356,6 +17356,8 @@ def load_entityinfo():
         "population",
         "area",
         "region",
+        "subregion",
+        "intregion",
     ]
     for data in [
         [
@@ -21346,7 +21348,10 @@ def load_entityinfo():
         ],
     ]:
         neighbors = data.pop()
-        o = TravelEntityInfo.objects.create(**dict(zip(keys, data)))
+        data.extend(["", "", ""])
+        dct = dict(zip(keys, data))
+        dct["region"] = dct["region"] or ""
+        o = TravelEntityInfo.objects.create(**dct)
         if neighbors:
             o.neighbors.add(*neighbors)
 

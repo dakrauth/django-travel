@@ -1,0 +1,10 @@
+{% extends "travel/base.html" %}
+{% load django_bootstrap5 %}
+{% block travel_heading %}<h1>Login</h1>{% endblock travel_heading %}
+{% block travel_content %}
+<form class="form" method="POST">{% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Login" %}
+</form>
+
+{% endblock travel_content  %}
