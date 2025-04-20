@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=77.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-travel"
+dynamic = ["version"]
+description = "A travelogue and bucket list app for Django"
+license = "MIT"
+license-files = ["LICENSE"]
+readme = { file = "README.rst", content-type = "text/x-rst" }
+keywords = ["django", "travel", "bucketlist"]
+authors = [
+    { name = "David Krauth", email = "dakrauth@gmail.com" },
+]
+requires-python = ">=3.10"
+classifiers = [
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Web Environment",
+        "Framework :: Django",
+        "Framework :: Django :: 4.2",
+        "Framework :: Django :: 5.1",
+        "Framework :: Django :: 5.2",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Topic :: Utilities",
+        "Topic :: Education",
+]
+
+dependencies = [
+    "Django>=4.2,<6.0",
+    "django-bootstrap5",
+    "python-dateutil",
+    "djangorestframework",
+    "django-vanilla-views",
+]
+
+[project.urls]
+Homepage = "https://github.com/dakrauth/django-travel"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "coverage",
+    "pytest-django",
+    "pytest-cov",
+]
+dev = [
+    "tox",
+    "build",
+    "ipython",
+    "ipdb",
+    "twine",
+    "ruff",
+    "django-extensions",
+    "pytest-sugar",
+    "pytest-clarity"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["travel", "travel.templatetags", "travel.migrations", "travel.extras", "travel.api"]
+
+[tool.setuptools.dynamic]
+version = { attr = "travel.version.__version__"}
+
+[tool.black]
+line-length = 100
+
+[tool.ruff]
+cache-dir = ".dev/ruff"
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+ignore = ["E741"]
