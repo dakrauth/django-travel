@@ -13,7 +13,7 @@ keywords = ["django", "travel", "bucketlist"]
 authors = [
     { name = "David Krauth", email = "dakrauth@gmail.com" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 classifiers = [
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
@@ -24,15 +24,15 @@ classifiers = [
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Utilities",
         "Topic :: Education",
 ]
 
 dependencies = [
-    "Django>=4.2,<6.0",
+    "Django>=5.2,<6.1",
     "django-bootstrap5",
     "python-dateutil",
     "djangorestframework",
